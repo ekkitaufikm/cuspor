@@ -10,7 +10,7 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     // Mengarahkan setelah login
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     // Menampilkan form login
     public function showLoginForm()
@@ -28,6 +28,6 @@ class LoginController extends Controller
     protected function loggedOut(\Illuminate\Http\Request $request)
     {
         session()->flash('success', 'You are logged out!');
-        return redirect('/home');
+        return redirect('/dashboard');
     }
 }

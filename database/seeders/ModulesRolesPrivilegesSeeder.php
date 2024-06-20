@@ -138,6 +138,7 @@ class ModulesRolesPrivilegesSeeder extends Seeder
 
         $RootPrivileges = [
             'modules' => [
+                'Dashboard',
                 'Complaint',
                 'Satisfaction',
                 'Certificate',

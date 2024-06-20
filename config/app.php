@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -121,9 +124,10 @@ return [
     */
 
     'maintenance' => [
-        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'driver' => 'file',
+        // 'store' => 'redis',
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -187,10 +191,9 @@ return [
     |
     */
 
-    'aliases' => [
-
+    'aliases' => Facade::defaultAliases()->merge([
         'App' => Illuminate\Support\Facades\App::class,
-
-    ],
+        'Helpers' => App\Helpers\Helpers::class,
+    ])->toArray(),
 
 ];

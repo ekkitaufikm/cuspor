@@ -17,14 +17,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
-        'name',
-        'password',
-        'phone',
-        'alamat',
-        'status',
-        'm_role_id',
+        'name', 'username', 'phone', 'password', 'alamat', 'status', 'm_role_id'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,4 +43,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'm_role_id', 'id');
+    }
+
 }
