@@ -40,4 +40,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{id}', 'UserGroupController@update')->name('user-group.update');
         Route::post('/delete/{id}', 'UserGroupController@destroy')->name('user-group.destroy');
     });
+
+    //Customer Satisfaction
+    Route::prefix('customer-satisfaction')->group(function(){
+        Route::get('/', 'CustomerSatisfactionGroupController@index')->name('customer-satisfaction');
+        Route::get('/create', 'CustomerSatisfactionGroupController@create')->name('customer-satisfaction.create');
+        Route::post('/', 'CustomerSatisfactionGroupController@store')->name('customer-satisfaction.store');
+        Route::get('/edit/{id}', 'CustomerSatisfactionGroupController@edit')->name('customer-satisfaction.edit');
+        Route::put('/{id}', 'CustomerSatisfactionGroupController@update')->name('customer-satisfaction.update');
+        Route::post('/delete/{id}', 'CustomerSatisfactionGroupController@destroy')->name('customer-satisfaction.destroy');
+    });
+
+    //Customer Complaint
+    Route::prefix('customer-complaint')->group(function(){
+        Route::get('/', 'CustomerComplaintGroupController@index')->name('customer-complaint');
+        Route::get('/create', 'CustomerComplaintGroupController@create')->name('customer-complaint.create');
+        Route::post('/', 'CustomerComplaintGroupController@store')->name('customer-complaint.store');
+        Route::get('/edit/{id}', 'CustomerComplaintGroupController@edit')->name('customer-complaint.edit');
+        Route::put('/{id}', 'CustomerComplaintGroupController@update')->name('customer-complaint.update');
+        Route::post('/delete/{id}', 'CustomerComplaintGroupController@destroy')->name('customer-complaint.destroy');
+    });
 });
