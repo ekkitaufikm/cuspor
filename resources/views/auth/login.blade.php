@@ -55,11 +55,11 @@
 									</div>
 									<div class="form-group">
 										<label class="form-label">User ID</label>
-										<input name="username" type="text" class="form-control ps-15 bg-transparent" placeholder="User ID" required>
+										<input name="username" type="text" class="form-control ps-15 bg-transparent" placeholder="User ID">
 									</div>
 									<div class="form-group">
 										<label class="form-label">Password</label>
-										<input name="password" type="password" class="form-control ps-15 bg-transparent" placeholder="Password" required>
+										<input name="password" type="password" class="form-control ps-15 bg-transparent" placeholder="Password">
 									</div>
 									<div class="row">
 										<!-- /.col -->
