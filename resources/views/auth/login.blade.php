@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{{ url('') }}/assets/images/LogoBBN.png">
 
-    <title>Login || {{ config('app.name') }} </title>
+    <title>Login || PT. Bukit Baja Nusantara </title>
   
 	<!-- Vendors Style-->
 	<link rel="stylesheet" href="{{ url('') }}/assets/css/vendors_css.css">

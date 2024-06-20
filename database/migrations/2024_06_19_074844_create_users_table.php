@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('name');
-            $table->string('password')->nullable(); // nullable because by default we login using sso
-            $table->string('email')->unique();
+            $table->string('password');
             $table->string('company_name');
             $table->string('company_sector');
             $table->string('phone');
