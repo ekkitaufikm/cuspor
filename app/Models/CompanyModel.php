@@ -11,7 +11,7 @@ class CompanyModel extends Model
 
     protected $table = 'm_company';
     protected $fillable = [
-        'company_name', 'company_sector', 'website', 'email', 'telephone', 'address'
+        'id', 'company_name', 'company_sector', 'website', 'email', 'telephone', 'address'
     ];
 
     public function dibuatOleh()
