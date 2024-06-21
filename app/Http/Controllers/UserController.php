@@ -134,7 +134,18 @@ class UserController extends Controller
                     $simpan = $data_users->update($data);
                 }
             } else {
-                return response()->json(['status' => false, 'message' => "Password is Empty!"]);
+                $data_users = User::findOrFail($id);
+                $data['username']       = $request->username;
+                $data['name']           = $request->name;
+                $data['company_name']   = $request->company_name;
+                $data['phone']          = $request->phone;
+                $data['m_role_id']      = $request->m_role_id;
+                $data['status']         = $request->status;
+                $data['alamat']         = $request->alamat;
+                $data['company_sector'] = $company->company_sector;
+                $data['updated_by']     = Auth::user()->id;
+
+                $simpan = $data_users->update($data);
             }
 
             if ($simpan) {

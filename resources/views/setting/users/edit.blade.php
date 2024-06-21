@@ -74,13 +74,13 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Password<span style="color: red">*</span></label>
-                                    <input name="password" type="text" class="form-control ps-15 bg-transparent" value="{{ $users->password }}">
+                                    <input name="password" type="text" class="form-control ps-15 bg-transparent">
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Confirm Password<span style="color: red">*</span></label>
-                                    <input name="verifikasi" type="text" class="form-control ps-15 bg-transparent" value="{{ $users->password }}">
+                                    <input name="verifikasi" type="text" class="form-control ps-15 bg-transparent">
                                 </div>
                             </div>
                             <div class="col-4">
