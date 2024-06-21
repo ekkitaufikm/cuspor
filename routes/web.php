@@ -15,10 +15,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('company')->group(function(){
         Route::get('/', 'CompanyController@index')->name('company');
         Route::get('/create', 'CompanyController@create')->name('company.create');
-        Route::post('/', 'CompanyController@store')->name('company.store');
-        Route::get('/edit/{id}', 'CompanyController@edit')->name('company.edit');
-        Route::put('/{id}', 'CompanyController@update')->name('company.update');
-        Route::post('/delete/{id}', 'CompanyController@destroy')->name('company.destroy');
+        Route::post('/create/save', 'CompanyController@store')->name('company.store');
+        Route::get('/detail/{id?}', 'CompanyController@show')->name('company.detail');
+        Route::get('/edit/{id?}', 'CompanyController@edit')->name('company.edit');
+        Route::put('/edit/save/{id?}', 'CompanyController@update')->name('company.update');
+        Route::post('/delete/{id?}', 'CompanyController@destroy')->name('company.destroy');
     });
 
     //Users

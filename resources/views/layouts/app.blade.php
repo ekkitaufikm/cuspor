@@ -34,7 +34,9 @@
 
 		  	<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
-                @yield('content')
+				<div class="container-full">
+                	@yield('content')
+				</div>
 			</div>
 		  	<!-- /.content-wrapper -->
             
