@@ -41,7 +41,10 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="row">
-                        <div class="col-lg-12 d-flex justify-content-end mb-0">
+                        <div class="col-lg-6 mt-2">
+                            <h4 class="box-title">{{ __('Create Data') }}</h4>
+                        </div>
+                        <div class="col-lg-6 d-flex justify-content-end mb-0">
                             <div class="btn-group">
                                 <button id="btn-submit" type="submit" class="btn btn-outline btn-success" style="margin-right: 10px;">Save</button>
                                 <a href="{{ route('company') }}" type="button" class="btn btn-outline btn-dark">
@@ -57,13 +60,13 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Company Name</label>
+                                    <label class="form-label">Company Name<span style="color: red">*</span></label>
                                     <input name="company_name" type="text" class="form-control ps-15 bg-transparent" placeholder="Company Name">
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Company Sector</label>
+                                    <label class="form-label">Company Sector<span style="color: red">*</span></label>
                                     <select id="select-companySector" class="form-select select2" name="company_sector" aria-label="Default select example">
                                         <option value="">--Choose Options--</option>
                                         @foreach(\App\Models\LookupModel::where('lookup_config', 'company_sector')->get() as $lookup)

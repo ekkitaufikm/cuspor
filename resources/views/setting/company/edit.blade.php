@@ -41,7 +41,10 @@
             <div class="box">
                 <div class="box-header with-border">
                     <div class="row">
-                        <div class="col-lg-12 d-flex justify-content-end mb-0">
+                        <div class="col-lg-6 mt-2">
+                            <h4 class="box-title">{{ __('Edit Data') }}</h4>
+                        </div>
+                        <div class="col-lg-6 d-flex justify-content-end mb-0">
                             <div class="btn-group">
                                 <button id="btn-submit" type="submit" class="btn btn-outline btn-success" style="margin-right: 10px;">Save</button>
                                 <a href="{{ route('company') }}" type="button" class="btn btn-outline btn-dark">
@@ -58,7 +61,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Company Name</label>
+                                    <label class="form-label">Company Name<span style="color: red">*</span></label>
                                     <input name="company_name" type="text" class="form-control ps-15 bg-transparent" value="{{ old('company_name', $company->company_name) }}">
                                 </div>
                             </div>
@@ -67,7 +70,7 @@
                                     $lookup = \App\Models\LookupModel::where('lookup_config', 'company_sector')->where('lookup_code', $company->company_sector)->first();
                                 @endphp
                                 <div class="form-group">
-                                    <label class="form-label">Company Sector</label>
+                                    <label class="form-label">Company Sector<span style="color: red">*</span></label>
                                     <select id="select-companySector" class="form-select select2" name="company_sector" aria-label="Default select example">
                                         <option value="{{ $company->company_sector }}" selected>{{ $lookup->lookup_name }}</option>
                                         <option value="">--Choose Options--</option>

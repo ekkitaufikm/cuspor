@@ -42,7 +42,7 @@
                     {{-- <h4 class="box-title">Complex headers (rowspan and colspan)</h4> --}}
                     <div class="row">
                         <div class="col-lg-6 mt-2">
-                            <h4 class="box-title">List Data</h4>
+                            <h4 class="box-title">{{ __('List Data') }}</h4>
                         </div>
                         <div class="col-lg-6 d-flex justify-content-end mb-0">
                             @if(Helpers::hasPrivilege('companyc'))

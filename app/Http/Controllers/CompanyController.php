@@ -81,7 +81,8 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['company'] = CompanyModel::findOrFail($id);
+        return view('setting.company.show', $data);
     }
 
     /**
