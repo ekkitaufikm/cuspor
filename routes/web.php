@@ -46,21 +46,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Customer Satisfaction
     Route::prefix('customer-satisfaction')->group(function(){
-        Route::get('/', 'CustomerSatisfactionGroupController@index')->name('customer-satisfaction');
-        Route::get('/create', 'CustomerSatisfactionGroupController@create')->name('customer-satisfaction.create');
-        Route::post('/create/save', 'CustomerSatisfactionGroupController@store')->name('customer-satisfaction.store');
-        Route::get('/edit/{id?}', 'CustomerSatisfactionGroupController@edit')->name('customer-satisfaction.edit');
-        Route::put('/edit/save/{id?}', 'CustomerSatisfactionGroupController@update')->name('customer-satisfaction.update');
-        Route::post('/delete/{id?}', 'CustomerSatisfactionGroupController@destroy')->name('customer-satisfaction.destroy');
+        Route::get('/', 'CustomerSatisfactionController@index')->name('customer-satisfaction');
+        Route::get('/add-survey/{id?}', 'CustomerSatisfactionController@create')->name('customer-satisfaction.create');
+        Route::post('/add-survey/save/{id?}', 'CustomerSatisfactionController@store')->name('customer-satisfaction.store');
+        Route::get('/show/{id?}', 'CustomerSatisfactionController@show')->name('customer-satisfaction.show');
+        Route::get('/print/{id?}', 'CustomerSatisfactionController@print')->name('customer-satisfaction.print');
+        Route::post('/delete/{id?}', 'CustomerSatisfactionController@destroy')->name('customer-satisfaction.destroy');
     });
 
     //Customer Complaint
     Route::prefix('customer-complaint')->group(function(){
-        Route::get('/', 'CustomerComplaintGroupController@index')->name('customer-complaint');
-        Route::get('/create', 'CustomerComplaintGroupController@create')->name('customer-complaint.create');
-        Route::post('/create/save', 'CustomerComplaintGroupController@store')->name('customer-complaint.store');
-        Route::get('/edit/{id?}', 'CustomerComplaintGroupController@edit')->name('customer-complaint.edit');
-        Route::put('/edit/save/{id?}', 'CustomerComplaintGroupController@update')->name('customer-complaint.update');
-        Route::post('/delete/{id?}', 'CustomerComplaintGroupController@destroy')->name('customer-complaint.destroy');
+        Route::get('/', 'CustomerComplaintController@index')->name('customer-complaint');
+        Route::get('/create', 'CustomerComplaintController@create')->name('customer-complaint.create');
+        Route::post('/create/save', 'CustomerComplaintController@store')->name('customer-complaint.store');
+        Route::get('/edit/{id?}', 'CustomerComplaintController@edit')->name('customer-complaint.edit');
+        Route::put('/edit/save/{id?}', 'CustomerComplaintController@update')->name('customer-complaint.update');
+        Route::post('/delete/{id?}', 'CustomerComplaintController@destroy')->name('customer-complaint.destroy');
     });
 });
