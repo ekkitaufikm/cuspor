@@ -43,12 +43,9 @@
 								<form action="{{ route('login') }}" method="post">
 									@csrf
 									<div class="form-group">
-										@if ($errors->any())
+										@if (session('gagal'))
 											<div class="alert alert-danger alert-dismissible fade show" role="alert">
-												<strong>Error!</strong>
-												@foreach ($errors->all() as $error)
-													{{ $error }}
-												@endforeach
+												<strong>Error!</strong> {{ session('gagal') }}
 												<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 											</div>
 										@endif
@@ -59,8 +56,33 @@
 									</div>
 									<div class="form-group">
 										<label class="form-label">Password</label>
-										<input name="password" type="password" class="form-control ps-15 bg-transparent" placeholder="Password">
+										<div class="input-group">
+											<input name="password" type="password" class="form-control ps-15 bg-transparent" placeholder="Password">
+											<div class="input-group-append" id="togglePassword">
+												<span class="input-group-text cursor-pointer">
+													<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+														<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+														<circle cx="12" cy="12" r="3"></circle>
+													</svg>
+												</span>
+											</div>
+										</div>
 									</div>
+									<div class="mb-2">
+										<div class="form-group mt-2 mb-2">
+											<div class="captcha">
+												<span>{!! captcha_img() !!}</span><br>
+												<a href="#" id="reload">Refresh Captcha</a>
+												{{-- <button type="button" class="btn btn-danger reload" id="reload">
+													&#x21bb;
+												</button> --}}
+											</div>
+										</div>
+										<div class="form-group mb-2">
+											<input type="text" class="form-control"  name="captcha" placeholder="Input Captcha" required>
+										</div>
+									</div>
+	
 									<div class="row">
 										<!-- /.col -->
 										  <button type="submit" class="btn btn-primary mt-10">SIGN IN</button>
@@ -81,5 +103,32 @@
 	<script src="{{ url('') }}/assets/js/pages/chat-popup.js"></script>
     <script src="{{ url('') }}/assets/icons/feather-icons/feather.min.js"></script>	
 
+	<script>
+		document.getElementById('togglePassword').addEventListener('click', function () {
+			var passwordField = document.getElementById('password');
+			var passwordFieldType = passwordField.getAttribute('type');
+			var toggleIcon = this.querySelector('svg');
+			
+			if (passwordFieldType === 'password') {
+				passwordField.setAttribute('type', 'text');
+				toggleIcon.classList.remove('feather-eye');
+				toggleIcon.classList.add('feather-eye-off');
+			} else {
+				passwordField.setAttribute('type', 'password');
+				toggleIcon.classList.remove('feather-eye-off');
+				toggleIcon.classList.add('feather-eye');
+			}
+		});
+
+		$('#reload').click(function(){
+			$.ajax({
+				type:'GET',
+				url:'reload-captcha',
+				success:function(data){
+					$(".captcha span").html(data.captcha)
+				}
+			});
+		});
+	</script>
 </body>
 </html>

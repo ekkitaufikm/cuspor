@@ -167,6 +167,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
+
 
 
         /*
@@ -194,6 +196,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'App' => Illuminate\Support\Facades\App::class,
         'Helpers' => App\Helpers\Helpers::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'Auth'  => Illuminate\Support\Facades\Auth::class,
+
     ])->toArray(),
 
 ];

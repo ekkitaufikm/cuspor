@@ -6,6 +6,7 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::get('/', 'LoginController@showLoginForm')->name('/');
     Route::post('/login', 'LoginController@login')->name('login');
     Route::post('/logout', 'LoginController@logout')->name('logout');
+    Route::get('/reload-captcha', ('LoginController@reloadCaptcha'));
 })->middleware('guest');
 
 Route::group(['middleware' => 'auth'], function () {
