@@ -27,8 +27,7 @@
 				<div class="row justify-content-end g-0">
 					<div class="col-lg-7 col-md-7 col-12 bg-white rounded10 shadow-lg">
 						<div class="d-flex align-items-center p-3">
-							<img src="{{ url('') }}/assets/images/LogoBBN.png" width="10%" class="me-3">
-							<h2 class="mb-0" style="color: rgba(11,81,166,1) !important; font-weight: bold;">Customer Portal</h2>
+							<img src="{{ url('') }}/assets/images/logo-bbn.png" width="40%" class="me-3">
 						</div>
 						<img src="{{ url('') }}/assets/images/background.png">
 					</div>

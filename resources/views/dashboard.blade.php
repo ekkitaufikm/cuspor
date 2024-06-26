@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    @php
+    $complaint      = $customer_satisfaction->where('cust_id', Auth::user()->id)->count('id');
+    $satisfaction   = $customer_complaint->where('cust_id', Auth::user()->id)->count('id');
+    @endphp
 
     <!-- Main content -->
     <section class="content">
@@ -20,11 +24,11 @@
                     <div class="box-body">
                         <div class="d-flex align-items-center justify-content-between ">
                             <div>
-                                <p class="text-mute mb-0">JCB Tractor</p>
-                                <h3 class="text-dark mb-0 mt-1 fw-500">$350/h</h3>
+                                <p class="text-mute mb-0">Tracking PO</p>
+                                <h3 class="text-dark mb-0 mt-1 fw-500">0</h3>
                             </div>
                             <div class="img-updown">
-                                <img src="../images/dashboard/jcb-1.png">
+                                <img src="{{ url('') }}/assets/images/dashboard/jcb-1.png">
                             </div>
                         </div>
                     </div>
@@ -35,11 +39,11 @@
                     <div class="box-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <p class="text-mute mb-0">JCB</p>
-                                <h3 class="text-dark mb-0 mt-1 fw-500">$400/h</h3>
+                                <p class="text-mute mb-0">E-Sertificate</p>
+                                <h3 class="text-dark mb-0 mt-1 fw-500">0</h3>
                             </div>
                             <div class="img-updown">
-                                <img src="../images/dashboard/jcb-2.png">
+                                <img src="{{ url('') }}/assets/images/dashboard/jcb-2.png">
                             </div>
                         </div>
                     </div>
@@ -50,26 +54,26 @@
                     <div class="box-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <p class="text-mute mb-0">Forklift JCB</p>
-                                <h3 class="text-dark mb-0 mt-1 fw-500">$450/h</h3>
+                                <p class="text-mute mb-0">Customer Satisfaction</p>
+                                <h3 class="text-dark mb-0 mt-1 fw-500">{{ $satisfaction }}</h3>
                             </div>
                             <div class="img-updown">
-                                <img src="../images/dashboard/jcb-3.png">
+                                <img src="{{ url('') }}/assets/images/dashboard/jcb-3.png">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 col-12">
-                <div class="box pull-up bg-primary">
+                <div class="box pull-up">
                     <div class="box-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <p class="text-mute mb-0 text-white">Total Ticket</p>
-                                <h3 class="text-dark mb-0 mt-1 fw-500 text-white">600</h3>
+                                <p class="text-mute mb-0">Customer Complaint</p>
+                                <h3 class="text-dark mb-0 mt-1 fw-500">{{ $complaint }}</h3>
                             </div>
                             <div class="img-updown">
-                                <img src="../images/dashboard/jcb-4.png">
+                                <img src="{{ url('') }}/assets/images/dashboard/jcb-4.png">
                             </div>
                         </div>
                     </div>
@@ -77,7 +81,7 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xxl-8 col-lg-12 col-12">
                 <div class="box">
                     <div class="d-flex justify-content-between box-header">
@@ -386,7 +390,7 @@
                   </div>
                   <!-- /.box -->
             </div>
-        </div>
+        </div> --}}
     </section>
     <!-- /.content -->
 
