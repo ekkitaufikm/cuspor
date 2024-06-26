@@ -14,12 +14,12 @@
 <div class="content-header">
     <div class="d-flex align-items-center">
         <div class="me-auto">
-            <h3 class="page-title">{{ __('Customer Satisfaction') }}</h3>
+            <h3 class="page-title">{{ __('Customer Complaint') }}</h3>
             <div class="d-inline-block align-items-center">
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"> Home</i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ __('Customer Satisfaction') }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ __('Customer Complaint') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -84,7 +84,7 @@
                                         <td>
                                             @if ($pk->status == 6)
                                                 <div class="btn-group">
-                                                    <a href='{{ route('customer-satisfaction.create', ['id' => Crypt::encrypt($pk->pk_no)]) }}' type="button" class="btn btn-rounded btn-sm bg-gradient-secondary w-100">
+                                                    <a href='{{ route('customer-complaint.create', ['id' => Crypt::encrypt($pk->pk_no)]) }}' type="button" class="btn btn-rounded btn-sm bg-gradient-secondary w-100">
                                                         Add Survey
                                                     </a>
                                                 </div>
@@ -104,8 +104,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                            <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                            <a href='{{ route('customer-complaint.show', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
+                                            <a href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -832,7 +832,7 @@
                                                                 <input type="checkbox" id="category10" class="filled-in chk-col-info" />
                                                                 <label for="category10"></label>
                                                             </td>
-                                                            <td rowspan="3">
+                                                            <td rowspan="4">
                                                                 <textarea class="form-control dynamic-height" name="remarks" placeholder="Remarks"></textarea>
                                                                 {{-- <textarea rows="10" class="form-control" name="remarks" placeholder="Remarks"></textarea> --}}
                                                             </td>

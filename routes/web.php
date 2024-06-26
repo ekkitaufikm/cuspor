@@ -57,10 +57,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Customer Complaint
     Route::prefix('customer-complaint')->group(function(){
         Route::get('/', 'CustomerComplaintController@index')->name('customer-complaint');
-        Route::get('/create', 'CustomerComplaintController@create')->name('customer-complaint.create');
-        Route::post('/create/save', 'CustomerComplaintController@store')->name('customer-complaint.store');
-        Route::get('/edit/{id?}', 'CustomerComplaintController@edit')->name('customer-complaint.edit');
-        Route::put('/edit/save/{id?}', 'CustomerComplaintController@update')->name('customer-complaint.update');
+        Route::get('/add-survey/{id?}', 'CustomerComplaintController@create')->name('customer-complaint.create');
+        Route::post('/add-survey/save/{id?}', 'CustomerComplaintController@store')->name('customer-complaint.store');
+        Route::get('/show/{id?}', 'CustomerComplaintController@show')->name('customer-complaint.show');
+        Route::get('/print/{id?}', 'CustomerComplaintController@print')->name('customer-complaint.print');
         Route::post('/delete/{id?}', 'CustomerComplaintController@destroy')->name('customer-complaint.destroy');
     });
 });
