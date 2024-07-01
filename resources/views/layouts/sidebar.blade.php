@@ -12,7 +12,7 @@
                 <li><a href="#"><i class="fa fa-line-chart"><span class="path1"></span><span class="path2"></span></i>Company News</a></li>
 
                 <li class="header">Menu </li>
-                <li><a href="#"><i class="fa fa-history"><span class="path1"></span><span class="path2"></span></i>Product Order History</a></li>
+                <li><a href="{{ route('product-order-history') }}"><i class="fa fa-history"><span class="path1"></span><span class="path2"></span></i>Product Order History</a></li>
                 <li><a href="#"><i class="fa fa-truck"><span class="path1"></span><span class="path2"></span></i>Tracking Product</a></li>
                 <li><a href="#"><i class="fa fa-paperclip"><span class="path1"></span><span class="path2"></span></i>E-Certificate Product</a></li>
                 @if(Helpers::hasPrivilege('satisfactionr'))

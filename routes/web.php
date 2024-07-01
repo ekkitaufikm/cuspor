@@ -44,6 +44,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/delete/{id?}', 'UserGroupController@destroy')->name('user-group.destroy');
     });
 
+    //Produk History
+    Route::prefix('product-order-history')->group(function(){
+        Route::get('/', 'ProdukHistoryController@index')->name('product-order-history');
+    });
+
     //Customer Satisfaction
     Route::prefix('customer-satisfaction')->group(function(){
         Route::get('/', 'CustomerSatisfactionController@index')->name('customer-satisfaction');
