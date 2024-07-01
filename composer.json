@@ -23,9 +23,12 @@
         "psr-4": {
             "App\\": "app/"
         },
-            "classmap": [
-                "database/seeders",
-                "database/factories"
+        "classmap": [
+            "database/seeders",
+            "database/factories"
+        ],
+        "files": [
+            "app/Helpers/globalhelper.php"
         ]
     },
     "autoload-dev": {

@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Produk History
     Route::prefix('product-order-history')->group(function(){
         Route::get('/', 'ProdukHistoryController@index')->name('product-order-history');
+        Route::get('/detail/{id?}', 'ProdukHistoryController@show')->name('product-order-history.show');
     });
 
     //Customer Satisfaction

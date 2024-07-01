@@ -55,6 +55,7 @@
                                     <th>INQ No</th>
                                     <th>Customer</th>
                                     <th>SQ Date</th>
+                                    <th>Offer Validity</th>
                                     <th>Total Offer</th>
                                     <th>SQ Type</th>
                                     <th>Status</th>
@@ -66,30 +67,62 @@
                                 @foreach ($sales_quotation as $sq)
                                     @php
                                         $lookup_status = \App\Models\LookupModel::where('lookup_config', 'sls_quotation_status')->where('lookup_code', $sq->status)->first();
-                                        $lookup_validity = \App\Models\LookupModel::where('lookup_config', 'offer_validity')->where('lookup_code', 1)->first();
                                         $lookup_sqType = \App\Models\LookupModel::where('lookup_config', 'sq_type')->where('lookup_code', $sq->sq_type)->first();
+                                        $lookup_offerVal = \App\Models\LookupModel::where('lookup_config', 'offer_validity')->where('lookup_code', $sq->oﬀer_validity)->first();
                                         $sales_inquiry = \App\Models\QuotationItemModel::select('sls_inquiry.*')
-                                            ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
-                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-                                            ->where('sls_inquiry.inq_id', $sq->inq_id) 
-                                            ->first();
+                                                            ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
+                                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                                                            ->where('sls_inquiry.inq_id', $sq->inq_id)
+                                                            ->first();
+                            
+                                        $status_text = '';
+                                        $status_color = '';
+                            
+                                        switch ($sq->status) {
+                                            case "2":
+                                            case "8":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-info';
+                                                break;
+                                            case "3":
+                                            case "9":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-danger';
+                                                break;
+                                            case "4":
+                                            case "5":
+                                            case "10":
+                                            case "11":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-warning';
+                                                break;
+                                            case "6":
+                                            case "7":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-success';
+                                                break;
+                                            default:
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-secondary';
+                                        }
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $sq->sq_no }}</td>
                                         <td>{{ $sales_inquiry->inq_no }}</td>
                                         <td>{{ Auth::user()->company_name }}</td>
-                                        <td>{{ $sq->created_date }}</td>
-                                        <td>{{ $sq->offer_value }}</td>
+                                        <td>{{ $sq->created_date }}</td>>
+                                        <td>{{ $lookup_offerVal->lookup_name }}</td>
+                                        <td>{{ rupiah($sq->offer_value) }}</td>
                                         <td>{{ $lookup_sqType->lookup_name ?? '' }}</td>
-                                        <td>{{ $lookup_status->lookup_name }}</td>
+                                        <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
                                         <td>{{ $sq->created_by }}</td>
                                         <td>
-                                            <a href='#'><i class='fa fa-eye ms-text-primary'></i></a>
+                                            <a href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->sq_id)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
-                          </tbody>
+                            </tbody>                            
                         </table>
                     </div>
                 </div>
