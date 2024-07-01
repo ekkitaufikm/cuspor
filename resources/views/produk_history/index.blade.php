@@ -111,7 +111,7 @@
                                         <td>{{ $sq->sq_no }}</td>
                                         <td>{{ $sales_inquiry->inq_no }}</td>
                                         <td>{{ Auth::user()->company_name }}</td>
-                                        <td>{{ $sq->created_date }}</td>>
+                                        <td>{{ $sq->created_date }}</td>
                                         <td>{{ $lookup_offerVal->lookup_name }}</td>
                                         <td>{{ rupiah($sq->offer_value) }}</td>
                                         <td>{{ $lookup_sqType->lookup_name ?? '' }}</td>
