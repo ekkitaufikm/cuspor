@@ -433,7 +433,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Survey Status</label>
-                                <input type="text" class="form-control ps-15" value="{{ isset($cp_satisfaction->status) ? '[Survey Finished]' : '[No Survey Yet]' }}" disabled>
+                                <input type="text" class="form-control ps-15" value="{{ isset($cp_satisfaction->status) ? '[No Survey Yet]' : '[Survey Finished]' }}" disabled>
                             </div>
                         </div>
                         <div class="col-4">
