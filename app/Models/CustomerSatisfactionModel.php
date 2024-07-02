@@ -11,7 +11,7 @@ class CustomerSatisfactionModel extends Model
 
     protected $table = 'cp_customer_satisfaction';
     protected $fillable = [
-        'pk_id', 'pic_sales', 'cust_id', 'cust_pic_id', 'remarks', 'status'
+        'sq_id', 'pic_sales', 'cust_id', 'cust_pic_id', 'remarks', 'status'
     ];
 
     public function dibuatOleh()

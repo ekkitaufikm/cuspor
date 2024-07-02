@@ -51,10 +51,11 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Customer Name</th>
-                                    <th>PK No</th>
-                                    <th>PK Date</th>
-                                    <th>PK Status</th>
+                                    <th>SQ No</th>
+                                    <th>INQ No</th>
+                                    <th>Customer</th>
+                                    <th>SQ Date</th>
+                                    <th>Status</th>
                                     <th>Commercial Aspect</th>
                                     <th>Technical Aspect</th>
                                     <th>Logistics</th>
@@ -65,35 +66,73 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($perintah_kerja as $pk)
+                                @foreach ($sales_quotation as $sq)
                                     @php
-                                        $lookup = \App\Models\LookupModel::where('lookup_config', 'sls_pk_status')->where('lookup_code', $pk->status)->first();
-                                        $cp_satisfaction = \App\Models\CustomerSatisfactionModel::where('pk_id', $pk->id)->first();
-                                        $cp_satisfaction_dtl = \App\Models\CustomerSatisfactionDetailModel::where('customer_satisfaction_id', isset($cp_satisfaction->id))->first();
+                                        $lookup_status = \App\Models\LookupModel::where('lookup_config', 'sls_quotation_status')->where('lookup_code', $sq->status)->first();
+                                        $cp_satisfaction = $customer_satisfaction->where('sq_id', $sq->sq_id)->first();
+                                        $cp_satisfaction_dtl = $customer_satisfaction_dtl->where('customer_satisfaction_id', isset($cp_satisfaction->id))->first();
+                                        $sales_inquiry = \App\Models\QuotationItemModel::select('sls_inquiry.*')
+                                                            ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
+                                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                                                            ->where('sls_inquiry.inq_id', $sq->inq_id)
+                                                            ->first();
+                                        $status_text = '';
+                                        $status_color = '';
+                            
+                                        switch ($sq->status) {
+                                            case "2":
+                                            case "8":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-info';
+                                                break;
+                                            case "3":
+                                            case "9":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-danger';
+                                                break;
+                                            case "4":
+                                            case "5":
+                                            case "10":
+                                            case "11":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-warning';
+                                                break;
+                                            case "6":
+                                            case "7":
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-success';
+                                                break;
+                                            default:
+                                                $status_text = $lookup_status->lookup_name;
+                                                $status_color = 'btn-secondary';
+                                        }
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $pk->cust_name }}</td>
-                                        <td>{{ $pk->pk_no }}</td>
-                                        <td>{{ $pk->pk_date }}</td>
-                                        <td>{{ $lookup->lookup_name }}</td>
-                                        <td>{{ $cp_satisfaction_dtl->commercial_aspect ?? '-' }}</td>
-                                        <td>{{ $cp_satisfaction_dtl->technical_aspect ?? '-' }}</td>
-                                        <td>{{ $cp_satisfaction_dtl->logistics ?? '-' }}</td>
-                                        <td>{{ $cp_satisfaction_dtl->quality ?? '-' }}</td>
+                                        <td>{{ $sq->sq_no }}</td>
+                                        <td>{{ $sales_inquiry->inq_no }}</td>
+                                        <td>{{ Auth::user()->company_name }}</td>
+                                        <td>{{ $sq->created_date }}</td>
+                                        <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->commercial_aspect) ? $cp_satisfaction_dtl->commercial_aspect . '%' : '-' }}</td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->technical_aspect) ? $cp_satisfaction_dtl->technical_aspect . '%' : '-' }}</td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->logistics) ? $cp_satisfaction_dtl->logistics . '%' : '-' }}</td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->quality) ? $cp_satisfaction_dtl->quality . '%' : '-' }}</td>
                                         <td>
-                                            @if ($pk->status == 6)
-                                                <div class="btn-group">
-                                                    <a href='{{ route('customer-satisfaction.create', ['id' => Crypt::encrypt($pk->pk_no)]) }}' type="button" class="btn btn-rounded btn-sm bg-gradient-secondary w-100">
-                                                        Add Survey
-                                                    </a>
-                                                </div>
-                                            @else
-                                                <div class="btn-group">
-                                                    <a type="button" class="btn btn-rounded btn-sm btn-secondary w-100">
-                                                        Add Survey
-                                                    </a>
-                                                </div>
+                                            @if (isset($cp_satisfaction->status) == null)
+                                                @if ($sq->status == 8)
+                                                    <div class="btn-group">
+                                                        <a href='{{ route('customer-satisfaction.create', ['id' => Crypt::encrypt($sq->sq_no)]) }}' type="button" class="btn btn-rounded btn-sm bg-gradient-secondary w-100">
+                                                            Add Survey
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div class="btn-group">
+                                                        <a type="button" class="btn btn-rounded btn-sm btn-secondary w-100">
+                                                            Add Survey
+                                                        </a>
+                                                    </div>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
@@ -104,8 +143,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                            <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($pk->pk_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                            <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
+                                            <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

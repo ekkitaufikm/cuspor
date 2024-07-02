@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
             [
                 'id'        => 1,
                 'username'  => 'admin_1',
-                'name'      => 'Ekki Taufik Maulana',
+                'name'      => 'Admin IT BBN',
                 'password'  => Hash::make(12345678),
                 'company_name'      => null,
                 'company_sector'    => null,

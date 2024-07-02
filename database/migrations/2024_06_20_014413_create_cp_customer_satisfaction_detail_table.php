@@ -36,6 +36,7 @@ return new class extends Migration
             $table->integer('average_time'); 
             $table->integer('emergency_delivery'); 
             $table->integer('delivery_reliability'); 
+            $table->integer('visit_frequency_log'); 
             $table->integer('product_quality'); 
             $table->integer('non_confirmity'); 
             $table->integer('time_answer_qq'); 

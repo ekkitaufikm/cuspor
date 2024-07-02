@@ -11,7 +11,7 @@ class CustomerComplaintModel extends Model
 
     protected $table = 'cp_customer_complaint';
     protected $fillable = [
-        'pk_id', 'pic_sales', 'cust_id', 'cust_pic_id', 'description', 'action_taken', 'status'
+        'sq_id', 'pic_sales', 'cust_id', 'cust_pic_id', 'description', 'action_taken', 'status'
     ];
 
     public function dibuatOleh()

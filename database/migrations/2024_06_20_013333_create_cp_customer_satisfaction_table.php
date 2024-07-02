@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cp_customer_satisfaction', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pk_id');
+            $table->unsignedBigInteger('sq_id');
             $table->string('pic_sales');
             $table->string('cust_id');
             $table->string('cust_pic_id');
