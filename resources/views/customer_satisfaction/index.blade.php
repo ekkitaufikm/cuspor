@@ -143,8 +143,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                            <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                            @if (isset($cp_satisfaction->status) != null)
+                                                <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
+                                                <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
