@@ -21,11 +21,16 @@
 <script src="{{ url('') }}/assets/vendor_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 <script src="{{ url('') }}/assets/vendor_plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="{{ url('') }}/assets/vendor_plugins/iCheck/icheck.min.js"></script>
+<script src="{{ url('') }}/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
+<script src="{{ url('') }}/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+<script src="{{ url('') }}/assets/vendor_components/dropzone/dropzone.js"></script>
 
 <!-- Etikto Admin App -->
 <script src="{{ url('') }}/assets/js/template.js"></script>
 <script src="{{ url('') }}/assets/js/pages/dashboard.js"></script>
 <script src="{{ url('') }}/assets/js/pages/calendar.js"></script>
 <script src="{{ url('') }}/assets/js/pages/data-table.js"></script>
+<script src="{{ url('') }}/assets/js/template.js"></script>
+<script src="{{ url('') }}/assets/js/pages/steps.js"></script>
 <!-- Sweetalert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

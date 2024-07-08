@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Crypt;
 //model
 use App\Models\LookupModel;
 use App\Models\CustomerComplaintModel;
-use App\Models\PkModel;
+use App\Models\SalesQuotationModel;
+use App\Models\QuotationItemModel;
 
 class CustomerComplaintController extends Controller
 {
@@ -22,17 +23,18 @@ class CustomerComplaintController extends Controller
      */
     public function index()
     {
-        $customer_complaint  = CustomerComplaintModel::all();
-        $perintah_kerja         = PkModel::select('sls_pk.*', 'sls_customer.cust_name')
-            ->join('sls_quotation', 'sls_pk.sq_id', '=', 'sls_quotation.sq_id')
+        $sales_quotation = SalesQuotationModel::select('sls_quotation.*')
             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
             ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->where('sls_customer.cust_name', Auth::user()->company_name) 
+            ->where('sls_quotation.status', 8)
+            ->where('sls_customer.cust_name', Auth::user()->company_name)
+            ->orderBy('sls_quotation.created_date', 'desc')
             ->get();
+        $customer_complaint      = CustomerComplaintModel::all();
 
         return view('customer_complaint.index', [
-            "customer_complaint" => $customer_complaint,
-            'perintah_kerja'        => $perintah_kerja
+            "customer_complaint"    => $customer_complaint,
+            "sales_quotation"       => $sales_quotation
         ]);
     }
 
@@ -41,42 +43,7 @@ class CustomerComplaintController extends Controller
      */
     public function create($id)
     {
-        $pk_no = Crypt::decrypt($id);
-        $customer_complaint  = CustomerComplaintModel::all();
-        $perintah_kerja         = PkModel::where('pk_no', $pk_no)->first();
-        $data_customer = PkModel::select('sls_customer.*')
-            ->join('sls_quotation', 'sls_pk.sq_id', '=', 'sls_quotation.sq_id')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->where('sls_pk.pk_no', $pk_no) 
-            ->first();
-        $data_pic_sales = PkModel::select('erp_user.*')
-            ->join('sls_quotation', 'sls_pk.sq_id', '=', 'sls_quotation.sq_id')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
-            ->where('sls_pk.pk_no', $pk_no) 
-            ->first();
-        $data_pic_customer = PkModel::select('sls_customer_pic.*')
-            ->join('sls_quotation', 'sls_pk.sq_id', '=', 'sls_quotation.sq_id')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer_pic', 'sls_inquiry.cust_pic_id', '=', 'sls_customer_pic.pic_id')
-            ->where('sls_pk.pk_no', $pk_no) 
-            ->first();
-        $data_sls_inquiry = PkModel::select('sls_inquiry.*')
-            ->join('sls_quotation', 'sls_pk.sq_id', '=', 'sls_quotation.sq_id')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->where('sls_pk.pk_no', $pk_no) 
-            ->first();
-            // echo json_encode($data_pic_customer); die;
-
-        return view('customer_complaint.create', [
-            "customer_complaint" => $customer_complaint,
-            'perintah_kerja'        => $perintah_kerja,
-            'data_customer'         => $data_customer,
-            'data_pic_sales'        => $data_pic_sales,
-            'data_pic_customer'     => $data_pic_customer,
-            'data_sls_inquiry'      => $data_sls_inquiry
-        ]);
+        //
     }
 
     /**

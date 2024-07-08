@@ -149,17 +149,23 @@
                                         $status_color = 'btn-secondary';
                                 }
                             @endphp
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Company Code<span style="color: red">*</span></label>
                                     <input type="text" class="form-control ps-15" value="{{ $sales_customer->cust_code }}" disabled>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Company Name<span style="color: red">*</span></label>
                                     <input type="text" class="form-control ps-15" value="{{ $sales_customer->cust_name }}" disabled>
                                 </div>    
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Survey Status</label>
+                                    <input type="text" class="form-control ps-15" value="{{ isset($cp_satisfaction->status) ? '[Survey Finished]' : '[No Survey Yet]' }}" disabled>
+                                </div>
                             </div>
                             <div class="col-md-12" style="margin-bottom: 10px;margin-top:20px;">
 								<fieldset class="scheduler-border" style="padding: 20px;">
@@ -435,20 +441,25 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Survey Status</label>
-                                    <input type="text" class="form-control ps-15" value="{{ isset($cp_satisfaction->status) ? '[Survey Finished]' : '[No Survey Yet]' }}" disabled>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label class="form-label">PIC Sales BBN</label>
-                                    <input type="text" class="form-control ps-15" value="{{ $sales_customer->user_name }}" disabled>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label class="form-label">PIC Customer BBN</label>
+                                    <label class="form-label">Personal Name</label>
                                     <input type="text" class="form-control ps-15" value="{{ $sales_customer->pic_name }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Email Customer</label>
+                                    <input type="text" class="form-control ps-15" value="{{ $sales_customer->email }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Division / Department</label>
+                                    <select id="divisi-customer" class="form-select select2" name="company_sector" aria-label="Default select example">
+                                        <option value="">--Choose Options--</option>
+                                        <option value="Procurement / Buyer">Procurement / Buyer</option>
+                                        <option value="Inventory Control / SCM / Receiving">Inventory Control / SCM / Receiving</option>
+                                        <option value="QC/QA">QC/QA</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -457,1098 +468,748 @@
                                     <textarea rows="5" class="form-control" name="remarks" placeholder="Improvement for our services"></textarea>
                                 </div>
                             </div>
-                            <div class="col-12 mt-3">
-                                <div class="form-group">
-                                    <h4 class="text-center" style="color: #0790E8">PERFORMANCE EVALUATION FOR OUR COMPANY</h4>
+                            <div class="type-form">
+                                <div id="type-form-1">
+                                    <div class="col-12 mt-3">
+                                        <div class="form-group">
+                                            <h4 class="text-center" style="color: #0790E8">PERFORMANCE EVALUATION FOR OUR COMPANY</h4>
+                                        </div>
+                                    </div>
+                                    <div id="text-1">
+                                        <div class="form-row">
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <fieldset class="scheduler-border">
+                                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                    <label class="form-label"><b>Please provide an evaluation of our SERVICES based on the following points</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table id="complex_header" class="table table-striped table-bordered display">
+                                                                    <thead>
+                                                                        <tr class="text-center">
+                                                                            <th rowspan="3">No</th>
+                                                                            <th rowspan="3">Description Survey</th>
+                                                                            <th colspan="10">Category</th>
+                                                                            <th rowspan="3">Remarks</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <!-- Kolom Category -->
+                                                                            <th>1</th>
+                                                                            <th>2</th>
+                                                                            <th>3</th>
+                                                                            <th>4</th>
+                                                                            <th>5</th>
+                                                                            <th>6</th>
+                                                                            <th>7</th>
+                                                                            <th>8</th>
+                                                                            <th>9</th>
+                                                                            <th>10</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>How was our service/response to the inquiry you sent to PT BBN?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1" name="telephone_reception" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2" name="telephone_reception" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3" name="telephone_reception" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4" name="telephone_reception" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7" name="telephone_reception" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8" name="telephone_reception" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9" name="telephone_reception" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10" name="telephone_reception" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10"></label>
+                                                                            </td>
+                                                                            <td rowspan="3">
+                                                                                <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>How was our service/response to the technical questions/clarifications/explanations you needed?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_1" name="time_for_quotation" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_1" name="time_for_quotation" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_1" name="time_for_quotation" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_1" name="time_for_quotation" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_1" name="time_for_quotation" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_1" name="time_for_quotation" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_1" name="time_for_quotation" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_1" name="time_for_quotation" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_1" name="time_for_quotation" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_1"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_1" name="time_for_quotation" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_1"></label>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>What is the level of alignment between the inquiry you sent and the proposal submitted by PT BBN?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_2" name="prices" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_2" name="prices" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_2" name="prices" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_2" name="prices" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_2" name="prices" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_2" name="prices" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_2" name="prices" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_2" name="prices" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_2" name="prices" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_2"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_2" name="prices" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_2"></label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <fieldset class="scheduler-border">
+                                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                    <label class="form-label"><b>Please provide an evaluation of the COMMERCIAL aspects of the proposal submitted by PT BBN, based on the following points</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table id="complex_header" class="table table-striped table-bordered display">
+                                                                    <thead>
+                                                                        <tr class="text-center">
+                                                                            <th rowspan="3">No</th>
+                                                                            <th rowspan="3">Description Survey</th>
+                                                                            <th colspan="10">Category</th>
+                                                                            <th rowspan="3">Remarks</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <!-- Kolom Category -->
+                                                                            <th>1</th>
+                                                                            <th>2</th>
+                                                                            <th>3</th>
+                                                                            <th>4</th>
+                                                                            <th>5</th>
+                                                                            <th>6</th>
+                                                                            <th>7</th>
+                                                                            <th>8</th>
+                                                                            <th>9</th>
+                                                                            <th>10</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>What is the level of alignment between the price we offer and the service and quality of materials we supply?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_3" name="telephone_reception" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_3" name="telephone_reception" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_3" name="telephone_reception" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_3" name="telephone_reception" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_3" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_3" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category6_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_3" name="telephone_reception" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_3" name="telephone_reception" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_3" name="telephone_reception" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_3"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_3" name="telephone_reception" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_3"></label>
+                                                                            </td>
+                                                                            <td rowspan="3">
+                                                                                <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>What is the level of flexibility in the Terms of Payment provided by PT BBN?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_4" name="time_for_quotation" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_4" name="time_for_quotation" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_4" name="time_for_quotation" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_4" name="time_for_quotation" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_4" name="time_for_quotation" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_4" name="time_for_quotation" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_4" name="time_for_quotation" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_4" name="time_for_quotation" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_4" name="time_for_quotation" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_4"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_4" name="time_for_quotation" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_4"></label>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>How is the compliance and completeness of the supporting documents for the Invoice we submitted?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_5" name="prices" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_5" name="prices" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_5" name="prices" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_5" name="prices" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_5" name="prices" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_5" name="prices" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_5" name="prices" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_5" name="prices" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_5" name="prices" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_5"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_5" name="prices" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_5"></label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="text-2">
+                                        <div class="form-row">
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <fieldset class="scheduler-border">
+                                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                    <label class="form-label"><b>Please provide an evaluation of the DELIVERY MATERIAL aspect that we have carried out based on the following points</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table id="complex_header" class="table table-striped table-bordered display">
+                                                                    <thead>
+                                                                        <tr class="text-center">
+                                                                            <th rowspan="3">No</th>
+                                                                            <th rowspan="3">Description Survey</th>
+                                                                            <th colspan="10">Category</th>
+                                                                            <th rowspan="3">Remarks</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <!-- Kolom Category -->
+                                                                            <th>1</th>
+                                                                            <th>2</th>
+                                                                            <th>3</th>
+                                                                            <th>4</th>
+                                                                            <th>5</th>
+                                                                            <th>6</th>
+                                                                            <th>7</th>
+                                                                            <th>8</th>
+                                                                            <th>9</th>
+                                                                            <th>10</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>What is the average accuracy of Delivery Material in relation to the due date of the Purchase Order?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_6" name="telephone_reception" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_6" name="telephone_reception" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_6" name="telephone_reception" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_6" name="telephone_reception" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_6" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_6" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category6_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_6" name="telephone_reception" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_6" name="telephone_reception" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_6" name="telephone_reception" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_6"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_6" name="telephone_reception" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_6"></label>
+                                                                            </td>
+                                                                            <td rowspan="3">
+                                                                                <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>What is the completeness of the documents provided by PT BBN during the material shipment?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_7" name="time_for_quotation" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_7" name="time_for_quotation" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_7" name="time_for_quotation" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_7" name="time_for_quotation" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_7" name="time_for_quotation" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_7" name="time_for_quotation" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_7" name="time_for_quotation" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_7" name="time_for_quotation" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_7" name="time_for_quotation" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_7"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_7" name="time_for_quotation" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_7"></label>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>What is the quality, safety, and neatness of the packing materials that PT BBN has been conducting during material shipments?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_8" name="prices" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_8" name="prices" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_8" name="prices" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_8" name="prices" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_8" name="prices" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_8" name="prices" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_8" name="prices" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_8" name="prices" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_8" name="prices" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_8"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_8" name="prices" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_8"></label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="text-3">
+                                        <div class="form-row">
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <fieldset class="scheduler-border">
+                                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                    <label class="form-label"><b>Please provide an evaluation of the PRODUCT QUALITY aspect of the supplies we provide based on the following points</b></label>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table id="complex_header" class="table table-striped table-bordered display">
+                                                                    <thead>
+                                                                        <tr class="text-center">
+                                                                            <th rowspan="3">No</th>
+                                                                            <th rowspan="3">Description Survey</th>
+                                                                            <th colspan="10">Category</th>
+                                                                            <th rowspan="3">Remarks</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                        </tr>
+                                                                        <tr class="text-center">
+                                                                            <!-- Kolom Category -->
+                                                                            <th>1</th>
+                                                                            <th>2</th>
+                                                                            <th>3</th>
+                                                                            <th>4</th>
+                                                                            <th>5</th>
+                                                                            <th>6</th>
+                                                                            <th>7</th>
+                                                                            <th>8</th>
+                                                                            <th>9</th>
+                                                                            <th>10</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>How compliant are the Materials sent with the PO specifications?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_9" name="telephone_reception" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_9" name="telephone_reception" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_9" name="telephone_reception" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_9" name="telephone_reception" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_9" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_9" name="telephone_reception" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category6_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_9" name="telephone_reception" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_9" name="telephone_reception" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_9" name="telephone_reception" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_9"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_9" name="telephone_reception" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_9"></label>
+                                                                            </td>
+                                                                            <td rowspan="3">
+                                                                                <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>How complete/compliant are the Certificate documents and other supporting documents provided by BBN in relation to the PO requirements?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_10" name="time_for_quotation" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_10" name="time_for_quotation" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_10" name="time_for_quotation" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_10" name="time_for_quotation" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_10" name="time_for_quotation" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_10" name="time_for_quotation" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_10" name="time_for_quotation" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_10" name="time_for_quotation" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_10" name="time_for_quotation" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_10"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_10" name="time_for_quotation" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_10"></label>
+                                                                            </td>
+                                                                        </tr>
+                
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>Is the response and/or resolution action we have taken regarding complaints of nonconformity, both in terms of documents and materials, satisfactory?</td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_11" name="prices" value="1" class="filled-in chk-col-info" />
+                                                                                <label for="category1_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_11" name="prices" value="2" class="filled-in chk-col-info" />
+                                                                                <label for="category2_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_11" name="prices" value="3" class="filled-in chk-col-info" />
+                                                                                <label for="category3_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_11" name="prices" value="4" class="filled-in chk-col-info" />
+                                                                                <label for="category4_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_11" name="prices" value="5" class="filled-in chk-col-info" />
+                                                                                <label for="category5_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_11" name="prices" value="6" class="filled-in chk-col-info" />
+                                                                                <label for="category6_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_11" name="prices" value="7" class="filled-in chk-col-info" />
+                                                                                <label for="category7_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_11" name="prices" value="8" class="filled-in chk-col-info" />
+                                                                                <label for="category8_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_11" name="prices" value="9" class="filled-in chk-col-info" />
+                                                                                <label for="category9_11"></label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_11" name="prices" value="10" class="filled-in chk-col-info" />
+                                                                                <label for="category10_11"></label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            {{-- COMMERCIAL ASPECT --}}
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <fieldset class="scheduler-border">
-                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                    <label class="form-label"><b>SURVEY POINT : COMMERCIAL ASPECT</b></label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <table id="complex_header" class="table table-striped table-bordered display">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th rowspan="3">No</th>
-                                                            <th rowspan="3">Description Survey</th>
-                                                            <th colspan="10">Category</th>
-                                                            <th rowspan="3">Remarks</th>
-                                                        </tr>
-                                                        <tr class="text-center">
-                                                            <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                        </tr>
-                                                        <tr class="text-center">
-                                                            <!-- Kolom Category -->
-                                                            <th>1</th>
-                                                            <th>2</th>
-                                                            <th>3</th>
-                                                            <th>4</th>
-                                                            <th>5</th>
-                                                            <th>6</th>
-                                                            <th>7</th>
-                                                            <th>8</th>
-                                                            <th>9</th>
-                                                            <th>10</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Telephone Reception</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1" name="telephone_reception" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2" name="telephone_reception" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3" name="telephone_reception" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4" name="telephone_reception" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5" name="telephone_reception" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6" name="telephone_reception" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7" name="telephone_reception" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8" name="telephone_reception" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9" name="telephone_reception" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10" name="telephone_reception" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10"></label>
-                                                            </td>
-                                                            <td rowspan="10">
-                                                                <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Time For Quotation</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_1" name="time_for_quotation" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_1" name="time_for_quotation" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_1" name="time_for_quotation" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_1" name="time_for_quotation" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_1" name="time_for_quotation" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_1" name="time_for_quotation" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_1" name="time_for_quotation" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_1" name="time_for_quotation" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_1" name="time_for_quotation" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_1" name="time_for_quotation" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_1"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Prices</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_2" name="prices" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_2" name="prices" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_2" name="prices" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_2" name="prices" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_2" name="prices" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_2" name="prices" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_2" name="prices" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_2" name="prices" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_2" name="prices" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_2" name="prices" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_2"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Delivery Document</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3" name="delivery_document" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3" name="delivery_document" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3" name="delivery_document" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3" name="delivery_document" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3" name="delivery_document" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3" name="delivery_document" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3" name="delivery_document" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3" name="delivery_document" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3" name="delivery_document" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3" name="delivery_document" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>Invoice Document</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_4" name="invoice_document" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_4" name="invoice_document" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_4" name="invoice_document" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_4" name="invoice_document" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_4" name="invoice_document" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_4" name="invoice_document" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_4" name="invoice_document" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_4" name="invoice_document" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_4" name="invoice_document" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_4" name="invoice_document" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_4"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>6</td>
-                                                            <td>Visit Frequency</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_5" name="visit_frequency_ca" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_5" name="visit_frequency_ca" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_5" name="visit_frequency_ca" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_5" name="visit_frequency_ca" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_5" name="visit_frequency_ca" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_5" name="visit_frequency_ca" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_5" name="visit_frequency_ca" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_5" name="visit_frequency_ca" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_5" name="visit_frequency_ca" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_5" name="visit_frequency_ca" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_5"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>7</td>
-                                                            <td>Information About Product to be delivered</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_6" name="information_product" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_6" name="information_product" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_6" name="information_product" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_6" name="information_product" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_6" name="information_product" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_6" name="information_product" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_6" name="information_product" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_6" name="information_product" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_6" name="information_product" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_6"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_6" name="information_product" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_6"></label>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>                        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            
-                            {{-- TECHNICAL ASPECT --}}
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <fieldset class="scheduler-border">
-                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                    <label class="form-label"><b>SURVEY POINT : TECHNICAL ASPECT</b></label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <table id="complex_header" class="table table-striped table-bordered display">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th rowspan="3">No</th>
-                                                            <th rowspan="3">Description Survey</th>
-                                                            <th colspan="10">Category</th>
-                                                            <th rowspan="3">Remarks</th>
-                                                        </tr>
-                                                        <tr class="text-center">
-                                                            <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <!-- Kolom Category -->
-                                                            <th>1</th>
-                                                            <th>2</th>
-                                                            <th>3</th>
-                                                            <th>4</th>
-                                                            <th>5</th>
-                                                            <th>6</th>
-                                                            <th>7</th>
-                                                            <th>8</th>
-                                                            <th>9</th>
-                                                            <th>10</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>General Information</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_1_1" name="general_information" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_1_1" name="general_information" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_1_1" name="general_information" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_1_1" name="general_information" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_1_1" name="general_information" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_1_1" name="general_information" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_1_1" name="general_information" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_1_1" name="general_information" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_1_1" name="general_information" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_1_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_1_1" name="general_information" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_1_1"></label>
-                                                            </td>
-                                                            <td rowspan="4">
-                                                                <textarea class="form-control dynamic-height" name="technical_aspect_remarks" placeholder="Remarks"></textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Technical Advice</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_1_2" name="technical_advice" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_1_2" name="technical_advice" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_1_2" name="technical_advice" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_1_2" name="technical_advice" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_1_2" name="technical_advice" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_1_2" name="technical_advice" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_1_2" name="technical_advice" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_1_2" name="technical_advice" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_1_2" name="technical_advice" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_1_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_1_2" name="technical_advice" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_1_2"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Time for answering to technical questions</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_1_3" name="time_answer_tq" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_1_3" name="time_answer_tq" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_1_3" name="time_answer_tq" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_1_3" name="time_answer_tq" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_1_3" name="time_answer_tq" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_1_3" name="time_answer_tq" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_1_3" name="time_answer_tq" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_1_3" name="time_answer_tq" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_1_3" name="time_answer_tq" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_1_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_1_3" name="time_answer_tq" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_1_3"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Visit Frequency</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_1_4" name="visit_frequency_ta" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_1_4" name="visit_frequency_ta" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_1_4" name="visit_frequency_ta" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_1_4" name="visit_frequency_ta" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_1_4" name="visit_frequency_ta" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_1_4" name="visit_frequency_ta" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_1_4" name="visit_frequency_ta" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_1_4" name="visit_frequency_ta" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_1_4" name="visit_frequency_ta" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_1_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_1_4" name="visit_frequency_ta" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_1_4"></label>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>                        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-
-                            {{-- LOGISTICS --}}
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <fieldset class="scheduler-border">
-                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                    <label class="form-label"><b>SURVEY POINT : LOGISTICS</b></label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <table id="complex_header" class="table table-striped table-bordered display">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th rowspan="3">No</th>
-                                                            <th rowspan="3">Description Survey</th>
-                                                            <th colspan="10">Category</th>
-                                                            <th rowspan="3">Remarks</th>
-                                                        </tr>
-                                                        <tr class="text-center">
-                                                            <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <!-- Kolom Category -->
-                                                            <th>1</th>
-                                                            <th>2</th>
-                                                            <th>3</th>
-                                                            <th>4</th>
-                                                            <th>5</th>
-                                                            <th>6</th>
-                                                            <th>7</th>
-                                                            <th>8</th>
-                                                            <th>9</th>
-                                                            <th>10</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Average time for delivery</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_2_1" name="average_time" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_2_1" name="average_time" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_2_1" name="average_time" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_2_1" name="average_time" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_2_1" name="average_time" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_2_1" name="average_time" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_2_1" name="average_time" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_2_1" name="average_time" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_2_1" name="average_time" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_2_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_2_1" name="average_time" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_2_1"></label>
-                                                            </td>
-                                                            <td rowspan="4">
-                                                                <textarea class="form-control dynamic-height" name="logistics_remarks" placeholder="Remarks"></textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Emergency delivery capacity</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_2_2" name="emergency_delivery" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_2_2" name="emergency_delivery" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_2_2" name="emergency_delivery" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_2_2" name="emergency_delivery" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_2_2" name="emergency_delivery" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_2_2" name="emergency_delivery" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_2_2" name="emergency_delivery" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_2_2" name="emergency_delivery" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_2_2" name="emergency_delivery" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_2_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_2_2" name="emergency_delivery" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_2_2"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Delivery reliability</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_2_3" name="delivery_reliability" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_2_3" name="delivery_reliability" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_2_3" name="delivery_reliability" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_2_3" name="delivery_reliability" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_2_3" name="delivery_reliability" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_2_3" name="delivery_reliability" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_2_3" name="delivery_reliability" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_2_3" name="delivery_reliability" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_2_3" name="delivery_reliability" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_2_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_2_3" name="delivery_reliability" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_2_3"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Visit Frequency</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_2_4" name="visit_frequency_log" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_2_4" name="visit_frequency_log" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_2_4" name="visit_frequency_log" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_2_4" name="visit_frequency_log" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_2_4" name="visit_frequency_log" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_2_4" name="visit_frequency_log" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_2_4" name="visit_frequency_log" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_2_4" name="visit_frequency_log" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_2_4" name="visit_frequency_log" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_2_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_2_4" name="visit_frequency_log" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_2_4"></label>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>                        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-
-                            {{-- QUALITY --}}
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                <fieldset class="scheduler-border">
-                                    {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                    <label class="form-label"><b>SURVEY POINT : QUALITY</b></label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive">
-                                                <table id="complex_header" class="table table-striped table-bordered display">
-                                                    <thead>
-                                                        <tr class="text-center">
-                                                            <th rowspan="3">No</th>
-                                                            <th rowspan="3">Description Survey</th>
-                                                            <th colspan="10">Category</th>
-                                                            <th rowspan="3">Remarks</th>
-                                                        </tr>
-                                                        <tr class="text-center">
-                                                            <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                            <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                            <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                            <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <!-- Kolom Category -->
-                                                            <th>1</th>
-                                                            <th>2</th>
-                                                            <th>3</th>
-                                                            <th>4</th>
-                                                            <th>5</th>
-                                                            <th>6</th>
-                                                            <th>7</th>
-                                                            <th>8</th>
-                                                            <th>9</th>
-                                                            <th>10</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Product quality</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3_1" name="product_quality" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3_1" name="product_quality" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3_1" name="product_quality" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3_1" name="product_quality" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3_1" name="product_quality" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3_1" name="product_quality" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3_1" name="product_quality" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3_1" name="product_quality" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3_1" name="product_quality" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3_1"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3_1" name="product_quality" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3_1"></label>
-                                                            </td>
-                                                            <td rowspan="5">
-                                                                <textarea class="form-control dynamic-height" name="quality_remarks" placeholder="Remarks"></textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Non confirmity management</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3_2" name="non_confirmity" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3_2" name="non_confirmity" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3_2" name="non_confirmity" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3_2" name="non_confirmity" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3_2" name="non_confirmity" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3_2" name="non_confirmity" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3_2" name="non_confirmity" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3_2" name="non_confirmity" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3_2" name="non_confirmity" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3_2"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3_2" name="non_confirmity" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3_2"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Time for answering to quality questions</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3_3" name="time_answer_qq" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3_3" name="time_answer_qq" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3_3" name="time_answer_qq" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3_3" name="time_answer_qq" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3_3" name="time_answer_qq" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3_3" name="time_answer_qq" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3_3" name="time_answer_qq" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3_3" name="time_answer_qq" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3_3" name="time_answer_qq" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3_3"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3_3" name="time_answer_qq" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3_3"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Management of your inspection report</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3_4" name="management_inspection" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3_4" name="management_inspection" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3_4" name="management_inspection" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3_4" name="management_inspection" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3_4" name="management_inspection" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3_4" name="management_inspection" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3_4" name="management_inspection" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3_4" name="management_inspection" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3_4" name="management_inspection" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3_4"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3_4" name="management_inspection" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3_4"></label>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>Time for answering to questions</td>
-                                                            <td>
-                                                                <input type="checkbox" id="category1_3_5" name="time_anser_quotation" value="1" class="filled-in chk-col-info" />
-                                                                <label for="category1_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category2_3_5" name="time_anser_quotation" value="2" class="filled-in chk-col-info" />
-                                                                <label for="category2_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category3_3_5" name="time_anser_quotation" value="3" class="filled-in chk-col-info" />
-                                                                <label for="category3_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category4_3_5" name="time_anser_quotation" value="4" class="filled-in chk-col-info" />
-                                                                <label for="category4_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category5_3_5" name="time_anser_quotation" value="5" class="filled-in chk-col-info" />
-                                                                <label for="category5_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category6_3_5" name="time_anser_quotation" value="6" class="filled-in chk-col-info" />
-                                                                <label for="category6_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category7_3_5" name="time_anser_quotation" value="7" class="filled-in chk-col-info" />
-                                                                <label for="category7_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category8_3_5" name="time_anser_quotation" value="8" class="filled-in chk-col-info" />
-                                                                <label for="category8_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category9_3_5" name="time_anser_quotation" value="9" class="filled-in chk-col-info" />
-                                                                <label for="category9_3_5"></label>
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" id="category10_3_5" name="time_anser_quotation" value="10" class="filled-in chk-col-info" />
-                                                                <label for="category10_3_5"></label>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>                        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
                             </div>
                         </div>
                     </form>
@@ -1643,6 +1304,7 @@
             });
         });
     </script>
+    
     <script>
         function myFunction() {
             var myDiv = $('#myDiv');
@@ -1658,5 +1320,40 @@
                 buttonText.addClass('text-warning');
             }
         }
+    </script>
+    
+    <script>
+        $(function() {
+            $('.type-form').hide();
+            $('#divisi-customer').on('change', function() {
+                if (this.value == '' || this.value == null) {
+                    $('.type-form').hide();
+                }
+                
+                if (this.value == 'Procurement / Buyer') {
+                    $('.type-form').show();
+                    $('#type-form-1').show();
+                    $('#text-1').show();
+                    $('#text-2').hide();
+                    $('#text-3').hide();
+                }
+                
+                if (this.value == 'Inventory Control / SCM / Receiving') {
+                    $('.type-form').show();
+                    $('#type-form-1').show();
+                    $('#text-1').hide();
+                    $('#text-2').show();
+                    $('#text-3').hide();
+                }
+
+                if (this.value == 'QC/QA') {
+                    $('.type-form').show();
+                    $('#type-form-1').show();
+                    $('#text-1').hide();
+                    $('#text-2').hide();
+                    $('#text-3').show();
+                }
+            });
+        });
     </script>
 @endsection
