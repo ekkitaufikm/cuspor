@@ -68,7 +68,7 @@
                                     <th>Email</th>
                                     <th>Telephone</th>
                                     <th>Address</th>
-                                    <th width="10%"><i class="fa fa-cog"></i></th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
