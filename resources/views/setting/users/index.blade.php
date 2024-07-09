@@ -68,7 +68,7 @@
                                     <th>Company Sector</th>
                                     <th>User Group</th>
                                     <th>Status</th>
-                                    <th width="10%"><i class="fa fa-cog"></i></th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,10 +93,15 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href='{{ route('users.detail', ['id' => $cp->id]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                            @if(Helpers::hasPrivilege('useru'))
-                                                <a href='{{ route('users.edit', ['id' => $cp->id]) }}'><i class='fa fa-pencil ms-text-primary'></i></a>
-                                            @endif
+                                            <div class="btn-group mb-5">
+                                                <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href='{{ route('users.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
+                                                    @if(Helpers::hasPrivilege('useru'))
+                                                        <a class="dropdown-item" href='{{ route('users.edit', ['id' => Crypt::encrypt($cp->id)]) }}'>Edit</a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

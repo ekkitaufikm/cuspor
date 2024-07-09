@@ -72,6 +72,12 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
+                                    <label class="form-label">Email<span style="color: red">*</span></label>
+                                    <input name="email" type="text" class="form-control ps-15 bg-transparent" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
                                     <label class="form-label">Password<span style="color: red">*</span></label>
                                     <input name="password" type="text" class="form-control ps-15 bg-transparent" placeholder="Password">
                                 </div>
@@ -90,6 +96,17 @@
                                         @foreach(\App\Models\CompanyModel::all() as $cmpny)
                                             <option value="{{ $cmpny->company_name }}">{{ $cmpny->company_name }}</option>
                                         @endforeach
+                                    </select>
+                                </div>    
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Division/Department<span style="color: red">*</span></label>
+                                    <select id="divisi-customer" class="form-select select2" name="department" aria-label="Default select example">
+                                        <option value="">--Choose Options--</option>
+                                        <option value="Procurement / Buyer">Procurement / Buyer</option>
+                                        <option value="Inventory Control / SCM / Receiving">Inventory Control / SCM / Receiving</option>
+                                        <option value="QC/QA">QC/QA</option>
                                     </select>
                                 </div>    
                             </div>

@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('name');
+            $table->string('email');
             $table->string('password');
             $table->string('company_name')->nullable();
             $table->string('company_sector')->nullable();
+            $table->string('department');
             $table->string('phone');
             $table->string('alamat');
             $table->boolean('status');

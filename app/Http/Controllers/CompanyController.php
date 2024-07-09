@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 //model
 use App\Models\CompanyModel;
@@ -81,7 +82,8 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        $data['company'] = CompanyModel::findOrFail($id);
+        $id_users = Crypt::decrypt($id);
+        $data['company'] = CompanyModel::findOrFail($id_users);
         return view('setting.company.show', $data);
     }
 
@@ -90,7 +92,8 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        $data['company'] = CompanyModel::findOrFail($id);
+        $id_users = Crypt::decrypt($id);
+        $data['company'] = CompanyModel::findOrFail($id_users);
         return view('setting.company.edit', $data);
     }
 

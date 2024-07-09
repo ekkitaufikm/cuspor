@@ -60,7 +60,7 @@
                                     <th>SQ Type</th>
                                     <th>Status</th>
                                     <th>Created By</th>
-                                    <th width="10%"><i class="fa fa-cog"></i></th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,7 +118,13 @@
                                         <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
                                         <td>{{ $sq->created_by }}</td>
                                         <td>
-                                            <a href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->sq_id)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
+                                            <div class="btn-group mb-5">
+                                                <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->sq_id)]) }}'>Detail</a>
+                                                    {{-- <a class="dropdown-item" href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a> --}}
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

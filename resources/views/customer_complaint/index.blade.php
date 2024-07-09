@@ -58,7 +58,7 @@
                                     <th>Status</th> 
                                     <th>Survey</th>
                                     <th>Survey Status</th>
-                                    <th width="10%"><i class="fa fa-cog"></i></th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,8 +135,13 @@
                                         </td>
                                         <td>
                                             @if (isset($cp_complaint->status) != null)
-                                                <a href='{{ route('customer-complaint.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                                <a href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                                <div class="btn-group mb-5">
+                                                    <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href='{{ route('customer-complaint.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Detail</a>
+                                                        <a class="dropdown-item" href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>

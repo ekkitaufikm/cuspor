@@ -85,10 +85,15 @@
                                         <td>{{ $cp->telephone }}</td>
                                         <td>{{ $cp->address }}</td>
                                         <td>
-                                            <a href='{{ route('company.detail', ['id' => $cp->id]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                            @if(Helpers::hasPrivilege('companyu'))
-                                                <a href='{{ route('company.edit', ['id' => $cp->id]) }}'><i class='fa fa-pencil ms-text-primary'></i></a>
-                                            @endif
+                                            <div class="btn-group mb-5">
+                                                <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href='{{ route('company.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
+                                                    @if(Helpers::hasPrivilege('companyu'))
+                                                        <a class="dropdown-item" href='{{ route('company.edit', ['id' => Crypt::encrypt($cp->id)]) }}'>Edit</a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

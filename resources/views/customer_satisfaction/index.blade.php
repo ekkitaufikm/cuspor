@@ -56,13 +56,14 @@
                                     <th>Customer</th>
                                     <th>SQ Date</th>
                                     <th>Status</th>
-                                    <th>Commercial Aspect</th>
-                                    <th>Technical Aspect</th>
-                                    <th>Logistics</th>
-                                    <th>Quality</th>   
+                                    <th>Services</th>
+                                    <th>Commercial</th>
+                                    <th>Delivery Material</th>
+                                    <th>Product Quality</th>    
+                                    <th>Average Satisfaction</th> 
                                     <th>Survey</th>
                                     <th>Survey Status</th>
-                                    <th width="10%"><i class="fa fa-cog"></i></th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,10 +115,14 @@
                                         <td>{{ Auth::user()->company_name }}</td>
                                         <td>{{ $sq->created_date }}</td>
                                         <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->services) ? $cp_satisfaction_dtl->services . '%' : '-' }}</td>
                                         <td class="text-center">{{ isset($cp_satisfaction_dtl->commercial_aspect) ? $cp_satisfaction_dtl->commercial_aspect . '%' : '-' }}</td>
-                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->technical_aspect) ? $cp_satisfaction_dtl->technical_aspect . '%' : '-' }}</td>
-                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->logistics) ? $cp_satisfaction_dtl->logistics . '%' : '-' }}</td>
-                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->quality) ? $cp_satisfaction_dtl->quality . '%' : '-' }}</td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->delivery_material) ? $cp_satisfaction_dtl->delivery_material . '%' : '-' }}</td>
+                                        <td class="text-center">{{ isset($cp_satisfaction_dtl->product_quality) ? $cp_satisfaction_dtl->product_quality . '%' : '-' }}</td>
+                                        @php
+                                            $nilai_average = (($cp_satisfaction_dtl->services ?? '0')+($cp_satisfaction_dtl->commercial_aspect ?? '0')+($cp_satisfaction_dtl->delivery_material ?? '0')+($cp_satisfaction_dtl->product_quality ?? '0'))/4
+                                        @endphp
+                                        <td class="text-center">{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}</td>
                                         <td>
                                             @if (isset($cp_satisfaction->status) == null)
                                                 @if ($sq->status == 8)
@@ -144,8 +149,13 @@
                                         </td>
                                         <td>
                                             @if (isset($cp_satisfaction->status) != null)
-                                                <a href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-eye ms-text-primary'></i></a>
-                                                <a href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'><i class='fa fa-print ms-text-primary'></i></a>
+                                                <div class="btn-group mb-5">
+                                                    <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Detail</a>
+                                                        <a class="dropdown-item" href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>

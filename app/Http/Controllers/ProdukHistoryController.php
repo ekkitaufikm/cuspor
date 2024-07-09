@@ -45,28 +45,20 @@ class ProdukHistoryController extends Controller
             ->join('sls_customer_pic', 'sls_quotation.cust_pic', '=', 'sls_customer_pic.pic_id')
             ->where('sls_quotation.sq_id', $id_sq)
             ->first();
-        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*', 'sls_customer.*', 'sls_customer_pic.*', 'erp_user.user_name as pic_sales_user_name')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->leftJoin('sls_customer_pic', 'sls_inquiry.cust_pic_id', '=', 'sls_customer_pic.pic_id')
-            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
-            ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
-            ->first();
         $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*')
             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
             ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
             ->first();
-        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'erp_user.*')
             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
             ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->join('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.pic_id')
             ->join('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
             ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
             ->first();
         $quotation_items = QuotationItemModel::where('sq_id', $id_sq)
             ->get();
 
-            // echo json_encode($quotation_items); die;
+            // echo json_encode($sales_inquiry); die;
         return view('produk_history.show', [
             'sales_quotation'       => $sales_quotation,
             'quotation_customer'    => $quotation_customer,

@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"> Home</i></a></li>
                         <li class="breadcrumb-item" aria-current="page">Settings</li>
                         <li class="breadcrumb-item" aria-current="page">Company</li>
-                        <li class="breadcrumb-item active" aria-current="page">Add New</li>
+                        <li class="breadcrumb-item active" aria-current="page">Detail</li>
                     </ol>
                 </nav>
             </div>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 //model
 use App\Models\User;
@@ -94,7 +95,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $data['users'] = User::findOrFail($id);
+        $id_users = Crypt::decrypt($id);
+        $data['users'] = User::findOrFail($id_users);
         return view('setting.users.show', $data);
     }
 
@@ -103,7 +105,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $data['users'] = User::findOrFail($id);
+        $id_users = Crypt::decrypt($id);
+        $data['users'] = User::findOrFail($id_users);
         return view('setting.users.edit', $data);
     }
 
@@ -137,12 +140,14 @@ class UserController extends Controller
                 $data_users = User::findOrFail($id);
                 $data['username']       = $request->username;
                 $data['name']           = $request->name;
+                $data['email']          = $request->email;
                 $data['company_name']   = $request->company_name;
                 $data['phone']          = $request->phone;
                 $data['m_role_id']      = $request->m_role_id;
                 $data['status']         = $request->status;
                 $data['alamat']         = $request->alamat;
                 $data['company_sector'] = $company->company_sector;
+                $data['department']     = $request->department;
                 $data['updated_by']     = Auth::user()->id;
 
                 $simpan = $data_users->update($data);

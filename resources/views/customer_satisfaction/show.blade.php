@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Users')
+@section('title', 'Detail Customer Satisfaction')
 
 @section('css-library')
     {{-- Tempat Ngoding Meletakkan css library --}}
@@ -70,7 +70,7 @@
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"> Home</i></a></li>
                         <li class="breadcrumb-item" aria-current="page">Settings</li>
                         <li class="breadcrumb-item" aria-current="page">{{ __('Customer Satisfaction') }}</li>
-                        <li class="breadcrumb-item active" aria-current="page">Detail Survey</li>
+                        <li class="breadcrumb-item active" aria-current="page">Detail</li>
                     </ol>
                 </nav>
             </div>
@@ -146,17 +146,23 @@
                                     $status_color = 'btn-secondary';
                             }
                         @endphp
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Company Code<span style="color: red">*</span></label>
                                 <input type="text" class="form-control ps-15" value="{{ $sales_customer->cust_code }}" disabled>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 <label class="form-label">Company Name<span style="color: red">*</span></label>
                                 <input type="text" class="form-control ps-15" value="{{ $sales_customer->cust_name }}" disabled>
                             </div>    
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Survey Status</label>
+                                <input type="text" class="form-control ps-15" value="{{ isset($customer_satisfaction->status) ? '[Survey Finished]' : '[No Survey Yet]' }}" disabled>
+                            </div>
                         </div>
                         <div class="col-md-12" style="margin-bottom: 10px;margin-top:20px;">
                             <fieldset class="scheduler-border" style="padding: 20px;">
@@ -266,10 +272,11 @@
                             <div class="row">
                                 <div class="col-md-12" style="margin-bottom: 10px;margin-top:20px;">
                                     @php
-                                        $lookup_stageInquiry = \App\Models\LookupModel::where('lookup_config', 'sls_stage_inquiry')->where('lookup_code', $sales_inquiry->stage_inquiry)->first();
-                                        $lookup_statusInquiry = \App\Models\LookupModel::where('lookup_config', 'sls_inquiry_status')->where('lookup_code', $sales_inquiry->status)->first();
-                                        $lookup_companySector = \App\Models\LookupModel::where('lookup_config', 'company_sector')->where('lookup_code', $sales_customer->company_sector)->first();
-                                        $lookup_customerType = \App\Models\LookupModel::where('lookup_config', 'sls_customer_type')->where('lookup_code', $sales_customer->cust_type)->first();
+                                        $lookup_stageInquiry    = \App\Models\LookupModel::where('lookup_config', 'sls_stage_inquiry')->where('lookup_code', $sales_inquiry->stage_inquiry)->first();
+                                        $lookup_statusInquiry   = \App\Models\LookupModel::where('lookup_config', 'sls_inquiry_status')->where('lookup_code', $sales_inquiry->status)->first();
+                                        $lookup_companySector   = \App\Models\LookupModel::where('lookup_config', 'company_sector')->where('lookup_code', $sales_customer->company_sector)->first();
+                                        $lookup_customerType    = \App\Models\LookupModel::where('lookup_config', 'sls_customer_type')->where('lookup_code', $sales_customer->cust_type)->first();
+                                        $users                  = \App\Models\User::where('id', Auth::user()->id)->first();
                                     @endphp
                                     <fieldset class="scheduler-border" style="padding: 20px;">
                                         <legend class="scheduler-border" style="color: green;">Inquiry Information</legend>
@@ -432,1380 +439,861 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">Survey Status</label>
-                                <input type="text" class="form-control ps-15" value="{{ isset($cp_satisfaction->status) ? '[No Survey Yet]' : '[Survey Finished]' }}" disabled>
+                                <label class="form-label">Personal Name</label>
+                                <input type="text" class="form-control ps-15" value="{{ $users->name }}" disabled>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">PIC Sales BBN</label>
-                                <input type="text" class="form-control ps-15" value="{{ $sales_customer->user_name }}" disabled>
+                                <label class="form-label">Email Customer</label>
+                                <input type="text" class="form-control ps-15" value="{{ $users->email }}" disabled>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">PIC Customer BBN</label>
-                                <input type="text" class="form-control ps-15" value="{{ $sales_customer->pic_name }}" disabled>
+                                <label class="form-label">Division / Department</label>
+                                <select id="divisi-customer" class="form-select select2" name="department" aria-label="Default select example" disabled>
+                                    <option value="{{ $users->department }}">{{ $users->department ?? '' }}</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
-                                <label class="form-label">What are your main requirements to improve our service ?</label>
-                                <textarea rows="5" class="form-control" name="remarks" disabled>{{ $customer_satisfaction->remarks }}</textarea>
+                                <label class="form-label">What are your main requirements to improve our service ?<span class="text-danger">*</span></label>
+                                <textarea rows="5" class="form-control" name="remarks" placeholder="Improvement for our services" disabled>{{ $customer_satisfaction->remarks }}</textarea>
                             </div>
                         </div>
-                        <div class="col-12 mt-3">
+                        <div class="col-4">
+                            @php
+                                $nilai_average = (($customer_satisfaction_dtl->services+$customer_satisfaction_dtl->commercial_aspect+$customer_satisfaction_dtl->delivery_material+$customer_satisfaction_dtl->product_quality)/4)
+                            @endphp
                             <div class="form-group">
-                                <h4 class="text-center" style="color: #0790E8">PERFORMANCE EVALUATION FOR OUR COMPANY</h4>
+                                <label class="form-label">Average Satisfaction</label>
+                                <input type="text" class="form-control ps-15" value="{{ $nilai_average }}%" disabled>
                             </div>
                         </div>
+                        <div class="type-form">
+                            <div id="type-form-1">
+                                <div class="col-12 mt-3">
+                                    <div class="form-group">
+                                        <h4 class="text-center" style="color: #0790E8">PERFORMANCE EVALUATION FOR OUR COMPANY</h4>
+                                    </div>
+                                </div>
+                                <div id="text-1">
+                                    <div class="form-row">
+                                        <div class="col-md-12" style="margin-bottom: 10px;">
+                                            <fieldset class="scheduler-border">
+                                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                <label class="form-label"><b>Please provide an evaluation of our SERVICES based on the following points</b></label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="complex_header" class="table table-striped table-bordered display">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th rowspan="3">No</th>
+                                                                        <th rowspan="3">Description Survey</th>
+                                                                        <th colspan="10">Category</th>
+                                                                        <th rowspan="3">Remarks</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <!-- Kolom Category -->
+                                                                        <th>1</th>
+                                                                        <th>2</th>
+                                                                        <th>3</th>
+                                                                        <th>4</th>
+                                                                        <th>5</th>
+                                                                        <th>6</th>
+                                                                        <th>7</th>
+                                                                        <th>8</th>
+                                                                        <th>9</th>
+                                                                        <th>10</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>How was our service/response to the inquiry you sent to PT BBN?</td>
+                                                                        @php
+                                                                            $services_inquiry_value = $customer_satisfaction_dtl->services_inquiry;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1" name="services_inquiry[]" value="1" class="filled-in chk-col-info" {{ $services_inquiry_value >= 1 ? 'checked disabled' : '' }} disabled  />
+                                                                            <label for="category1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2" name="services_inquiry" value="2" class="filled-in chk-col-info" {{ $services_inquiry_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3" name="services_inquiry" value="3" class="filled-in chk-col-info" {{ $services_inquiry_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4" name="services_inquiry" value="4" class="filled-in chk-col-info" {{ $services_inquiry_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5" name="services_inquiry" value="5" class="filled-in chk-col-info" {{ $services_inquiry_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6" name="services_inquiry" value="5" class="filled-in chk-col-info" {{ $services_inquiry_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7" name="services_inquiry" value="7" class="filled-in chk-col-info" {{ $services_inquiry_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8" name="services_inquiry" value="8" class="filled-in chk-col-info" {{ $services_inquiry_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9" name="services_inquiry" value="9" class="filled-in chk-col-info" {{ $services_inquiry_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10" name="services_inquiry" value="10" class="filled-in chk-col-info" {{ $services_inquiry_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10"></label>
+                                                                        </td>
+                                                                        <td rowspan="3">
+                                                                            <textarea class="form-control dynamic-height" name="services_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->services_remarks }}</textarea>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>How was our service/response to the technical questions/clarifications/explanations you needed?</td>
+                                                                        @php
+                                                                            $services_technical_value = $customer_satisfaction_dtl->services_technical;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_1" name="services_technical" value="1" class="filled-in chk-col-info" {{ $services_technical_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_1" name="services_technical" value="2" class="filled-in chk-col-info" {{ $services_technical_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_1" name="services_technical" value="3" class="filled-in chk-col-info" {{ $services_technical_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_1" name="services_technical" value="4" class="filled-in chk-col-info" {{ $services_technical_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_1" name="services_technical" value="5" class="filled-in chk-col-info" {{ $services_technical_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_1" name="services_technical" value="6" class="filled-in chk-col-info" {{ $services_technical_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_1" name="services_technical" value="7" class="filled-in chk-col-info" {{ $services_technical_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_1" name="services_technical" value="8" class="filled-in chk-col-info" {{ $services_technical_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_1" name="services_technical" value="9" class="filled-in chk-col-info" {{ $services_technical_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_1"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_1" name="services_technical" value="10" class="filled-in chk-col-info" {{ $services_technical_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_1"></label>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>What is the level of alignment between the inquiry you sent and the proposal submitted by PT BBN?</td>
+                                                                        @php
+                                                                            $services_level_alignment_value = $customer_satisfaction_dtl->services_level_alignment;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_2" name="services_level_alignment" value="1" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_2" name="services_level_alignment" value="2" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_2" name="services_level_alignment" value="3" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_2" name="services_level_alignment" value="4" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_2" name="services_level_alignment" value="5" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_2" name="services_level_alignment" value="6" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_2" name="services_level_alignment" value="7" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_2" name="services_level_alignment" value="8" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_2" name="services_level_alignment" value="9" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_2"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_2" name="services_level_alignment" value="10" class="filled-in chk-col-info" {{ $services_level_alignment_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_2"></label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        @php
+                                                                            $nilai_average = ((($customer_satisfaction_dtl->services_inquiry ?? '0')+($customer_satisfaction_dtl->services_technical ?? '0')+($customer_satisfaction_dtl->services_level_alignment ?? '0'))/3)*10
+                                                                        @endphp
+                                                                        <td colspan="2">
+                                                                            <h3 class="text-center">Average Survey</h1>
+                                                                        </td>
+                                                                        <td colspan="11">
+                                                                            <input type="text" class="form-control" value="{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}"  disabled  />
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
 
-                        {{-- COMMERCIAL ASPECT --}}
-                        <div class="col-md-12" style="margin-bottom: 10px;">
-                            <fieldset class="scheduler-border">
-                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                <label class="form-label"><b>SURVEY POINT : COMMERCIAL ASPECT</b></label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table id="complex_header" class="table table-striped table-bordered display">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th rowspan="3">No</th>
-                                                        <th rowspan="3">Description Survey</th>
-                                                        <th colspan="10">Category</th>
-                                                        <th rowspan="3">Remarks</th>
-                                                    </tr>
-                                                    <tr class="text-center">
-                                                        <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                    </tr>
-                                                    <tr class="text-center">
-                                                        <!-- Kolom Category -->
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                        <th>6</th>
-                                                        <th>7</th>
-                                                        <th>8</th>
-                                                        <th>9</th>
-                                                        <th>10</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Telephone Reception</td>
-                                                        @php
-                                                            $telephone_reception_value = $customer_satisfaction_dtl->telephone_reception;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="telephone_reception[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="telephone_reception[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="telephone_reception[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="telephone_reception[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="telephone_reception[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="telephone_reception[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="telephone_reception[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="telephone_reception[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="telephone_reception[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="telephone_reception[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $telephone_reception_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>                                                    
-                                                        <td rowspan="10">
-                                                            <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" disabled>{{ $customer_satisfaction_dtl->commercial_aspect_remarks }}</textarea>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Time For Quotation</td>
-                                                        @php
-                                                            $time_for_quotation_value = $customer_satisfaction_dtl->time_for_quotation;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="time_for_quotation[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="time_for_quotation[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="time_for_quotation[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="time_for_quotation[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="time_for_quotation[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="time_for_quotation[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="time_for_quotation[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="time_for_quotation[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="time_for_quotation[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="time_for_quotation[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $time_for_quotation_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Prices</td>
-                                                        @php
-                                                            $prices_value = $customer_satisfaction_dtl->prices;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="prices[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="prices[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="prices[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="prices[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="prices[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="prices[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="prices[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="prices[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="prices[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="prices[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $prices_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Delivery Document</td>
-                                                        @php
-                                                            $delivery_document_value = $customer_satisfaction_dtl->delivery_document;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="delivery_document[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="delivery_document[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="delivery_document[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="delivery_document[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="delivery_document[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="delivery_document[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="delivery_document[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="delivery_document[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="delivery_document[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="delivery_document[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $delivery_document_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Invoice Document</td>
-                                                        @php
-                                                            $invoice_document_value = $customer_satisfaction_dtl->invoice_document;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="invoice_document[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="invoice_document[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="invoice_document[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="invoice_document[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="invoice_document[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="invoice_document[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="invoice_document[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="invoice_document[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="invoice_document[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="invoice_document[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $invoice_document_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>6</td>
-                                                        <td>Visit Frequency</td>
-                                                        @php
-                                                            $visit_frequency_ca_value = $customer_satisfaction_dtl->visit_frequency_ca;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="visit_frequency_ca[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="visit_frequency_ca[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="visit_frequency_ca[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="visit_frequency_ca[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="visit_frequency_ca[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="visit_frequency_ca[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="visit_frequency_ca[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="visit_frequency_ca[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="visit_frequency_ca[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="visit_frequency_ca[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ca_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>7</td>
-                                                        <td>Information About Product to be delivered</td>
-                                                        @php
-                                                            $information_product_value = $customer_satisfaction_dtl->information_product;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="information_product[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="information_product[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="information_product[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="information_product[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="information_product[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="information_product[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="information_product[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="information_product[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="information_product[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="information_product[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $information_product_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>                        
+                                        <div class="col-md-12" style="margin-bottom: 10px;">
+                                            <fieldset class="scheduler-border">
+                                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                <label class="form-label"><b>Please provide an evaluation of the COMMERCIAL aspects of the proposal submitted by PT BBN, based on the following points</b></label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="complex_header" class="table table-striped table-bordered display">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th rowspan="3">No</th>
+                                                                        <th rowspan="3">Description Survey</th>
+                                                                        <th colspan="10">Category</th>
+                                                                        <th rowspan="3">Remarks</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <!-- Kolom Category -->
+                                                                        <th>1</th>
+                                                                        <th>2</th>
+                                                                        <th>3</th>
+                                                                        <th>4</th>
+                                                                        <th>5</th>
+                                                                        <th>6</th>
+                                                                        <th>7</th>
+                                                                        <th>8</th>
+                                                                        <th>9</th>
+                                                                        <th>10</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>What is the level of alignment between the price we offer and the service and quality of materials we supply?</td>
+                                                                        @php
+                                                                            $commercial_level_alignment_value = $customer_satisfaction_dtl->commercial_level_alignment;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_3" name="commercial_level_alignment" value="1" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_3" name="commercial_level_alignment" value="2" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_3" name="commercial_level_alignment" value="3" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_3" name="commercial_level_alignment" value="4" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_3" name="commercial_level_alignment" value="5" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_3" name="commercial_level_alignment" value="6" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_3" name="commercial_level_alignment" value="7" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_3" name="commercial_level_alignment" value="8" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_3" name="commercial_level_alignment" value="9" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_3"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_3" name="commercial_level_alignment" value="10" class="filled-in chk-col-info" {{ $commercial_level_alignment_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_3"></label>
+                                                                        </td>
+                                                                        <td rowspan="3">
+                                                                            <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->commercial_aspect_remarks }}</textarea>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>What is the level of flexibility in the Terms of Payment provided by PT BBN?</td>
+                                                                        @php
+                                                                            $commercial_flexibility_value = $customer_satisfaction_dtl->commercial_flexibility;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_4" name="commercial_flexibility" value="1" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_4" name="commercial_flexibility" value="2" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_4" name="commercial_flexibility" value="3" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_4" name="commercial_flexibility" value="4" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_4" name="commercial_flexibility" value="5" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_4" name="commercial_flexibility" value="6" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_4" name="commercial_flexibility" value="7" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_4" name="commercial_flexibility" value="8" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_4" name="commercial_flexibility" value="9" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_4"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_4" name="commercial_flexibility" value="10" class="filled-in chk-col-info" {{ $commercial_flexibility_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_4"></label>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>How is the compliance and completeness of the supporting documents for the Invoice we submitted?</td>
+                                                                        @php
+                                                                            $commercial_compliance_value = $customer_satisfaction_dtl->commercial_compliance;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_5" name="commercial_compliance" value="1" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_5" name="commercial_compliance" value="2" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_5" name="commercial_compliance" value="3" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_5" name="commercial_compliance" value="4" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_5" name="commercial_compliance" value="5" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_5" name="commercial_compliance" value="6" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_5" name="commercial_compliance" value="7" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_5" name="commercial_compliance" value="8" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_5" name="commercial_compliance" value="9" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_5"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_5" name="commercial_compliance" value="10" class="filled-in chk-col-info" {{ $commercial_compliance_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_5"></label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        @php
+                                                                            $nilai_average = ((($customer_satisfaction_dtl->commercial_level_alignment ?? '0')+($customer_satisfaction_dtl->commercial_flexibility ?? '0')+($customer_satisfaction_dtl->commercial_compliance ?? '0'))/3)*10
+                                                                        @endphp
+                                                                        <td colspan="2">
+                                                                            <h3 class="text-center">Average Survey</h1>
+                                                                        </td>
+                                                                        <td colspan="11">
+                                                                            <input type="text" class="form-control" value="{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}"  disabled  />
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </div>
-                        
-                        {{-- TECHNICAL ASPECT --}}
-                        <div class="col-md-12" style="margin-bottom: 10px;">
-                            <fieldset class="scheduler-border">
-                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                <label class="form-label"><b>SURVEY POINT : TECHNICAL ASPECT</b></label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table id="complex_header" class="table table-striped table-bordered display">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th rowspan="3">No</th>
-                                                        <th rowspan="3">Description Survey</th>
-                                                        <th colspan="10">Category</th>
-                                                        <th rowspan="3">Remarks</th>
-                                                    </tr>
-                                                    <tr class="text-center">
-                                                        <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- Kolom Category -->
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                        <th>6</th>
-                                                        <th>7</th>
-                                                        <th>8</th>
-                                                        <th>9</th>
-                                                        <th>10</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>General Information</td>
-                                                        @php
-                                                            $general_information_value = $customer_satisfaction_dtl->general_information;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="general_information[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="general_information[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="general_information[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="general_information[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="general_information[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="general_information[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="general_information[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="general_information[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="general_information[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="general_information[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $general_information_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>  
-                                                        <td rowspan="4">
-                                                            <textarea class="form-control dynamic-height" name="technical_aspect_remarks" disabled>{{ $customer_satisfaction_dtl->technical_aspect_remarks }}</textarea>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Technical Advice</td>
-                                                        @php
-                                                            $technical_advice_value = $customer_satisfaction_dtl->technical_advice;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="technical_advice[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="technical_advice[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="technical_advice[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="technical_advice[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="technical_advice[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="technical_advice[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="technical_advice[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="technical_advice[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="technical_advice[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="technical_advice[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $technical_advice_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>  
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Time for answering to technical questions</td>
-                                                        @php
-                                                            $time_answer_tq_value = $customer_satisfaction_dtl->time_answer_tq;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="time_answer_tq[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="time_answer_tq[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="time_answer_tq[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="time_answer_tq[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="time_answer_tq[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="time_answer_tq[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="time_answer_tq[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="time_answer_tq[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="time_answer_tq[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="time_answer_tq[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_tq_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>  
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Visit Frequency</td>
-                                                        @php
-                                                            $visit_frequency_ta_value = $customer_satisfaction_dtl->visit_frequency_ta;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="visit_frequency_ta[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="visit_frequency_ta[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="visit_frequency_ta[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="visit_frequency_ta[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="visit_frequency_ta[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="visit_frequency_ta[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="visit_frequency_ta[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="visit_frequency_ta[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="visit_frequency_ta[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="visit_frequency_ta[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_ta_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>  
-                                                    </tr>
-                                                </tbody>
-                                            </table>                        
+                                <div id="text-2">
+                                    <div class="form-row">
+                                        <div class="col-md-12" style="margin-bottom: 10px;">
+                                            <fieldset class="scheduler-border">
+                                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                <label class="form-label"><b>Please provide an evaluation of the DELIVERY MATERIAL aspect that we have carried out based on the following points</b></label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="complex_header" class="table table-striped table-bordered display">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th rowspan="3">No</th>
+                                                                        <th rowspan="3">Description Survey</th>
+                                                                        <th colspan="10">Category</th>
+                                                                        <th rowspan="3">Remarks</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <!-- Kolom Category -->
+                                                                        <th>1</th>
+                                                                        <th>2</th>
+                                                                        <th>3</th>
+                                                                        <th>4</th>
+                                                                        <th>5</th>
+                                                                        <th>6</th>
+                                                                        <th>7</th>
+                                                                        <th>8</th>
+                                                                        <th>9</th>
+                                                                        <th>10</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>What is the average accuracy of Delivery Material in relation to the due date of the Purchase Order?</td>
+                                                                        @php
+                                                                            $delivery_average_value = $customer_satisfaction_dtl->delivery_average;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_6" name="delivery_average" value="1" class="filled-in chk-col-info" {{ $delivery_average_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="2" class="filled-in chk-col-info" {{ $delivery_average_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_6" name="delivery_average" value="3" class="filled-in chk-col-info" {{ $delivery_average_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_6" name="delivery_average" value="4" class="filled-in chk-col-info" {{ $delivery_average_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_6" name="delivery_average" value="5" class="filled-in chk-col-info" {{ $delivery_average_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_6" name="delivery_average" value="5" class="filled-in chk-col-info" {{ $delivery_average_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_6" name="delivery_average" value="7" class="filled-in chk-col-info" {{ $delivery_average_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_6" name="delivery_average" value="8" class="filled-in chk-col-info" {{ $delivery_average_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_6" name="delivery_average" value="9" class="filled-in chk-col-info" {{ $delivery_average_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_6"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_6" name="delivery_average" value="10" class="filled-in chk-col-info" {{ $delivery_average_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_6"></label>
+                                                                        </td>
+                                                                        <td rowspan="3">
+                                                                            <textarea class="form-control dynamic-height" name="delivery_material_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->delivery_material_remarks }}</textarea>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>What is the completeness of the documents provided by PT BBN during the material shipment?</td>
+                                                                        @php
+                                                                            $delivery_completeness_value = $customer_satisfaction_dtl->delivery_completeness;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_7" name="delivery_completeness" value="1" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_7" name="delivery_completeness" value="2" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_7" name="delivery_completeness" value="3" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_7" name="delivery_completeness" value="4" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_7" name="delivery_completeness" value="5" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_7" name="delivery_completeness" value="6" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_7" name="delivery_completeness" value="7" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_7" name="delivery_completeness" value="8" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_7" name="delivery_completeness" value="9" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_7"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_7" name="delivery_completeness" value="10" class="filled-in chk-col-info" {{ $delivery_completeness_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_7"></label>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>What is the quality, safety, and neatness of the packing materials that PT BBN has been conducting during material shipments?</td>
+                                                                        @php
+                                                                            $delivery_packing_value = $customer_satisfaction_dtl->delivery_packing;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_8" name="delivery_packing" value="1" class="filled-in chk-col-info" {{ $delivery_packing_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_8" name="delivery_packing" value="2" class="filled-in chk-col-info" {{ $delivery_packing_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_8" name="delivery_packing" value="3" class="filled-in chk-col-info" {{ $delivery_packing_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_8" name="delivery_packing" value="4" class="filled-in chk-col-info" {{ $delivery_packing_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_8" name="delivery_packing" value="5" class="filled-in chk-col-info" {{ $delivery_packing_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_8" name="delivery_packing" value="6" class="filled-in chk-col-info" {{ $delivery_packing_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_8" name="delivery_packing" value="7" class="filled-in chk-col-info" {{ $delivery_packing_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_8" name="delivery_packing" value="8" class="filled-in chk-col-info" {{ $delivery_packing_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_8" name="delivery_packing" value="9" class="filled-in chk-col-info" {{ $delivery_packing_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_8"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_8" name="delivery_packing" value="10" class="filled-in chk-col-info" {{ $delivery_packing_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_8"></label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        @php
+                                                                            $nilai_average = ((($customer_satisfaction_dtl->delivery_average ?? '0')+($customer_satisfaction_dtl->delivery_completeness ?? '0')+($customer_satisfaction_dtl->delivery_packing ?? '0'))/3)*10
+                                                                        @endphp
+                                                                        <td colspan="2">
+                                                                            <h3 class="text-center">Average Survey</h1>
+                                                                        </td>
+                                                                        <td colspan="11">
+                                                                            <input type="text" class="form-control" value="{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}"  disabled  />
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </div>
 
-                        {{-- LOGISTICS --}}
-                        <div class="col-md-12" style="margin-bottom: 10px;">
-                            <fieldset class="scheduler-border">
-                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                <label class="form-label"><b>SURVEY POINT : LOGISTICS</b></label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table id="complex_header" class="table table-striped table-bordered display">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th rowspan="3">No</th>
-                                                        <th rowspan="3">Description Survey</th>
-                                                        <th colspan="10">Category</th>
-                                                        <th rowspan="3">Remarks</th>
-                                                    </tr>
-                                                    <tr class="text-center">
-                                                        <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- Kolom Category -->
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                        <th>6</th>
-                                                        <th>7</th>
-                                                        <th>8</th>
-                                                        <th>9</th>
-                                                        <th>10</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Average time for delivery</td>
-                                                        @php
-                                                            $average_time_value = $customer_satisfaction_dtl->average_time;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="average_time[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="average_time[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="average_time[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="average_time[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="average_time[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="average_time[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="average_time[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="average_time[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="average_time[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="average_time[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $average_time_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>  
-                                                        <td rowspan="4">
-                                                            <textarea class="form-control dynamic-height" name="logistics_remarks" disabled>{{ $customer_satisfaction_dtl->logistics_remarks }}</textarea>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Emergency delivery capacity</td>
-                                                        @php
-                                                            $emergency_delivery_value = $customer_satisfaction_dtl->emergency_delivery;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="emergency_delivery[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="emergency_delivery[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="emergency_delivery[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="emergency_delivery[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="emergency_delivery[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="emergency_delivery[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="emergency_delivery[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="emergency_delivery[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="emergency_delivery[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="emergency_delivery[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $emergency_delivery_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Delivery reliability</td>
-                                                        @php
-                                                            $delivery_reliability_value = $customer_satisfaction_dtl->delivery_reliability;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="delivery_reliability[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="delivery_reliability[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="delivery_reliability[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="delivery_reliability[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="delivery_reliability[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="delivery_reliability[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="delivery_reliability[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="delivery_reliability[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="delivery_reliability[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="delivery_reliability[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $delivery_reliability_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Visit Frequency</td>
-                                                        @php
-                                                            $visit_frequency_log_value = $customer_satisfaction_dtl->visit_frequency_log;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="visit_frequency_log[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="visit_frequency_log[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="visit_frequency_log[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="visit_frequency_log[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="visit_frequency_log[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="visit_frequency_log[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="visit_frequency_log[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="visit_frequency_log[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="visit_frequency_log[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="visit_frequency_log[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $visit_frequency_log_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>                        
+                                <div id="text-3">
+                                    <div class="form-row">
+                                        <div class="col-md-12" style="margin-bottom: 10px;">
+                                            <fieldset class="scheduler-border">
+                                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
+                                                <label class="form-label"><b>Please provide an evaluation of the PRODUCT QUALITY aspect of the supplies we provide based on the following points</b></label>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table id="complex_header" class="table table-striped table-bordered display">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th rowspan="3">No</th>
+                                                                        <th rowspan="3">Description Survey</th>
+                                                                        <th colspan="10">Category</th>
+                                                                        <th rowspan="3">Remarks</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
+                                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
+                                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
+                                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
+                                                                    </tr>
+                                                                    <tr class="text-center">
+                                                                        <!-- Kolom Category -->
+                                                                        <th>1</th>
+                                                                        <th>2</th>
+                                                                        <th>3</th>
+                                                                        <th>4</th>
+                                                                        <th>5</th>
+                                                                        <th>6</th>
+                                                                        <th>7</th>
+                                                                        <th>8</th>
+                                                                        <th>9</th>
+                                                                        <th>10</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>How compliant are the Materials sent with the PO specifications?</td>
+                                                                        @php
+                                                                            $product_compliant_value = $customer_satisfaction_dtl->product_compliant;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_9" name="product_compliant" value="1" class="filled-in chk-col-info" {{ $product_compliant_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_9" name="product_compliant" value="2" class="filled-in chk-col-info" {{ $product_compliant_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_9" name="product_compliant" value="3" class="filled-in chk-col-info" {{ $product_compliant_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_9" name="product_compliant" value="4" class="filled-in chk-col-info" {{ $product_compliant_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_9" name="product_compliant" value="5" class="filled-in chk-col-info" {{ $product_compliant_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_9" name="product_compliant" value="5" class="filled-in chk-col-info" {{ $product_compliant_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_9" name="product_compliant" value="7" class="filled-in chk-col-info" {{ $product_compliant_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_9" name="product_compliant" value="8" class="filled-in chk-col-info" {{ $product_compliant_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_9" name="product_compliant" value="9" class="filled-in chk-col-info" {{ $product_compliant_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_9"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_9" name="product_compliant" value="10" class="filled-in chk-col-info" {{ $product_compliant_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_9"></label>
+                                                                        </td>
+                                                                        <td rowspan="3">
+                                                                            <textarea class="form-control dynamic-height" name="product_quality_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->product_quality_remarks }}</textarea>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>How complete/compliant are the Certificate documents and other supporting documents provided by BBN in relation to the PO requirements?</td>
+                                                                        @php
+                                                                            $product_certificate_value = $customer_satisfaction_dtl->product_certificate;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_10" name="product_certificate" value="1" class="filled-in chk-col-info" {{ $product_certificate_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_10" name="product_certificate" value="2" class="filled-in chk-col-info" {{ $product_certificate_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_10" name="product_certificate" value="3" class="filled-in chk-col-info" {{ $product_certificate_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_10" name="product_certificate" value="4" class="filled-in chk-col-info" {{ $product_certificate_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_10" name="product_certificate" value="5" class="filled-in chk-col-info" {{ $product_certificate_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_10" name="product_certificate" value="6" class="filled-in chk-col-info" {{ $product_certificate_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_10" name="product_certificate" value="7" class="filled-in chk-col-info" {{ $product_certificate_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_10" name="product_certificate" value="8" class="filled-in chk-col-info" {{ $product_certificate_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_10" name="product_certificate" value="9" class="filled-in chk-col-info" {{ $product_certificate_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_10"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_10" name="product_certificate" value="10" class="filled-in chk-col-info" {{ $product_certificate_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_10"></label>
+                                                                        </td>
+                                                                    </tr>
+            
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Is the response and/or resolution action we have taken regarding complaints of nonconformity, both in terms of documents and materials, satisfactory?</td>
+                                                                        @php
+                                                                            $product_response_value = $customer_satisfaction_dtl->product_response;
+                                                                        @endphp
+                                                                        <td>
+                                                                            <input type="checkbox" id="category1_11" name="product_response" value="1" class="filled-in chk-col-info" {{ $product_response_value >= 1 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category1_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category2_11" name="product_response" value="2" class="filled-in chk-col-info" {{ $product_response_value >= 2 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category2_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category3_11" name="product_response" value="3" class="filled-in chk-col-info" {{ $product_response_value >= 3 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category3_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category4_11" name="product_response" value="4" class="filled-in chk-col-info" {{ $product_response_value >= 4 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category4_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category5_11" name="product_response" value="5" class="filled-in chk-col-info" {{ $product_response_value >= 5 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category5_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category6_11" name="product_response" value="6" class="filled-in chk-col-info" {{ $product_response_value >= 6 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category6_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category7_11" name="product_response" value="7" class="filled-in chk-col-info" {{ $product_response_value >= 7 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category7_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category8_11" name="product_response" value="8" class="filled-in chk-col-info" {{ $product_response_value >= 8 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category8_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category9_11" name="product_response" value="9" class="filled-in chk-col-info" {{ $product_response_value >= 9 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category9_11"></label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="checkbox" id="category10_11" name="product_response" value="10" class="filled-in chk-col-info" {{ $product_response_value >= 10 ? 'checked disabled' : '' }} disabled/>
+                                                                            <label for="category10_11"></label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        @php
+                                                                            $nilai_average = ((($customer_satisfaction_dtl->product_compliant ?? '0')+($customer_satisfaction_dtl->product_certificate ?? '0')+($customer_satisfaction_dtl->product_response ?? '0'))/3)*10
+                                                                        @endphp
+                                                                        <td colspan="2">
+                                                                            <h3 class="text-center">Average Survey</h1>
+                                                                        </td>
+                                                                        <td colspan="11">
+                                                                            <input type="text" class="form-control" value="{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}"  disabled  />
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </div>
-
-                        {{-- QUALITY --}}
-                        <div class="col-md-12" style="margin-bottom: 10px;">
-                            <fieldset class="scheduler-border">
-                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                <label class="form-label"><b>SURVEY POINT : QUALITY</b></label>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table id="complex_header" class="table table-striped table-bordered display">
-                                                <thead>
-                                                    <tr class="text-center">
-                                                        <th rowspan="3">No</th>
-                                                        <th rowspan="3">Description Survey</th>
-                                                        <th colspan="10">Category</th>
-                                                        <th rowspan="3">Remarks</th>
-                                                    </tr>
-                                                    <tr class="text-center">
-                                                        <th colspan="4" style="background-color: red; color:white">Poor</th>
-                                                        <th colspan="2" style="background-color: yellow; color:black">Fair</th>
-                                                        <th colspan="2" style="background-color: blue; color:white">Good</th>
-                                                        <th colspan="2" style="background-color: green; color:white">Excelent</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- Kolom Category -->
-                                                        <th>1</th>
-                                                        <th>2</th>
-                                                        <th>3</th>
-                                                        <th>4</th>
-                                                        <th>5</th>
-                                                        <th>6</th>
-                                                        <th>7</th>
-                                                        <th>8</th>
-                                                        <th>9</th>
-                                                        <th>10</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Product quality</td>
-                                                        @php
-                                                            $product_quality_value = $customer_satisfaction_dtl->product_quality;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="product_quality[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="product_quality[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="product_quality[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="product_quality[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="product_quality[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="product_quality[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="product_quality[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="product_quality[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="product_quality[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="product_quality[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $product_quality_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                        <td rowspan="5">
-                                                            <textarea class="form-control dynamic-height" name="quality_remarks" disabled> {{ $customer_satisfaction_dtl->quality_remarks }}</textarea>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Non confirmity management</td>
-                                                        @php
-                                                            $non_confirmity_value = $customer_satisfaction_dtl->non_confirmity;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="non_confirmity[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="non_confirmity[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="non_confirmity[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="non_confirmity[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="non_confirmity[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="non_confirmity[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="non_confirmity[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="non_confirmity[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="non_confirmity[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="non_confirmity[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $non_confirmity_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Time for answering to quality questions</td>
-                                                        @php
-                                                            $time_answer_qq_value = $customer_satisfaction_dtl->time_answer_qq;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="time_answer_qq[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="time_answer_qq[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="time_answer_qq[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="time_answer_qq[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="time_answer_qq[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="time_answer_qq[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="time_answer_qq[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="time_answer_qq[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="time_answer_qq[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="time_answer_qq[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $time_answer_qq_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Management of your inspection report</td>
-                                                        @php
-                                                            $management_inspection_value = $customer_satisfaction_dtl->management_inspection;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="management_inspection[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="management_inspection[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="management_inspection[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="management_inspection[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="management_inspection[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="management_inspection[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="management_inspection[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="management_inspection[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="management_inspection[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="management_inspection[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $management_inspection_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Time for answering to questions</td>
-                                                        @php
-                                                            $time_anser_quotation_value = $customer_satisfaction_dtl->time_anser_quotation;
-                                                        @endphp
-                                                        <td>
-                                                            <input type="checkbox" id="category1" name="time_anser_quotation[]" value="1"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category1"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category2" name="time_anser_quotation[]" value="2"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 2 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category2"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category3" name="time_anser_quotation[]" value="3"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 3 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category3"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category4" name="time_anser_quotation[]" value="4"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 4 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category4"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category5" name="time_anser_quotation[]" value="5"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 5 ? 'checked disabled' : '' }} disabled  />
-                                                            <label for="category5"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category6" name="time_anser_quotation[]" value="6"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 6 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category6"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category7" name="time_anser_quotation[]" value="7"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 7 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category7"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category8" name="time_anser_quotation[]" value="8"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 8 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category8"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category9" name="time_anser_quotation[]" value="9"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 9 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category9"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" id="category10" name="time_anser_quotation[]" value="10"
-                                                                   class="filled-in chk-col-info" {{ $time_anser_quotation_value >= 10 ? 'checked disabled' : '' }} disabled />
-                                                            <label for="category10"></label>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>                        
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1834,7 +1322,72 @@
             setTextareaHeight();
             $(window).resize(setTextareaHeight);
         });
+        
+        $(document).ready(function() {
+            $('.select-companySector').select2({ placeholder: "--Choose Options--" });
+
+            // SUBMIT FORM
+            $("#btn-submit").on('click', function(e) {
+                e.preventDefault();
+                $('#btn-submit').prop('disabled', true);
+                
+                let formUrl = $('#form-id').attr('action');
+                let form_data = $('#form-id').serialize();
+
+                $.ajax({
+                    url: formUrl,
+                    method: "POST",
+                    dataType: "JSON",
+                    data: form_data,
+                    timeout: 30000,
+                    error: function(xmlhttprequest, textstatus, message) {
+                        var res = (textstatus === "timeout") ? "Request timeout!" : textstatus;
+                        Swal.fire({
+                            title: "Error",
+                            html: res,
+                            icon: "warning"
+                        }).then(function() {
+                            $('#btn-submit').prop('disabled', false);
+                        });
+                    },
+                    success: function(response) {
+                        let alert_text = "";
+                        if ($.isArray(response.message)) {
+                            $.each(response.message, function(i, message) {
+                                alert_text += message + "<br>";
+                            });
+                        } else if (typeof response.message === 'object') {
+                            $.each(response.message, function(key, messages) {
+                                alert_text += messages[0] + "<br>";
+                            });
+                        } else {
+                            alert_text = response.message;
+                        }
+
+                        if (response.status == true) {
+                            Swal.fire({
+                                title: "Success",
+                                text: response.message,
+                                icon: "success",
+                                timer: 1500
+                            }).then(function() {
+                                window.location.href = response.url;
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                html: alert_text,
+                                icon: "warning"
+                            }).then(function() {
+                                $('#btn-submit').prop('disabled', false);
+                            });
+                        }
+                    }
+                });
+            });
+        });
     </script>
+    
     <script>
         function myFunction() {
             var myDiv = $('#myDiv');
@@ -1851,4 +1404,36 @@
             }
         }
     </script>
+    
+    <script>
+        $(function() {
+            $('.type-form').hide(); // Semua elemen dengan kelas .type-form disembunyikan secara default
+    
+            // Fungsi untuk menampilkan elemen berdasarkan nilai yang dipilih saat halaman dimuat
+            function showElementsBasedOnValue(value) {
+                $('.type-form').show(); // Tampilkan semua elemen .type-form terlebih dahulu
+    
+                if (value == '' || value == null) {
+                    $('.type-form').hide(); // Jika tidak ada yang dipilih, sembunyikan semua .type-form
+                } else if (value == 'Procurement / Buyer') {
+                    $('#text-1').show();
+                    $('#text-2').hide();
+                    $('#text-3').hide();
+                } else if (value == 'Inventory Control / SCM / Receiving') {
+                    $('#text-1').hide();
+                    $('#text-2').show();
+                    $('#text-3').hide();
+                } else if (value == 'QC/QA') {
+                    $('#text-1').hide();
+                    $('#text-2').hide();
+                    $('#text-3').show();
+                }
+            }
+    
+            // Panggil fungsi pertama kali saat halaman dimuat
+            var initialValue = $('#divisi-customer').val();
+            showElementsBasedOnValue(initialValue);
+        });
+    </script>
+    
 @endsection

@@ -313,7 +313,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">PIC Customer</label>
-                                <input type="text" class="form-control ps-15" value="{{ old('pic_name', $sales_customer->pic_name) }}" disabled>
+                                <input type="text" class="form-control ps-15" value="{{ old('pic_name', $quotation_customer->pic_name) }}" disabled>
                             </div>
                         </div>
                     </div>

@@ -25,7 +25,7 @@ class ModulesRolesPrivilegesSeeder extends Seeder
        'History' => 6,
        'Company' => 7,
        'User' => 8,
-       'Role' => 8,
+       'Role' => 9,
     ];
     /**
      * Run the database seeds.
