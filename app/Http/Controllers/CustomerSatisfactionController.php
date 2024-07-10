@@ -53,11 +53,8 @@ class CustomerSatisfactionController extends Controller
             ->join('sls_customer_pic', 'sls_quotation.cust_pic', '=', 'sls_customer_pic.pic_id')
             ->where('sls_quotation.sq_no', $sq_no)
             ->first();
-        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*', 'sls_customer.*', 'sls_customer_pic.*', 'erp_user.user_name as pic_sales_user_name')
+        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*')
             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->leftJoin('sls_customer_pic', 'sls_inquiry.cust_pic_id', '=', 'sls_customer_pic.pic_id')
-            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
             ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
             ->first();
         $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')

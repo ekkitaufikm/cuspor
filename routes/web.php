@@ -63,9 +63,11 @@ Route::group(['middleware' => 'auth'], function () {
     //Customer Complaint
     Route::prefix('customer-complaint')->group(function(){
         Route::get('/', 'CustomerComplaintController@index')->name('customer-complaint');
+        Route::get('/get-data-ajax', 'CustomerComplaintController@getDataAjax')->name('customer-complaint.getDataAjax');
+        Route::post('/get-quotation-details', 'CustomerComplaintController@getQuotationDetails')->name('customer-complaint.getQuotationDetails');
         Route::get('/add-survey/{id?}', 'CustomerComplaintController@create')->name('customer-complaint.create');
         Route::post('/add-survey/save/{id?}', 'CustomerComplaintController@store')->name('customer-complaint.store');
-        Route::get('/show/{id?}', 'CustomerComplaintController@show')->name('customer-complaint.show');
+        Route::get('/detail/{id?}', 'CustomerComplaintController@show')->name('customer-complaint.detail');
         Route::get('/print/{id?}', 'CustomerComplaintController@print')->name('customer-complaint.print');
         Route::post('/delete/{id?}', 'CustomerComplaintController@destroy')->name('customer-complaint.destroy');
     });

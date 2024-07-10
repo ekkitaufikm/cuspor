@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerComplaintModel extends Model
+class CustomerComplaintFileModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'cp_customer_complaint';
+    protected $table = 'cp_customer_complaint_file';
     protected $guarded = ['id'];
 
     public function dibuatOleh()

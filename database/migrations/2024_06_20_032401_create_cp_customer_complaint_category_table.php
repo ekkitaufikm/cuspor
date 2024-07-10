@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_complaint_id');
             $table->integer('category_id');
             $table->string('category_name');
+            $table->string('category_other')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

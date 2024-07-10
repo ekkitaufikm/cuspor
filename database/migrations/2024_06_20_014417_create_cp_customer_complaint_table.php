@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sq_id');
             $table->string('pic_sales');
-            $table->string('cust_id');
-            $table->string('cust_pic_id');
+            $table->string('personal_name');
+            $table->string('telp_fax');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('title');
+            $table->string('po_dan_date');
             $table->string('description');
             $table->string('action_taken');
             $table->string('status');

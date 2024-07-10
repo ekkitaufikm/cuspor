@@ -68,7 +68,6 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"> Home</i></a></li>
-                        <li class="breadcrumb-item" aria-current="page">Settings</li>
                         <li class="breadcrumb-item" aria-current="page">{{ __('Customer Satisfaction') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">Add Survey</li>
                     </ol>
@@ -331,7 +330,7 @@
                                                             <tr>
                                                                 <td class="pr-1" valign="top">Subject</td>
                                                                 <td style="width: 10px;" valign="top">: </td>
-                                                                <td valign="top">{{ $sales_customer->user_name }}</td>
+                                                                <td valign="top">{{ $sales_inquiry->subject }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="pr-1" valign="top">PIC Sales</td>
