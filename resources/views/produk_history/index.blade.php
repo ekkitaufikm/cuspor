@@ -58,8 +58,10 @@
                                     <th>Offer Validity</th>
                                     <th>Total Offer</th>
                                     <th>SQ Type</th>
+                                    <th>Project Name</th>
+                                    <th>SQ PIC Customer</th>
                                     <th>Status</th>
-                                    <th>Created By</th>
+                                    <th>Sales By</th>
                                     <th width="10%">Action</th>
                                 </tr>
                             </thead>
@@ -74,7 +76,13 @@
                                                             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
                                                             ->where('sls_inquiry.inq_id', $sq->inq_id)
                                                             ->first();
-                            
+                                        $sales_customer = \App\Models\SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+                                                        ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                                                        ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+                                                        ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+                                                        ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+                                                        ->where('sls_quotation.sq_no', $sq->sq_no)
+                                                        ->first();
                                         $status_text = '';
                                         $status_color = '';
                             
@@ -115,15 +123,13 @@
                                         <td>{{ $lookup_offerVal->lookup_name }}</td>
                                         <td>{{ rupiah($sq->offer_value) }}</td>
                                         <td>{{ $lookup_sqType->lookup_name ?? '' }}</td>
+                                        <td>{{ $sales_inquiry->project_name }}</td>
+                                        <td>{{ $sales_customer->pic_name }}</td>
                                         <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
                                         <td>{{ $sq->created_by }}</td>
                                         <td>
                                             <div class="btn-group mb-5">
-                                                <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->sq_id)]) }}'>Detail</a>
-                                                    {{-- <a class="dropdown-item" href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a> --}}
-                                                </div>
+                                                <a class="btn btn-sm btn-info" type="button" href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->id)]) }}'>Detail</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -107,11 +107,8 @@
                                         </td>
                                         <td>
                                             <div class="btn-group mb-5">
-                                                <button type="button" class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href='{{ route('customer-complaint.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
-                                                    <a class="dropdown-item" href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($cp->sq_no)]) }}'>Print</a>
-                                                </div>
+                                                <a class="btn btn-sm btn-info" type="button" href='{{ route('customer-complaint.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
+                                                <a class="btn btn-sm btn-secondary" type="button" href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($cp->sq_no)]) }}'>Print</a>
                                             </div>
                                         </td>
                                     </tr>

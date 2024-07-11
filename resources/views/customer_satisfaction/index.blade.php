@@ -55,6 +55,7 @@
                                     <th>INQ No</th>
                                     <th>Customer</th>
                                     <th>SQ Date</th>
+                                    <th>Project Name</th>
                                     <th>Status</th>
                                     <th>Services</th>
                                     <th>Commercial</th>
@@ -114,6 +115,7 @@
                                         <td>{{ $sales_inquiry->inq_no }}</td>
                                         <td>{{ Auth::user()->company_name }}</td>
                                         <td>{{ $sq->created_date }}</td>
+                                        <td>{{ $sales_inquiry->project_name }}</td>
                                         <td><span class="btn btn-sm btn-outline {{ $status_color }}">{{ $status_text }}</span></td>
                                         <td class="text-center">{{ isset($cp_satisfaction_dtl->services) ? $cp_satisfaction_dtl->services . '%' : '-' }}</td>
                                         <td class="text-center">{{ isset($cp_satisfaction_dtl->commercial_aspect) ? $cp_satisfaction_dtl->commercial_aspect . '%' : '-' }}</td>
@@ -150,11 +152,8 @@
                                         <td>
                                             @if (isset($cp_satisfaction->status) != null)
                                                 <div class="btn-group mb-5">
-                                                    <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Detail</a>
-                                                        <a class="dropdown-item" href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a>
-                                                    </div>
+                                                    <a class="btn btn-sm btn-info" type="button" href='{{ route('customer-satisfaction.show', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Detail</a>
+                                                    <a class="btn btn-sm btn-secondary" type="button" href='{{ route('customer-satisfaction.print', ['id' => Crypt::encrypt($sq->sq_no)]) }}'>Print</a>
                                                 </div>
                                             @endif
                                         </td>

@@ -372,10 +372,6 @@
                                     <fieldset class="scheduler-border" style="padding: 20px;">
                                         <legend class="scheduler-border" style="color: green;">PRODUCT ORDER HISTORY</legend>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-md-2">Total Offer</label>
-                                            <div class="col-md-10">
-                                                <input class="form-control" type="text" value="{{ rupiah($sales_quotation->offer_value) }}" disabled>
-                                            </div>
                                             <div class="table-responsive mt-3">
                                                 <table class="table table-striped table-bordered display" style="width:100%">
                                                     <thead>
@@ -396,11 +392,6 @@
                                                             <th>Length</th>
                                                             <th>Satuan</th>
                                                             <th>QTY Sets</th>
-                                                            <th>Unit Prices</th>
-                                                            <th>Amount</th>
-                                                            <th>@Kg</th>
-                                                            <th>Total Kg</th>
-                                                            <th>Level</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -422,11 +413,6 @@
                                                                 <td>{{ $qit->length }}</td>
                                                                 <td>{{ $qit->length_unit }}</td>
                                                                 <td>{{ $qit->qty_sets }}</td>
-                                                                <td>{{ rupiah($qit->unit_price) }}</td>
-                                                                <td>{{ rupiah($qit->amount) }}</td>
-                                                                <td>{{ $qit->weight_per_item }}</td>
-                                                                <td>{{ $qit->weight_total }}</td>
-                                                                <td>{{ $qit->level }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>                            

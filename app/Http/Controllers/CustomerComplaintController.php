@@ -257,7 +257,44 @@ class CustomerComplaintController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $complaint_id       = Crypt::decrypt($id);
+        $customer_complaint = CustomerComplaintModel::where('id', $complaint_id)->first();
+        $customer_complaint_category    = CustomerComplaintCategoryModel::where('customer_complaint_id', $complaint_id)->get();
+        $customer_complaint_file        = CustomerComplaintFileModel::where('customer_complaint_id', $complaint_id)->get();
+        $sales_quotation = SalesQuotationModel::select('sls_quotation.*')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->where('sls_quotation.status', 8)
+            ->where('sls_quotation.sq_id', $customer_complaint->sq_id)
+            ->orderBy('sls_quotation.created_date', 'desc')
+            ->first();
+        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*', 'sls_customer.*', 'sls_customer_pic.*', 'erp_user.user_name as pic_sales_user_name')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->leftJoin('sls_customer_pic', 'sls_inquiry.cust_pic_id', '=', 'sls_customer_pic.pic_id')
+            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+            ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
+            ->first();
+        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+            ->where('sls_quotation.sq_no', $sales_quotation->sq_no)
+            ->first();
+        $quotation_items = QuotationItemModel::where('sq_id', $sales_quotation->sq_id)
+            ->get();
+            // echo json_encode($sales_quotation); die;
+
+        return view('customer_complaint.show', [
+            "customer_complaint"            => $customer_complaint,
+            'customer_complaint_category'   => $customer_complaint_category,
+            'customer_complaint_file'       => $customer_complaint_file,
+            'sales_quotation'               => $sales_quotation,
+            'sales_inquiry'                 => $sales_inquiry,
+            'sales_customer'                => $sales_customer,
+            'quotation_items'               => $quotation_items,
+        ]);
     }
 
     /**
