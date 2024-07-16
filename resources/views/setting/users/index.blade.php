@@ -94,13 +94,10 @@
                                         </td>
                                         <td>
                                             <div class="btn-group mb-5">
-                                                <button class="waves-effect waves-light btn btn-sm btn-info dropdown-toggle" data-bs-toggle="dropdown"></button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href='{{ route('users.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
-                                                    @if(Helpers::hasPrivilege('useru'))
-                                                        <a class="dropdown-item" href='{{ route('users.edit', ['id' => Crypt::encrypt($cp->id)]) }}'>Edit</a>
-                                                    @endif
-                                                </div>
+                                                <a class="btn btn-sm btn-info" type="button" href='{{ route('users.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
+                                                @if(Helpers::hasPrivilege('useru'))
+                                                <a class="btn btn-sm btn-secondary" type="button" href='{{ route('users.edit', ['id' => Crypt::encrypt($cp->id)]) }}'>Edit</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

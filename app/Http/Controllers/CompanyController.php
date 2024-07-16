@@ -82,8 +82,8 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        $id_users = Crypt::decrypt($id);
-        $data['company'] = CompanyModel::findOrFail($id_users);
+        $id_company = Crypt::decrypt($id);
+        $data['company'] = CompanyModel::findOrFail($id_company);
         return view('setting.company.show', $data);
     }
 
@@ -92,8 +92,8 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        $id_users = Crypt::decrypt($id);
-        $data['company'] = CompanyModel::findOrFail($id_users);
+        $id_company = Crypt::decrypt($id);
+        $data['company'] = CompanyModel::findOrFail($id_company);
         return view('setting.company.edit', $data);
     }
 

@@ -62,7 +62,13 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Company Name<span style="color: red">*</span></label>
-                                    <input name="company_name" type="text" class="form-control ps-15 bg-transparent" value="{{ old('company_name', $company->company_name) }}">
+                                    <select id="select-companyName" class="form-select select2" name="company_name" aria-label="Default select example">
+                                        <option value="{{ $company->company_name }}" selected>{{ $company->company_name }}</option>
+                                        <option value="">--Choose Options--</option>
+                                        @foreach(\App\Models\CompanySalesModel::all() as $cmpnySales)
+                                            <option value="{{ $cmpnySales->cust_name }}">{{ $cmpnySales->cust_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-4">
