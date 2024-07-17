@@ -221,13 +221,13 @@
                         <div class="col-lg-6 mt-2">
                             <h4 class="box-title">{{ __('Detail Data Inquiry') }}</h4>
                         </div>
-                        {{-- <div class="col-lg-6 d-flex justify-content-end mb-0">
+                        <div class="col-lg-6 d-flex justify-content-end mb-0">
                             <div class="btn-group">
                                 <a href="{{ route('product-order-history') }}" type="button" class="btn btn-outline btn-dark">
                                     Return
                                 </a>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="box-body">

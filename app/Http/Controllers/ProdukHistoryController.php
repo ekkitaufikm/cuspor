@@ -58,7 +58,7 @@ class ProdukHistoryController extends Controller
         $quotation_items = QuotationItemModel::where('sq_id', $id_sq)
             ->get();
 
-            // echo json_encode($sales_inquiry); die;
+            // echo json_encode($sales_quotation); die;
         return view('produk_history.show', [
             'sales_quotation'       => $sales_quotation,
             'quotation_customer'    => $quotation_customer,

@@ -129,7 +129,7 @@
                                         <td>{{ $sq->created_by }}</td>
                                         <td>
                                             <div class="btn-group mb-5">
-                                                <a class="btn btn-sm btn-info" type="button" href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->id)]) }}'>Detail</a>
+                                                <a class="btn btn-sm btn-info" type="button" href='{{ route('product-order-history.show', ['id' => Crypt::encrypt($sq->sq_id)]) }}'>Detail</a>
                                             </div>
                                         </td>
                                     </tr>

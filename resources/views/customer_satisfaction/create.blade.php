@@ -54,7 +54,24 @@
             width: auto;
             border: none;
             font-size: large;
-        },
+        }
+
+        .star-checkbox {
+            display: none; /* Sembunyikan checkbox */
+        }
+
+        .star {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .star:hover {
+            color: orange; /* Warna saat hover */
+        }
+
+        .star.checked {
+            color: orange; /* Warna bintang terpilih */
+        }
     </style>
     
 @endsection
@@ -473,7 +490,7 @@
                                                                             <th rowspan="3">No</th>
                                                                             <th rowspan="3">Description Survey</th>
                                                                             <th colspan="10">Category</th>
-                                                                            <th rowspan="3">Remarks</th>
+                                                                            <th rowspan="3">Remarks<span class="text-danger">*</span></th>
                                                                         </tr>
                                                                         <tr class="text-center">
                                                                             <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
@@ -500,45 +517,35 @@
                                                                             <td>1</td>
                                                                             <td>How was our service/response to the inquiry you sent to PT BBN?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1" name="services_inquiry" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1" name="services_inquiry" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2" name="services_inquiry" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2" name="services_inquiry" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3" name="services_inquiry" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3" name="services_inquiry" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4" name="services_inquiry" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4" name="services_inquiry" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5" name="services_inquiry" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5" name="services_inquiry" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6" name="services_inquiry" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category6"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6" name="services_inquiry" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7" name="services_inquiry" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7" name="services_inquiry" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8" name="services_inquiry" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8" name="services_inquiry" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9" name="services_inquiry" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9" name="services_inquiry" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                          </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10" name="services_inquiry" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category10" name="services_inquiry" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                           </td>
                                                                             <td rowspan="3">
                                                                                 <textarea class="form-control dynamic-height" name="services_remarks" placeholder="Remarks"></textarea>
                                                                             </td>
@@ -548,44 +555,35 @@
                                                                             <td>2</td>
                                                                             <td>How was our service/response to the technical questions/clarifications/explanations you needed?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_1" name="services_technical" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_1" name="services_technical" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_1" name="services_technical" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_1" name="services_technical" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_1" name="services_technical" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_1" name="services_technical" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_1" name="services_technical" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_1" name="services_technical" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_1" name="services_technical" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_1" name="services_technical" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_1" name="services_technical" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_1" name="services_technical" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_1" name="services_technical" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_1" name="services_technical" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_1" name="services_technical" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_1" name="services_technical" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_1" name="services_technical" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_1"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_1" name="services_technical" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_1" name="services_technical" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_1"></label>
+                                                                                <input type="checkbox" id="category10_1" name="services_technical" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                 
@@ -593,44 +591,35 @@
                                                                             <td>3</td>
                                                                             <td>What is the level of alignment between the inquiry you sent and the proposal submitted by PT BBN?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_2" name="services_level_alignment" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_2" name="services_level_alignment" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_2" name="services_level_alignment" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_2" name="services_level_alignment" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_2" name="services_level_alignment" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_2" name="services_level_alignment" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_2" name="services_level_alignment" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_2" name="services_level_alignment" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_2" name="services_level_alignment" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_2" name="services_level_alignment" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_2" name="services_level_alignment" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_2" name="services_level_alignment" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_2" name="services_level_alignment" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_2" name="services_level_alignment" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_2" name="services_level_alignment" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_2" name="services_level_alignment" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_2" name="services_level_alignment" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_2"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_2" name="services_level_alignment" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_2" name="services_level_alignment" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_2"></label>
+                                                                                <input type="checkbox" id="category10_2" name="services_level_alignment" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -654,7 +643,7 @@
                                                                             <th rowspan="3">No</th>
                                                                             <th rowspan="3">Description Survey</th>
                                                                             <th colspan="10">Category</th>
-                                                                            <th rowspan="3">Remarks</th>
+                                                                            <th rowspan="3">Remarks<span class="text-danger">*</span></th>
                                                                         </tr>
                                                                         <tr class="text-center">
                                                                             <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
@@ -681,44 +670,35 @@
                                                                             <td>1</td>
                                                                             <td>What is the level of alignment between the price we offer and the service and quality of materials we supply?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_3" name="commercial_level_alignment" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_3" name="commercial_level_alignment" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_3" name="commercial_level_alignment" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_3" name="commercial_level_alignment" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_3" name="commercial_level_alignment" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_3" name="commercial_level_alignment" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_3" name="commercial_level_alignment" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_3" name="commercial_level_alignment" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_3" name="commercial_level_alignment" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_3" name="commercial_level_alignment" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_3" name="commercial_level_alignment" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category6_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_3" name="commercial_level_alignment" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_3" name="commercial_level_alignment" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_3" name="commercial_level_alignment" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_3" name="commercial_level_alignment" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_3" name="commercial_level_alignment" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_3" name="commercial_level_alignment" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_3"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_3" name="commercial_level_alignment" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_3" name="commercial_level_alignment" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_3"></label>
+                                                                                <input type="checkbox" id="category10_3" name="commercial_level_alignment" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td rowspan="3">
                                                                                 <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks"></textarea>
@@ -729,44 +709,35 @@
                                                                             <td>2</td>
                                                                             <td>What is the level of flexibility in the Terms of Payment provided by PT BBN?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_4" name="commercial_flexibility" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_4" name="commercial_flexibility" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_4" name="commercial_flexibility" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_4" name="commercial_flexibility" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_4" name="commercial_flexibility" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_4" name="commercial_flexibility" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_4" name="commercial_flexibility" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_4" name="commercial_flexibility" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_4" name="commercial_flexibility" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_4" name="commercial_flexibility" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_4" name="commercial_flexibility" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_4" name="commercial_flexibility" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_4" name="commercial_flexibility" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_4" name="commercial_flexibility" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_4" name="commercial_flexibility" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_4" name="commercial_flexibility" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_4" name="commercial_flexibility" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_4"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_4" name="commercial_flexibility" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_4" name="commercial_flexibility" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_4"></label>
+                                                                                <input type="checkbox" id="category10_4" name="commercial_flexibility" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                 
@@ -774,44 +745,35 @@
                                                                             <td>3</td>
                                                                             <td>How is the compliance and completeness of the supporting documents for the Invoice we submitted?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_5" name="commercial_compliance" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_5" name="commercial_compliance" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_5" name="commercial_compliance" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_5" name="commercial_compliance" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_5" name="commercial_compliance" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_5" name="commercial_compliance" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_5" name="commercial_compliance" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_5" name="commercial_compliance" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_5" name="commercial_compliance" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_5" name="commercial_compliance" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_5" name="commercial_compliance" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_5" name="commercial_compliance" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_5" name="commercial_compliance" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_5" name="commercial_compliance" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_5" name="commercial_compliance" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_5" name="commercial_compliance" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_5" name="commercial_compliance" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_5"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_5" name="commercial_compliance" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_5" name="commercial_compliance" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_5"></label>
+                                                                                <input type="checkbox" id="category10_5" name="commercial_compliance" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -838,7 +800,7 @@
                                                                             <th rowspan="3">No</th>
                                                                             <th rowspan="3">Description Survey</th>
                                                                             <th colspan="10">Category</th>
-                                                                            <th rowspan="3">Remarks</th>
+                                                                            <th rowspan="3">Remarks<span class="text-danger">*</span></th>
                                                                         </tr>
                                                                         <tr class="text-center">
                                                                             <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
@@ -865,44 +827,44 @@
                                                                             <td>1</td>
                                                                             <td>What is the average accuracy of Delivery Material in relation to the due date of the Purchase Order?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_6" name="delivery_average" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_6"></label>
+                                                                                <input type="checkbox" id="category1_6" name="delivery_average" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_6" name="delivery_average" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_6"></label>
+                                                                                <input type="checkbox" id="category2_6" name="delivery_average" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_6" name="delivery_average" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_6"></label>
+                                                                                <input type="checkbox" id="category3_6" name="delivery_average" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_6" name="delivery_average" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_6"></label>
+                                                                                <input type="checkbox" id="category4_6" name="delivery_average" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_6" name="delivery_average" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_6"></label>
+                                                                                <input type="checkbox" id="category5_6" name="delivery_average" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_6" name="delivery_average" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category6_6"></label>
+                                                                                <input type="checkbox" id="category6_6" name="delivery_average" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_6" name="delivery_average" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_6"></label>
+                                                                                <input type="checkbox" id="category7_6" name="delivery_average" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_6" name="delivery_average" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_6"></label>
+                                                                                <input type="checkbox" id="category8_6" name="delivery_average" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_6" name="delivery_average" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_6"></label>
+                                                                                <input type="checkbox" id="category9_6" name="delivery_average" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_6" name="delivery_average" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_6"></label>
+                                                                                <input type="checkbox" id="category10_6" name="delivery_average" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td rowspan="3">
                                                                                 <textarea class="form-control dynamic-height" name="delivery_material_remarks" placeholder="Remarks"></textarea>
@@ -913,44 +875,44 @@
                                                                             <td>2</td>
                                                                             <td>What is the completeness of the documents provided by PT BBN during the material shipment?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_7" name="delivery_completeness" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_7"></label>
+                                                                                <input type="checkbox" id="category1_7" name="delivery_completeness" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_7" name="delivery_completeness" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_7"></label>
+                                                                                <input type="checkbox" id="category2_7" name="delivery_completeness" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_7" name="delivery_completeness" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_7"></label>
+                                                                                <input type="checkbox" id="category3_7" name="delivery_completeness" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_7" name="delivery_completeness" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_7"></label>
+                                                                                <input type="checkbox" id="category4_7" name="delivery_completeness" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_7" name="delivery_completeness" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_7"></label>
+                                                                                <input type="checkbox" id="category5_7" name="delivery_completeness" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_7" name="delivery_completeness" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_7"></label>
+                                                                                <input type="checkbox" id="category6_7" name="delivery_completeness" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_7" name="delivery_completeness" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_7"></label>
+                                                                                <input type="checkbox" id="category7_7" name="delivery_completeness" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_7" name="delivery_completeness" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_7"></label>
+                                                                                <input type="checkbox" id="category8_7" name="delivery_completeness" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_7" name="delivery_completeness" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_7"></label>
+                                                                                <input type="checkbox" id="category9_7" name="delivery_completeness" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_7" name="delivery_completeness" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_7"></label>
+                                                                                <input type="checkbox" id="category10_7" name="delivery_completeness" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                 
@@ -958,44 +920,44 @@
                                                                             <td>3</td>
                                                                             <td>What is the quality, safety, and neatness of the packing materials that PT BBN has been conducting during material shipments?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_8" name="delivery_packing" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_8"></label>
+                                                                                <input type="checkbox" id="category1_8" name="delivery_packing" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_8" name="delivery_packing" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_8"></label>
+                                                                                <input type="checkbox" id="category2_8" name="delivery_packing" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_8" name="delivery_packing" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_8"></label>
+                                                                                <input type="checkbox" id="category3_8" name="delivery_packing" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_8" name="delivery_packing" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_8"></label>
+                                                                                <input type="checkbox" id="category4_8" name="delivery_packing" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_8" name="delivery_packing" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_8"></label>
+                                                                                <input type="checkbox" id="category5_8" name="delivery_packing" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_8" name="delivery_packing" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_8"></label>
+                                                                                <input type="checkbox" id="category6_8" name="delivery_packing" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_8" name="delivery_packing" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_8"></label>
+                                                                                <input type="checkbox" id="category7_8" name="delivery_packing" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_8" name="delivery_packing" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_8"></label>
+                                                                                <input type="checkbox" id="category8_8" name="delivery_packing" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_8" name="delivery_packing" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_8"></label>
+                                                                                <input type="checkbox" id="category9_8" name="delivery_packing" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_8" name="delivery_packing" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_8"></label>
+                                                                                <input type="checkbox" id="category10_8" name="delivery_packing" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1023,7 +985,7 @@
                                                                             <th rowspan="3">No</th>
                                                                             <th rowspan="3">Description Survey</th>
                                                                             <th colspan="10">Category</th>
-                                                                            <th rowspan="3">Remarks</th>
+                                                                            <th rowspan="3">Remarks<span class="text-danger">*</span></th>
                                                                         </tr>
                                                                         <tr class="text-center">
                                                                             <th colspan="4" style="background-color: red; color:white">Unsatisfactory</th>
@@ -1050,44 +1012,44 @@
                                                                             <td>1</td>
                                                                             <td>How compliant are the Materials sent with the PO specifications?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_9" name="product_compliant" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_9"></label>
+                                                                                <input type="checkbox" id="category1_9" name="product_compliant" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_9" name="product_compliant" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_9"></label>
+                                                                                <input type="checkbox" id="category2_9" name="product_compliant" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_9" name="product_compliant" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_9"></label>
+                                                                                <input type="checkbox" id="category3_9" name="product_compliant" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_9" name="product_compliant" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_9"></label>
+                                                                                <input type="checkbox" id="category4_9" name="product_compliant" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_9" name="product_compliant" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_9"></label>
+                                                                                <input type="checkbox" id="category5_9" name="product_compliant" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_9" name="product_compliant" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category6_9"></label>
+                                                                                <input type="checkbox" id="category6_9" name="product_compliant" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_9" name="product_compliant" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_9"></label>
+                                                                                <input type="checkbox" id="category7_9" name="product_compliant" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_9" name="product_compliant" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_9"></label>
+                                                                                <input type="checkbox" id="category8_9" name="product_compliant" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_9" name="product_compliant" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_9"></label>
+                                                                                <input type="checkbox" id="category9_9" name="product_compliant" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_9" name="product_compliant" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_9"></label>
+                                                                                <input type="checkbox" id="category10_9" name="product_compliant" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                             <td rowspan="3">
                                                                                 <textarea class="form-control dynamic-height" name="product_quality_remarks" placeholder="Remarks"></textarea>
@@ -1098,44 +1060,35 @@
                                                                             <td>2</td>
                                                                             <td>How complete/compliant are the Certificate documents and other supporting documents provided by BBN in relation to the PO requirements?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_10" name="product_certificate" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_10" name="product_certificate" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_10" name="product_certificate" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_10" name="product_certificate" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_10" name="product_certificate" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_10" name="product_certificate" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_10" name="product_certificate" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_10" name="product_certificate" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_10" name="product_certificate" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_10" name="product_certificate" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_10" name="product_certificate" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_10" name="product_certificate" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_10" name="product_certificate" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_10" name="product_certificate" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_10" name="product_certificate" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_10" name="product_certificate" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_10" name="product_certificate" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_10"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_10" name="product_certificate" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_10" name="product_certificate" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_10"></label>
+                                                                                <input type="checkbox" id="category10_10" name="product_certificate" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                 
@@ -1143,44 +1096,35 @@
                                                                             <td>3</td>
                                                                             <td>Is the response and/or resolution action we have taken regarding complaints of nonconformity, both in terms of documents and materials, satisfactory?</td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_11" name="product_response" value="1" class="filled-in chk-col-info" />
-                                                                                <label for="category1_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category1_11" name="product_response" value="1" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_11" name="product_response" value="2" class="filled-in chk-col-info" />
-                                                                                <label for="category2_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category2_11" name="product_response" value="2" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_11" name="product_response" value="3" class="filled-in chk-col-info" />
-                                                                                <label for="category3_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category3_11" name="product_response" value="3" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_11" name="product_response" value="4" class="filled-in chk-col-info" />
-                                                                                <label for="category4_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category4_11" name="product_response" value="4" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_11" name="product_response" value="5" class="filled-in chk-col-info" />
-                                                                                <label for="category5_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category5_11" name="product_response" value="5" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_11" name="product_response" value="6" class="filled-in chk-col-info" />
-                                                                                <label for="category6_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category6_11" name="product_response" value="6" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_11" name="product_response" value="7" class="filled-in chk-col-info" />
-                                                                                <label for="category7_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category7_11" name="product_response" value="7" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_11" name="product_response" value="8" class="filled-in chk-col-info" />
-                                                                                <label for="category8_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category8_11" name="product_response" value="8" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_11" name="product_response" value="9" class="filled-in chk-col-info" />
-                                                                                <label for="category9_11"></label>
-                                                                            </td>
+                                                                                <input type="checkbox" id="category9_11" name="product_response" value="9" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>                                                                            </td>
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_11" name="product_response" value="10" class="filled-in chk-col-info" />
-                                                                                <label for="category10_11"></label>
+                                                                                <input type="checkbox" id="category10_11" name="product_response" value="10" class="star-checkbox" />
+                                                                                <span class="star">&#9733;</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -1210,6 +1154,17 @@
 
 @section('js-custom')
     {{-- Tempat Ngoding Meletakkan js custom --}}
+    <script>
+        // Tambahkan event listener untuk setiap span dengan kelas 'star'
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+          star.addEventListener('click', function() {
+            const checkbox = this.previousElementSibling;
+            checkbox.checked = !checkbox.checked; // Toggle nilai checkbox
+            this.classList.toggle('checked'); // Toggle kelas 'checked' pada span
+          });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // Fungsi untuk mengatur tinggi textarea sesuai tinggi tabel
