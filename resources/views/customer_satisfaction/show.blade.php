@@ -526,36 +526,12 @@
                                                                         @php
                                                                             $services_inquiry_value = $customer_satisfaction_dtl->services_inquiry;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1" name="services_inquiry[]" value="1" class="star-checkbox" {{ $services_inquiry_value >= 1 ? 'checked disabled' : '' }} disabled  />
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2" name="services_inquiry" value="2" class="star-checkbox" {{ $services_inquiry_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3" name="services_inquiry" value="3" class="star-checkbox" {{ $services_inquiry_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4" name="services_inquiry" value="4" class="star-checkbox" {{ $services_inquiry_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5" name="services_inquiry" value="5" class="star-checkbox" {{ $services_inquiry_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6" name="services_inquiry" value="5" class="star-checkbox" {{ $services_inquiry_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7" name="services_inquiry" value="7" class="star-checkbox" {{ $services_inquiry_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8" name="services_inquiry" value="8" class="star-checkbox" {{ $services_inquiry_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9" name="services_inquiry" value="9" class="star-checkbox" {{ $services_inquiry_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                     </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10" name="services_inquiry" value="10" class="star-checkbox" {{ $services_inquiry_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                      </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category1_{{ $value }}" name="services_inquiry" value="1" class="star-checkbox" {{ $services_inquiry_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                         <td rowspan="3">
                                                                             <textarea class="form-control dynamic-height" name="services_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->services_remarks }}</textarea>
                                                                         </td>
@@ -567,36 +543,12 @@
                                                                         @php
                                                                             $services_technical_value = $customer_satisfaction_dtl->services_technical;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_1" name="services_technical" value="1" class="star-checkbox" {{ $services_technical_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_1" name="services_technical" value="2" class="star-checkbox" {{ $services_technical_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_1" name="services_technical" value="3" class="star-checkbox" {{ $services_technical_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_1" name="services_technical" value="4" class="star-checkbox" {{ $services_technical_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_1" name="services_technical" value="5" class="star-checkbox" {{ $services_technical_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_1" name="services_technical" value="6" class="star-checkbox" {{ $services_technical_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_1" name="services_technical" value="7" class="star-checkbox" {{ $services_technical_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_1" name="services_technical" value="8" class="star-checkbox" {{ $services_technical_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_1" name="services_technical" value="9" class="star-checkbox" {{ $services_technical_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_1" name="services_technical" value="10" class="star-checkbox" {{ $services_technical_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category2_{{ $value }}" name="services_technical" value="1" class="star-checkbox" {{ $services_technical_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
             
                                                                     <tr>
@@ -605,36 +557,12 @@
                                                                         @php
                                                                             $services_level_alignment_value = $customer_satisfaction_dtl->services_level_alignment;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_2" name="services_level_alignment" value="1" class="star-checkbox" {{ $services_level_alignment_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_2" name="services_level_alignment" value="2" class="star-checkbox" {{ $services_level_alignment_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_2" name="services_level_alignment" value="3" class="star-checkbox" {{ $services_level_alignment_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_2" name="services_level_alignment" value="4" class="star-checkbox" {{ $services_level_alignment_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_2" name="services_level_alignment" value="5" class="star-checkbox" {{ $services_level_alignment_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_2" name="services_level_alignment" value="6" class="star-checkbox" {{ $services_level_alignment_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_2" name="services_level_alignment" value="7" class="star-checkbox" {{ $services_level_alignment_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_2" name="services_level_alignment" value="8" class="star-checkbox" {{ $services_level_alignment_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_2" name="services_level_alignment" value="9" class="star-checkbox" {{ $services_level_alignment_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_2" name="services_level_alignment" value="10" class="star-checkbox" {{ $services_level_alignment_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category3_{{ $value }}" name="services_level_alignment" value="1" class="star-checkbox" {{ $services_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
                                                                     <tr>
                                                                         @php
@@ -697,36 +625,12 @@
                                                                         @php
                                                                             $commercial_level_alignment_value = $customer_satisfaction_dtl->commercial_level_alignment;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_3" name="commercial_level_alignment" value="1" class="star-checkbox" {{ $commercial_level_alignment_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_3" name="commercial_level_alignment" value="2" class="star-checkbox" {{ $commercial_level_alignment_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_3" name="commercial_level_alignment" value="3" class="star-checkbox" {{ $commercial_level_alignment_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_3" name="commercial_level_alignment" value="4" class="star-checkbox" {{ $commercial_level_alignment_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_3" name="commercial_level_alignment" value="5" class="star-checkbox" {{ $commercial_level_alignment_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_3" name="commercial_level_alignment" value="6" class="star-checkbox" {{ $commercial_level_alignment_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_3" name="commercial_level_alignment" value="7" class="star-checkbox" {{ $commercial_level_alignment_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_3" name="commercial_level_alignment" value="8" class="star-checkbox" {{ $commercial_level_alignment_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_3" name="commercial_level_alignment" value="9" class="star-checkbox" {{ $commercial_level_alignment_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_3" name="commercial_level_alignment" value="10" class="star-checkbox" {{ $commercial_level_alignment_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category4_{{ $value }}" name="commercial_level_alignment" value="1" class="star-checkbox" {{ $commercial_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                         <td rowspan="3">
                                                                             <textarea class="form-control dynamic-height" name="commercial_aspect_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->commercial_aspect_remarks }}</textarea>
                                                                         </td>
@@ -738,36 +642,12 @@
                                                                         @php
                                                                             $commercial_flexibility_value = $customer_satisfaction_dtl->commercial_flexibility;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_4" name="commercial_flexibility" value="1" class="star-checkbox" {{ $commercial_flexibility_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_4" name="commercial_flexibility" value="2" class="star-checkbox" {{ $commercial_flexibility_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_4" name="commercial_flexibility" value="3" class="star-checkbox" {{ $commercial_flexibility_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_4" name="commercial_flexibility" value="4" class="star-checkbox" {{ $commercial_flexibility_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_4" name="commercial_flexibility" value="5" class="star-checkbox" {{ $commercial_flexibility_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_4" name="commercial_flexibility" value="6" class="star-checkbox" {{ $commercial_flexibility_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_4" name="commercial_flexibility" value="7" class="star-checkbox" {{ $commercial_flexibility_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_4" name="commercial_flexibility" value="8" class="star-checkbox" {{ $commercial_flexibility_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_4" name="commercial_flexibility" value="9" class="star-checkbox" {{ $commercial_flexibility_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_4" name="commercial_flexibility" value="10" class="star-checkbox" {{ $commercial_flexibility_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category5_{{ $value }}" name="commercial_flexibility" value="1" class="star-checkbox" {{ $commercial_flexibility_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
             
                                                                     <tr>
@@ -776,36 +656,12 @@
                                                                         @php
                                                                             $commercial_compliance_value = $customer_satisfaction_dtl->commercial_compliance;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_5" name="commercial_compliance" value="1" class="star-checkbox" {{ $commercial_compliance_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_5" name="commercial_compliance" value="2" class="star-checkbox" {{ $commercial_compliance_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_5" name="commercial_compliance" value="3" class="star-checkbox" {{ $commercial_compliance_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_5" name="commercial_compliance" value="4" class="star-checkbox" {{ $commercial_compliance_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_5" name="commercial_compliance" value="5" class="star-checkbox" {{ $commercial_compliance_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_5" name="commercial_compliance" value="6" class="star-checkbox" {{ $commercial_compliance_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_5" name="commercial_compliance" value="7" class="star-checkbox" {{ $commercial_compliance_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_5" name="commercial_compliance" value="8" class="star-checkbox" {{ $commercial_compliance_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_5" name="commercial_compliance" value="9" class="star-checkbox" {{ $commercial_compliance_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_5" name="commercial_compliance" value="10" class="star-checkbox" {{ $commercial_compliance_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category6_{{ $value }}" name="commercial_compliance" value="1" class="star-checkbox" {{ $commercial_compliance_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
                                                                     <tr>
                                                                         @php
@@ -871,41 +727,12 @@
                                                                         @php
                                                                             $delivery_average_value = $customer_satisfaction_dtl->delivery_average;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="1" class="star-checkbox" {{ $delivery_average_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>            
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="2" class="star-checkbox" {{ $delivery_average_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="3" class="star-checkbox" {{ $delivery_average_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="4" class="star-checkbox" {{ $delivery_average_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_6" name="delivery_average" value="5" class="star-checkbox" {{ $delivery_average_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_6" name="delivery_average" value="5" class="star-checkbox" {{ $delivery_average_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_6" name="delivery_average" value="7" class="star-checkbox" {{ $delivery_average_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_6" name="delivery_average" value="8" class="star-checkbox" {{ $delivery_average_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_6" name="delivery_average" value="9" class="star-checkbox" {{ $delivery_average_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_6" name="delivery_average" value="10" class="star-checkbox" {{ $delivery_average_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category7_{{ $value }}" name="delivery_average" value="1" class="star-checkbox" {{ $delivery_average_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                         <td rowspan="3">
                                                                             <textarea class="form-control dynamic-height" name="delivery_material_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->delivery_material_remarks }}</textarea>
                                                                         </td>
@@ -917,36 +744,12 @@
                                                                         @php
                                                                             $delivery_completeness_value = $customer_satisfaction_dtl->delivery_completeness;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_7" name="delivery_completeness" value="1" class="star-checkbox" {{ $delivery_completeness_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_7" name="delivery_completeness" value="2" class="star-checkbox" {{ $delivery_completeness_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_7" name="delivery_completeness" value="3" class="star-checkbox" {{ $delivery_completeness_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_7" name="delivery_completeness" value="4" class="star-checkbox" {{ $delivery_completeness_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_7" name="delivery_completeness" value="5" class="star-checkbox" {{ $delivery_completeness_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_7" name="delivery_completeness" value="6" class="star-checkbox" {{ $delivery_completeness_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_7" name="delivery_completeness" value="7" class="star-checkbox" {{ $delivery_completeness_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_7" name="delivery_completeness" value="8" class="star-checkbox" {{ $delivery_completeness_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_7" name="delivery_completeness" value="9" class="star-checkbox" {{ $delivery_completeness_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_7" name="delivery_completeness" value="10" class="star-checkbox" {{ $delivery_completeness_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category8_{{ $value }}" name="delivery_completeness" value="1" class="star-checkbox" {{ $delivery_completeness_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
             
                                                                     <tr>
@@ -955,36 +758,12 @@
                                                                         @php
                                                                             $delivery_packing_value = $customer_satisfaction_dtl->delivery_packing;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_8" name="delivery_packing" value="1" class="star-checkbox" {{ $delivery_packing_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_8" name="delivery_packing" value="2" class="star-checkbox" {{ $delivery_packing_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_8" name="delivery_packing" value="3" class="star-checkbox" {{ $delivery_packing_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_8" name="delivery_packing" value="4" class="star-checkbox" {{ $delivery_packing_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_8" name="delivery_packing" value="5" class="star-checkbox" {{ $delivery_packing_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_8" name="delivery_packing" value="6" class="star-checkbox" {{ $delivery_packing_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_8" name="delivery_packing" value="7" class="star-checkbox" {{ $delivery_packing_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_8" name="delivery_packing" value="8" class="star-checkbox" {{ $delivery_packing_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_8" name="delivery_packing" value="9" class="star-checkbox" {{ $delivery_packing_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_8" name="delivery_packing" value="10" class="star-checkbox" {{ $delivery_packing_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category9_{{ $value }}" name="delivery_packing" value="1" class="star-checkbox" {{ $delivery_packing_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
                                                                     <tr>
                                                                         @php
@@ -1051,36 +830,12 @@
                                                                         @php
                                                                             $product_compliant_value = $customer_satisfaction_dtl->product_compliant;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_9" name="product_compliant" value="1" class="star-checkbox" {{ $product_compliant_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_9" name="product_compliant" value="2" class="star-checkbox" {{ $product_compliant_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_9" name="product_compliant" value="3" class="star-checkbox" {{ $product_compliant_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_9" name="product_compliant" value="4" class="star-checkbox" {{ $product_compliant_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_9" name="product_compliant" value="5" class="star-checkbox" {{ $product_compliant_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_9" name="product_compliant" value="5" class="star-checkbox" {{ $product_compliant_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_9" name="product_compliant" value="7" class="star-checkbox" {{ $product_compliant_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_9" name="product_compliant" value="8" class="star-checkbox" {{ $product_compliant_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_9" name="product_compliant" value="9" class="star-checkbox" {{ $product_compliant_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                       </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_9" name="product_compliant" value="10" class="star-checkbox" {{ $product_compliant_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category10_{{ $value }}" name="product_compliant" value="1" class="star-checkbox" {{ $product_compliant_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                         <td rowspan="3">
                                                                             <textarea class="form-control dynamic-height" name="product_quality_remarks" placeholder="Remarks" disabled>{{ $customer_satisfaction_dtl->product_quality_remarks }}</textarea>
                                                                         </td>
@@ -1092,37 +847,12 @@
                                                                         @php
                                                                             $product_certificate_value = $customer_satisfaction_dtl->product_certificate;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_10" name="product_certificate" value="1" class="star-checkbox" {{ $product_certificate_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_10" name="product_certificate" value="2" class="star-checkbox" {{ $product_certificate_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_10" name="product_certificate" value="3" class="star-checkbox" {{ $product_certificate_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_10" name="product_certificate" value="4" class="star-checkbox" {{ $product_certificate_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_10" name="product_certificate" value="5" class="star-checkbox" {{ $product_certificate_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_10" name="product_certificate" value="6" class="star-checkbox" {{ $product_certificate_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_10" name="product_certificate" value="7" class="star-checkbox" {{ $product_certificate_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_10" name="product_certificate" value="8" class="star-checkbox" {{ $product_certificate_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_10" name="product_certificate" value="9" class="star-checkbox" {{ $product_certificate_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_10" name="product_certificate" value="10" class="star-checkbox" {{ $product_certificate_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category11_{{ $value }}" name="product_certificate" value="1" class="star-checkbox" {{ $product_certificate_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
             
                                                                     <tr>
@@ -1131,37 +861,12 @@
                                                                         @php
                                                                             $product_response_value = $customer_satisfaction_dtl->product_response;
                                                                         @endphp
-                                                                        <td>
-                                                                            <input type="checkbox" id="category1_11" name="product_response" value="1" class="star-checkbox" {{ $product_response_value >= 1 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category2_11" name="product_response" value="2" class="star-checkbox" {{ $product_response_value >= 2 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category3_11" name="product_response" value="3" class="star-checkbox" {{ $product_response_value >= 3 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category4_11" name="product_response" value="4" class="star-checkbox" {{ $product_response_value >= 4 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category5_11" name="product_response" value="5" class="star-checkbox" {{ $product_response_value >= 5 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category6_11" name="product_response" value="6" class="star-checkbox" {{ $product_response_value >= 6 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category7_11" name="product_response" value="7" class="star-checkbox" {{ $product_response_value >= 7 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category8_11" name="product_response" value="8" class="star-checkbox" {{ $product_response_value >= 8 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category9_11" name="product_response" value="9" class="star-checkbox" {{ $product_response_value >= 9 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" id="category10_11" name="product_response" value="10" class="star-checkbox" {{ $product_response_value >= 10 ? 'checked disabled' : '' }} disabled/>
-                                                                            <span class="star">&#9733;</span>
-                                                                        </td>
+                                                                        @foreach (range(1, 10) as $value)
+                                                                            <td>
+                                                                                <input type="checkbox" id="category12_{{ $value }}" name="product_response" value="1" class="star-checkbox" {{ $product_response_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <span class="star">&#9733;</span>            
+                                                                            </td>
+                                                                        @endforeach
                                                                     </tr>
                                                                     <tr>
                                                                         @php

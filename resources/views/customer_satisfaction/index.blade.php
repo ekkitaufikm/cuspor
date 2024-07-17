@@ -72,7 +72,7 @@
                                     @php
                                         $lookup_status = \App\Models\LookupModel::where('lookup_config', 'sls_quotation_status')->where('lookup_code', $sq->status)->first();
                                         $cp_satisfaction = $customer_satisfaction->where('sq_id', $sq->sq_id)->first();
-                                        $cp_satisfaction_dtl = $customer_satisfaction_dtl->where('customer_satisfaction_id', isset($cp_satisfaction->id))->first();
+                                        $cp_satisfaction_dtl = $customer_satisfaction_dtl->where('customer_satisfaction_id', $cp_satisfaction->id)->first();
                                         $sales_inquiry = \App\Models\QuotationItemModel::select('sls_inquiry.*')
                                                             ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
                                                             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
