@@ -528,7 +528,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category1_{{ $value }}" name="services_inquiry" value="1" class="star-checkbox" {{ $services_inquiry_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category1_{{ $value }}" name="services_inquiry" value="{{ $value }}" class="star-checkbox" {{ $services_inquiry_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -545,7 +545,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category2_{{ $value }}" name="services_technical" value="1" class="star-checkbox" {{ $services_technical_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category2_{{ $value }}" name="services_technical" value="{{ $value }}" class="star-checkbox" {{ $services_technical_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -559,7 +559,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category3_{{ $value }}" name="services_level_alignment" value="1" class="star-checkbox" {{ $services_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category3_{{ $value }}" name="services_level_alignment" value="{{ $value }}" class="star-checkbox" {{ $services_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -627,7 +627,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category4_{{ $value }}" name="commercial_level_alignment" value="1" class="star-checkbox" {{ $commercial_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category4_{{ $value }}" name="commercial_level_alignment" value="{{ $value }}" class="star-checkbox" {{ $commercial_level_alignment_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -644,7 +644,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category5_{{ $value }}" name="commercial_flexibility" value="1" class="star-checkbox" {{ $commercial_flexibility_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category5_{{ $value }}" name="commercial_flexibility" value="{{ $value }}" class="star-checkbox" {{ $commercial_flexibility_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -658,7 +658,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category6_{{ $value }}" name="commercial_compliance" value="1" class="star-checkbox" {{ $commercial_compliance_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category6_{{ $value }}" name="commercial_compliance" value="{{ $value }}" class="star-checkbox" {{ $commercial_compliance_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -729,7 +729,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category7_{{ $value }}" name="delivery_average" value="1" class="star-checkbox" {{ $delivery_average_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category7_{{ $value }}" name="delivery_average" value="{{ $value }}" class="star-checkbox" {{ $delivery_average_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -746,7 +746,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category8_{{ $value }}" name="delivery_completeness" value="1" class="star-checkbox" {{ $delivery_completeness_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category8_{{ $value }}" name="delivery_completeness" value="{{ $value }}" class="star-checkbox" {{ $delivery_completeness_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -760,7 +760,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category9_{{ $value }}" name="delivery_packing" value="1" class="star-checkbox" {{ $delivery_packing_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category9_{{ $value }}" name="delivery_packing" value="{{ $value }}" class="star-checkbox" {{ $delivery_packing_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -832,7 +832,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category10_{{ $value }}" name="product_compliant" value="1" class="star-checkbox" {{ $product_compliant_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category10_{{ $value }}" name="product_compliant" value="{{ $value }}" class="star-checkbox" {{ $product_compliant_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -849,7 +849,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category11_{{ $value }}" name="product_certificate" value="1" class="star-checkbox" {{ $product_certificate_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category11_{{ $value }}" name="product_certificate" value="{{ $value }}" class="star-checkbox" {{ $product_certificate_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach
@@ -863,7 +863,7 @@
                                                                         @endphp
                                                                         @foreach (range(1, 10) as $value)
                                                                             <td>
-                                                                                <input type="checkbox" id="category12_{{ $value }}" name="product_response" value="1" class="star-checkbox" {{ $product_response_value >= $value ? 'checked disabled' : '' }} disabled/>
+                                                                                <input type="checkbox" id="category12_{{ $value }}" name="product_response" value="{{ $value }}" class="star-checkbox" {{ $product_response_value >= $value ? 'checked disabled' : '' }} disabled/>
                                                                                 <span class="star">&#9733;</span>            
                                                                             </td>
                                                                         @endforeach

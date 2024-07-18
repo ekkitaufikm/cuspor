@@ -238,7 +238,7 @@
                                                 <tr>
                                                     <td class="pr-1" valign="top">Est`d Shipping CW</td>
                                                     <td style="width: 10px;" valign="top">: </td>
-                                                    <td valign="top">{{ rupiah( $sales_quotation->est_ship_weight) }}</td>
+                                                    <td valign="top">{{ $sales_quotation->est_ship_weight }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="pr-1" valign="top">Payment Term</td>
@@ -541,6 +541,56 @@
                                     </div>
                                 </div>                                    
                             </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-lg-6 mt-2">
+                            <h4 class="box-title">{{ __('Complaints Resolved By') }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Complain Received by</label>
+                                <input type="text" class="form-control ps-15" name="personal_name" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Data Received</label>
+                                <input type="text" class="form-control ps-15" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Complaints Resolved By</label>
+                                <input type="text" class="form-control ps-15" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control ps-15" disabled>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Action Taken</label>
+                                <textarea rows="5" class="form-control" disabled></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

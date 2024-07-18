@@ -509,10 +509,13 @@
                                                                         <tr>
                                                                             <td>1</td>
                                                                             <td>How was our service/response to the inquiry you sent to PT BBN?</td>
+                                                                            @php
+                                                                                $services_inquiry_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category1_{{ $value }}" name="services_inquiry" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category1_{{ $value }}" name="services_inquiry" value="{{ $value }}" class="star-checkbox {{ $services_inquiry_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $services_inquiry_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                             <td rowspan="3">
@@ -523,10 +526,13 @@
                                                                         <tr>
                                                                             <td>2</td>
                                                                             <td>How was our service/response to the technical questions/clarifications/explanations you needed?</td>
+                                                                            @php
+                                                                                $services_technical_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category2_{{ $value }}" name="services_technical" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category2_{{ $value }}" name="services_technical" value="{{ $value }}" class="star-checkbox {{ $services_technical_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $services_technical_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -534,10 +540,13 @@
                                                                         <tr>
                                                                             <td>3</td>
                                                                             <td>What is the level of alignment between the inquiry you sent and the proposal submitted by PT BBN?</td>
+                                                                            @php
+                                                                                $services_level_alignment_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category3_{{ $value }}" name="services_level_alignment" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category3_{{ $value }}" name="services_level_alignment" value="{{ $value }}" class="star-checkbox {{ $services_level_alignment_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $services_level_alignment_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -581,10 +590,13 @@
                                                                         <tr>
                                                                             <td>1</td>
                                                                             <td>What is the level of alignment between the price we offer and the service and quality of materials we supply?</td>
+                                                                            @php
+                                                                                $commercial_level_alignment_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category4_{{ $value }}" name="commercial_level_alignment" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category4_{{ $value }}" name="commercial_level_alignment" value="{{ $value }}" class="star-checkbox {{ $commercial_level_alignment_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $commercial_level_alignment_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                             <td rowspan="3">
@@ -595,10 +607,13 @@
                                                                         <tr>
                                                                             <td>2</td>
                                                                             <td>What is the level of flexibility in the Terms of Payment provided by PT BBN?</td>
+                                                                            @php
+                                                                                $commercial_flexibility_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category5_{{ $value }}" name="commercial_flexibility" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category5_{{ $value }}" name="commercial_flexibility" value="{{ $value }}" class="star-checkbox {{ $commercial_flexibility_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $commercial_flexibility_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -606,10 +621,13 @@
                                                                         <tr>
                                                                             <td>3</td>
                                                                             <td>How is the compliance and completeness of the supporting documents for the Invoice we submitted?</td>
+                                                                            @php
+                                                                                $commercial_compliance_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category6_{{ $value }}" name="commercial_compliance" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category6_{{ $value }}" name="commercial_compliance" value="{{ $value }}" class="star-checkbox {{ $commercial_compliance_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $commercial_compliance_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -656,35 +674,44 @@
                                                                         <tr>
                                                                             <td>1</td>
                                                                             <td>What is the average accuracy of Delivery Material in relation to the due date of the Purchase Order?</td>
+                                                                            @php
+                                                                                $delivery_average_value = 7; // Default value
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category7_{{ $value }}" name="delivery_average" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category7_{{ $value }}" name="delivery_average" value="{{ $value }}" class="star-checkbox {{ $delivery_average_value >= $value ? 'checked' : '' }}" {{ $delivery_average_value >= $value ? 'checked' : '' }}>
+                                                                                    <span class="star {{ $delivery_average_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                             <td rowspan="3">
                                                                                 <textarea class="form-control dynamic-height" name="delivery_material_remarks" placeholder="Remarks"></textarea>
                                                                             </td>
                                                                         </tr>
-                
+                                                                        
                                                                         <tr>
                                                                             <td>2</td>
                                                                             <td>What is the completeness of the documents provided by PT BBN during the material shipment?</td>
+                                                                            @php
+                                                                                $delivery_completeness_value = 7; // Default value
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category8_{{ $value }}" name="delivery_completeness" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category8_{{ $value }}" name="delivery_completeness" value="{{ $value }}" class="star-checkbox {{ $delivery_completeness_value >= $value ? 'checked' : '' }}" {{ $delivery_completeness_value >= $value ? 'checked' : '' }}>
+                                                                                    <span class="star {{ $delivery_completeness_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
-                
+                                                                        
                                                                         <tr>
                                                                             <td>3</td>
                                                                             <td>What is the quality, safety, and neatness of the packing materials that PT BBN has been conducting during material shipments?</td>
+                                                                            @php
+                                                                                $delivery_packing_value = 7; // Default value
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category9_{{ $value }}" name="delivery_packing" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category9_{{ $value }}" name="delivery_packing" value="{{ $value }}" class="star-checkbox {{ $delivery_packing_value >= $value ? 'checked' : '' }}" {{ $delivery_packing_value >= $value ? 'checked' : '' }}>
+                                                                                    <span class="star {{ $delivery_packing_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -732,10 +759,13 @@
                                                                         <tr>
                                                                             <td>1</td>
                                                                             <td>How compliant are the Materials sent with the PO specifications?</td>
+                                                                            @php
+                                                                                $product_compliant_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category10_{{ $value }}" name="product_compliant" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category10_{{ $value }}" name="product_compliant" value="{{ $value }}" class="star-checkbox {{ $product_compliant_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $product_compliant_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                             <td rowspan="3">
@@ -746,10 +776,13 @@
                                                                         <tr>
                                                                             <td>2</td>
                                                                             <td>How complete/compliant are the Certificate documents and other supporting documents provided by BBN in relation to the PO requirements?</td>
+                                                                            @php
+                                                                                $product_certificate_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category11_{{ $value }}" name="product_certificate" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category11_{{ $value }}" name="product_certificate" value="{{ $value }}" class="star-checkbox {{ $product_certificate_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $product_certificate_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -757,10 +790,13 @@
                                                                         <tr>
                                                                             <td>3</td>
                                                                             <td>Is the response and/or resolution action we have taken regarding complaints of nonconformity, both in terms of documents and materials, satisfactory?</td>
+                                                                            @php
+                                                                                $product_response_value = 7;
+                                                                            @endphp
                                                                             @foreach (range(1, 10) as $value)
                                                                                 <td>
-                                                                                    <input type="checkbox" id="category12_{{ $value }}" name="product_response" value="1" class="star-checkbox" />
-                                                                                    <span class="star">&#9733;</span>            
+                                                                                    <input type="checkbox" id="category12_{{ $value }}" name="product_response" value="{{ $value }}" class="star-checkbox {{ $product_response_value >= $value ? 'checked' : '' }}" />
+                                                                                    <span class="star {{ $product_response_value >= $value ? 'checked' : '' }}">&#9733;</span>            
                                                                                 </td>
                                                                             @endforeach
                                                                         </tr>
@@ -793,13 +829,15 @@
     {{-- Tempat Ngoding Meletakkan js custom --}}
     <script>
         // Tambahkan event listener untuk setiap span dengan kelas 'star'
-        const stars = document.querySelectorAll('.star');
-        stars.forEach(star => {
-          star.addEventListener('click', function() {
-            const checkbox = this.previousElementSibling;
-            checkbox.checked = !checkbox.checked; // Toggle nilai checkbox
-            this.classList.toggle('checked'); // Toggle kelas 'checked' pada span
-          });
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const checkbox = this.previousElementSibling;
+                    checkbox.checked = !checkbox.checked; // Toggle nilai checkbox
+                    this.classList.toggle('checked'); // Toggle kelas 'checked' pada span
+                });
+            });
         });
     </script>
     <script>

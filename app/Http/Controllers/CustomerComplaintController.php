@@ -158,7 +158,7 @@ class CustomerComplaintController extends Controller
             'quotation_date'    => $quotation->created_date,
             'status'            => $lookup_status->lookup_name,
             'offer_mode'        => $lookup_sqOffMode->lookup_name,
-            'est_ship_weight'   => rupiah($quotation->est_ship_weight),
+            'est_ship_weight'   => $quotation->est_ship_weight,
             'payment_term'      => $lookup_sqPayment->lookup_name,
             'payment_mode'      => $lookup_sqPayMode->lookup_name,
             'delivery_time'     => $lookup_sqDelTime->lookup_name,
