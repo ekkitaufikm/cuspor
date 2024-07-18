@@ -61,7 +61,7 @@
         }
 
         .star {
-            font-size: 1.5em;
+            font-size: 2.5em;
             cursor: pointer;
         }
 
