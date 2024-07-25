@@ -565,31 +565,31 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">Complain Received by</label>
-                                <input type="text" class="form-control ps-15" name="personal_name" disabled>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->received_by ?? '-' }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label">Data Received</label>
-                                <input type="text" class="form-control ps-15" disabled>
+                                <label class="form-label">Date Received</label>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->received_date ?? '-' }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">Complaints Resolved By</label>
-                                <input type="text" class="form-control ps-15" disabled>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->resolved_by ?? '-' }}" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label">Title</label>
-                                <input type="text" class="form-control ps-15" disabled>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->resolved_title ?? '-' }}" disabled>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">Action Taken</label>
-                                <textarea rows="5" class="form-control" disabled></textarea>
+                                <textarea rows="5" class="form-control" disabled>{{ $customer_complaint->action_taken ?? '-' }}</textarea>
                             </div>
                         </div>
                     </div>

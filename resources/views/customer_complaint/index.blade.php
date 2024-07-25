@@ -29,6 +29,68 @@
 </div>
 <section class="content">
     <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header">						
+                    {{-- <h4 class="box-title">Complex headers (rowspan and colspan)</h4> --}}
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <h4 class="box-title">{{ __('Search Parameter') }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <form id="searchForm" action="{{ url('customer-complaint') }}" method="GET">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">SQ No</label>
+                                    <input type="text" class="form-control ps-15" name="sq_no" placeholder="SQ No" value="{{ request('sq_no') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">INQ No</label>
+                                    <input type="text" class="form-control ps-15" name="inq_no" placeholder="INQ No" value="{{ request('inq_no') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">SQ Date</label>
+                                    <input type="date" class="form-control ps-15" name="sq_date" placeholder="SQ Date" value="{{ request('sq_date') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Project Name</label>
+                                    <input type="text" class="form-control ps-15" name="project_name" placeholder="Project Name" value="{{ request('project_name') }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+                                        Search
+                                    </button>
+                                    <button type="button" class="btn btn-warning me-1" onclick="resetForm()">
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> {{ session('success') }}
@@ -61,10 +123,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Complaint No</th>
                                     <th>SQ No</th>
                                     <th>INQ No</th>
                                     <th>Customer</th>
                                     <th>SQ Date</th>
+                                    <th>Project Name</th>
                                     <th>Status</th> 
                                     <th width="10%">Action</th>
                                 </tr>
@@ -94,10 +158,12 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $customer_complaint->complaint_no }}</td>
                                         <td>{{ $sales_quotation->sq_no }}</td>
                                         <td>{{ $sales_inquiry->inq_no }}</td>
                                         <td>{{ $sales_customer->cust_name }}</td>
                                         <td>{{ $sales_quotation->created_date }}</td>
+                                        <td>{{ $sales_inquiry->project_name }}</td>
                                         <td>
                                             @if (isset($cp->status) == 1)
                                                 <div class="w-100"><span class="badge badge-success">Survey Finished</span></div>
@@ -130,4 +196,21 @@
 
 @section('js-custom')
     {{-- Tempat Ngoding Meletakkan js custom --}}
+    <script>
+        function resetForm() {
+            // Dapatkan referensi ke form berdasarkan ID
+            var form = document.getElementById('searchForm');
+            
+            // Reset form
+            form.reset();
+        }
+        
+        function submitForm() {
+            // Dapatkan referensi ke form berdasarkan ID
+            var form = document.getElementById('searchForm');
+            
+            // Submit form
+            form.submit();
+        }
+    </script>
 @endsection

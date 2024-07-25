@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('cp_customer_satisfaction', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sq_id');
+            $table->string('satisfaction_no');
             $table->string('pic_sales');
             $table->string('cust_id');
             $table->string('cust_pic_id');
             $table->string('remarks');
             $table->string('status');
+            $table->string('received_by')->nullable();
+            $table->string('received_date')->nullable();
+            $table->string('resolved_by')->nullable();
+            $table->string('resolved_title')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

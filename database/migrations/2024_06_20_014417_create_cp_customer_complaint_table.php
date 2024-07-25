@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('cp_customer_complaint', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sq_id');
+            $table->string('complaint_no');
+            $table->string('sq_no');
+            $table->string('inq_no');
+            $table->string('project_name');
+            $table->string('customer');
+            $table->string('sq_date');
             $table->string('pic_sales');
             $table->string('personal_name');
             $table->string('telp_fax');
@@ -22,7 +28,12 @@ return new class extends Migration
             $table->string('title');
             $table->string('po_dan_date');
             $table->string('description');
-            $table->string('action_taken');
+            $table->string('received_by')->nullable();
+            $table->string('received_date')->nullable();
+            $table->string('resolved_by')->nullable();
+            $table->string('ncr_no')->nullable();
+            $table->string('resolved_title')->nullable();
+            $table->string('action_taken')->nullable();
             $table->string('status');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();

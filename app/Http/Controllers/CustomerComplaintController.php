@@ -24,15 +24,40 @@ class CustomerComplaintController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $sales_quotation = SalesQuotationModel::all();
-        $customer_complaint      = CustomerComplaintModel::where('personal_name', Auth::user()->name)->get();
 
-        // echo json_encode($customer_complaint); die;
+        // Start building the query
+        $query = CustomerComplaintModel::where('personal_name', Auth::user()->name);
+
+        // Apply filters based on request parameters
+        if ($request->has('sq_no')) {
+            $query->where('sq_no', 'like', '%' . $request->sq_no . '%');
+        }
+
+        if ($request->has('inq_no')) {
+            $query->where('inq_no', 'like', '%' . $request->inq_no . '%');
+        }
+
+        if ($request->has('customer')) {
+            $query->where('customer', 'like', '%' . $request->customer . '%');
+        }
+
+        if ($request->has('sq_date')) {
+            $query->where('sq_date', 'like', '%' . $request->sq_date . '%');
+        }
+
+        if ($request->has('project_name')) {
+            $query->where('project_name', 'like', '%' . $request->project_name . '%');
+        }
+
+        // Execute the query and get the results
+        $customer_complaint = $query->get();
+
         return view('customer_complaint.index', [
-            "customer_complaint"    => $customer_complaint,
-            "sales_quotation"       => $sales_quotation
+            "customer_complaint" => $customer_complaint,
+            "sales_quotation"    => $sales_quotation
         ]);
     }
 
@@ -195,12 +220,31 @@ class CustomerComplaintController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'message' => $validator->errors()], 200);
         }
+        $quotation        = SalesQuotationModel::where('sq_id', $request->sq_id)->first();
+        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->where('sls_inquiry.inq_id', $quotation->inq_id)
+            ->first();
+        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+            ->where('sls_quotation.sq_no', $quotation->sq_no)
+            ->first();
 
         DB::beginTransaction();
         try {
 
             $data = [
+                'complaint_no'  => $request->complaint_no,
                 'sq_id'         => $request->sq_id,
+                'sq_no'         => $quotation->sq_no,
+                'inq_no'        => $sales_inquiry->inq_no,
+                'project_name'  => $sales_inquiry->project_name,
+                'customer'      => $sales_customer->cust_name,
+                'sq_date'       => $quotation->created_date,
+                'sq_date'       => $quotation->created_date,
                 'pic_sales'     => $request->pic_sales,
                 'personal_name' => Auth::user()->name,
                 'telp_fax'      => Auth::user()->phone,

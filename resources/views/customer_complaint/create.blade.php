@@ -140,7 +140,25 @@
                     <form id="form-id" action="{{ route('customer-complaint.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Complaint No</label>
+                                    <input type="text" class="form-control ps-15" name="complaint_no" placeholder="[ Auto ]" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Complaint Date</label>
+                                    <input type="text" class="form-control ps-15" name="created_at" value="{{ now() }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Complaint By</label>
+                                    <input type="text" class="form-control ps-15" name="created_by" value="{{ Auth::user()->name }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4">
                                 <label class="form-label">SQ No<span style="color: red">*</span></label>
                                 <div class="input-group">
                                     <input id="select-quotation-display" name="sq_id" type="text" class="form-control" placeholder="SQ No" readonly>
@@ -507,17 +525,29 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div id="fileInputsContainer" class="col-12">
-                                    <div class="form-group file-input-group">
+                                <div class="col-lg-6" >
+                                    <div class="form-group file-input-group" id="fileInputsContainer1">
                                         <label class="form-label">Upload File Lampiran</label>
                                         <div class="input-group">
-                                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent"> 
+                                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent">
                                         </div>
-                                        <div class="form-control-feedback"><small>Example : Form Keluhan Pelanggan Format Customer</small></div>
+                                        <div class="form-control-feedback"><small>Contoh: Form Keluhan Pelanggan Format Customer</small></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button id="addFileButton1" class="btn btn-primary mb-3" type="button">Tambah Upload File Lampiran</button>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <button id="addFileButton" class="btn btn-primary mb-3" type="button">Tambah Upload File</button>
+                                <div class="col-lg-6" >
+                                    <div class="form-group file-input-group" id="fileInputsContainer2">
+                                        <label class="form-label">Upload Photo</label>
+                                        <div class="input-group">
+                                            <input type="file" name="file_photo[]" class="form-control bg-transparent">
+                                        </div>
+                                        <div class="form-control-feedback"><small>Contoh: Foto Produk yang Rusak</small></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button id="addFileButton2" class="btn btn-primary mb-3" type="button">Tambah Upload Photo</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -549,7 +579,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label">Data Received</label>
+                                <label class="form-label">Date Received</label>
                                 <input type="text" class="form-control ps-15" disabled>
                             </div>
                         </div>
@@ -592,22 +622,41 @@
     {{-- Tempat Ngoding Meletakkan js custom --}}
     <script>
         $(document).ready(function() {
-            $('#addFileButton').click(function() {
+            $('#addFileButton1').click(function() {
                 var html = `
                     <div class="form-group file-input-group">
                         <label class="form-label">Upload File Lampiran</label>
                         <div class="input-group">
                             <input type="file" name="file_lampiran[]" class="form-control bg-transparent"> 
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-danger delete-button"><i class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-danger delete-button1"><i class="fa fa-trash"></i></button>
                             </div>
                         </div>
                         <div class="form-control-feedback"><small>Example : Form Keluhan Pelanggan Format Customer</small></div>
                     </div>`;
-                $('#fileInputsContainer').append(html);
+                $('#fileInputsContainer1').append(html);
             });
         
-            $(document).on('click', '.delete-button', function() {
+            $(document).on('click', '.delete-button1', function() {
+                $(this).closest('.form-group').remove();
+            });
+
+            $('#addFileButton2').click(function() {
+                var html = `
+                    <div class="form-group file-input-group">
+                        <label class="form-label">Upload Photo</label>
+                        <div class="input-group">
+                            <input type="file" name="file_photo[]" class="form-control bg-transparent"> 
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-danger delete-button2"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-control-feedback"><small>Contoh: Foto Produk yang Rusak</small></div>
+                    </div>`;
+                $('#fileInputsContainer2').append(html);
+            });
+        
+            $(document).on('click', '.delete-button2', function() {
                 $(this).closest('.form-group').remove();
             });
         });
