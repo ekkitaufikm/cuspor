@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form id="form-id" action="{{ route('customer-complaint.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="form-id" action="{{ url('customer-complaint/add-survey/save') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-4">
@@ -529,7 +529,7 @@
                                     <div class="form-group file-input-group" id="fileInputsContainer1">
                                         <label class="form-label">Upload File Lampiran</label>
                                         <div class="input-group">
-                                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent">
+                                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent" multiple>
                                         </div>
                                         <div class="form-control-feedback"><small>Contoh: Form Keluhan Pelanggan Format Customer</small></div>
                                     </div>
@@ -541,7 +541,7 @@
                                     <div class="form-group file-input-group" id="fileInputsContainer2">
                                         <label class="form-label">Upload Photo</label>
                                         <div class="input-group">
-                                            <input type="file" name="file_photo[]" class="form-control bg-transparent">
+                                            <input type="file" name="file_photo[]" class="form-control bg-transparent" multiple>
                                         </div>
                                         <div class="form-control-feedback"><small>Contoh: Foto Produk yang Rusak</small></div>
                                     </div>
@@ -627,7 +627,7 @@
                     <div class="form-group file-input-group">
                         <label class="form-label">Upload File Lampiran</label>
                         <div class="input-group">
-                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent"> 
+                            <input type="file" name="file_lampiran[]" class="form-control bg-transparent" multiple>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-danger delete-button1"><i class="fa fa-trash"></i></button>
                             </div>
@@ -646,7 +646,7 @@
                     <div class="form-group file-input-group">
                         <label class="form-label">Upload Photo</label>
                         <div class="input-group">
-                            <input type="file" name="file_photo[]" class="form-control bg-transparent"> 
+                            <input type="file" name="file_photo[]" class="form-control bg-transparent" multiple>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-danger delete-button2"><i class="fa fa-trash"></i></button>
                             </div>
@@ -818,19 +818,20 @@
 
     <script>
         $(document).ready(function() {
-            // SUBMIT FORM
             $("#btn-submit").on('click', function(e) {
                 e.preventDefault();
                 $('#btn-submit').prop('disabled', true);
                 
                 let formUrl = $('#form-id').attr('action');
-                let form_data = $('#form-id').serialize();
+                let formData = new FormData($('#form-id')[0]); // Menggunakan FormData untuk mengirim form data
 
                 $.ajax({
                     url: formUrl,
                     method: "POST",
                     dataType: "JSON",
-                    data: form_data,
+                    data: formData,
+                    contentType: false,
+                    processData: false, // Penting untuk FormData
                     timeout: 30000,
                     error: function(xmlhttprequest, textstatus, message) {
                         var res = (textstatus === "timeout") ? "Request timeout!" : textstatus;

@@ -181,6 +181,24 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
+                                <label class="form-label">Complaint No</label>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->complaint_no }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Complaint Date</label>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->created_at }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="form-label">Complaint By</label>
+                                <input type="text" class="form-control ps-15" value="{{ $customer_complaint->dibuatOleh->name }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
                                 <label class="form-label">Company Code<span style="color: red">*</span></label>
                                 <input type="text" class="form-control ps-15" value="{{ $sales_customer->cust_code }}" disabled>
                             </div>
@@ -529,18 +547,35 @@
                                 <textarea rows="5" class="form-control" name="description" disabled>{{ $customer_complaint->description }}</textarea>
                             </div>
                         </div>
-                        <div class="col-md-12" style="margin-bottom: 10px;">
-                            <fieldset class="scheduler-border" style="padding: 20px;">
-                                {{-- <legend class="scheduler-border">Inquiry Items</legend> --}}
-                                <legend class="scheduler-border" style="color: green;">File Lampiran</legend>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        @foreach ($customer_complaint_file as $cpf)
-                                        <p>{{ $cpf->file_lampiran }}</p>
-                                        @endforeach
-                                    </div>
-                                </div>                                    
-                            </fieldset>
+                        <div class="row">
+                            <div class="col-lg-6" >
+                                <fieldset class="scheduler-border" style="padding: 20px;">
+                                    <legend class="scheduler-border" style="color: green;">File Lampiran</legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @foreach ($customer_complaint_file as $cpf)
+                                                <a href="{{ url('upload/customer_complaint/lampiran')}}/{{ $cpf->file_lampiran }}" target="__blank">
+                                                    <p>{{ $cpf->file_lampiran }}</p>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>                                    
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6" >
+                                <fieldset class="scheduler-border" style="padding: 20px;">
+                                    <legend class="scheduler-border" style="color: green;">Foto Lampiran</legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @foreach ($customer_complaint_file as $cpf)
+                                            <a href="{{ url('upload/customer_complaint/foto')}}/{{ $cpf->foto_lampiran }}" target="__blank">
+                                                <p>{{ $cpf->foto_lampiran }}</p>
+                                            </a>
+                                            @endforeach
+                                        </div>
+                                    </div>                                    
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
                 </div>

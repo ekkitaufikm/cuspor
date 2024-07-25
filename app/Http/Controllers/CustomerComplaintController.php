@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -220,76 +221,123 @@ class CustomerComplaintController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => false, 'message' => $validator->errors()], 200);
         }
-        $quotation        = SalesQuotationModel::where('sq_id', $request->sq_id)->first();
-        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->where('sls_inquiry.inq_id', $quotation->inq_id)
-            ->first();
-        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
-            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
-            ->where('sls_quotation.sq_no', $quotation->sq_no)
-            ->first();
+        
+        $request->validate([
+            'file_lampiran.*' => 'nullable|mimes:doc,pdf,xls,xlsx|max:2048',
+            'file_photo.*' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+        ]);
 
         DB::beginTransaction();
         try {
+            // Get last stored number
+            $lastNumber = file_exists('lastNumber.txt') ? (int) file_get_contents('lastNumber.txt') : 0;
 
+            // Increment number for new complaint
+            $newNumber = $lastNumber + 1;
+
+            // Update last stored number in file
+            file_put_contents('lastNumber.txt', $newNumber);
+
+            // Format complaint number
+            $complaint_no = str_pad($newNumber, 4, '0', STR_PAD_LEFT) . "/EXP/" . date('mY');
+
+            // Fetch related data
+            $quotation = SalesQuotationModel::where('sq_id', $request->sq_id)->first();
+            $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*')
+                ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                ->where('sls_inquiry.inq_id', $quotation->inq_id)
+                ->first();
+            $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+                ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+                ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+                ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+                ->where('sls_quotation.sq_no', $quotation->sq_no)
+                ->first();
+
+            // Create Customer Complaint
             $data = [
-                'complaint_no'  => $request->complaint_no,
-                'sq_id'         => $request->sq_id,
-                'sq_no'         => $quotation->sq_no,
-                'inq_no'        => $sales_inquiry->inq_no,
-                'project_name'  => $sales_inquiry->project_name,
-                'customer'      => $sales_customer->cust_name,
-                'sq_date'       => $quotation->created_date,
-                'sq_date'       => $quotation->created_date,
-                'pic_sales'     => $request->pic_sales,
+                'complaint_no' => $complaint_no,
+                'sq_id' => $request->sq_id,
+                'sq_no' => $quotation->sq_no,
+                'inq_no' => $sales_inquiry->inq_no,
+                'project_name' => $sales_inquiry->project_name,
+                'customer' => $sales_customer->cust_name,
+                'sq_date' => $quotation->created_date,
+                'pic_sales' => $sales_customer->user_name,
                 'personal_name' => Auth::user()->name,
-                'telp_fax'      => Auth::user()->phone,
-                'phone'         => Auth::user()->phone,
-                'email'         => Auth::user()->email,
-                'title'         => Auth::user()->department,
-                'po_dan_date'   => $request->po_dan_date,
-                'description'   => $request->description,
-                'created_by'    => Auth::user()->id,
-                'status'        => 1,
+                'telp_fax' => Auth::user()->phone,
+                'phone' => Auth::user()->phone,
+                'email' => Auth::user()->email,
+                'title' => Auth::user()->department,
+                'po_dan_date' => $request->po_dan_date,
+                'description' => $request->description,
+                'created_by' => Auth::user()->id,
+                'status' => 1,
             ];
 
-            $customerComplaint      = CustomerComplaintModel::create($data);
-            $customerComplaintId    = $customerComplaint->id;
-            
-            //input category
+            $customerComplaint = CustomerComplaintModel::create($data);
+            $customerComplaintId = $customerComplaint->id;
+
+            // Input category
             if ($request->has('category')) {
                 foreach ($request->category as $category) {
                     CustomerComplaintCategoryModel::create([
                         'customer_complaint_id' => $customerComplaintId,
-                        'category_name'         => $category,
-                        'category_other'        => $request->category_other,
+                        'category_name' => $category,
+                        'category_other' => $request->category_other,
                     ]);
                 }
             }
 
-            //input file
             if ($request->hasFile('file_lampiran')) {
-                $file       = $request->file('file_lampiran');
-                $fileName   = Str::uuid()."-".time().".".$file->extension();
-                $file->move( "upload/customer_complaint/", $fileName);
+                foreach ($request->file('file_lampiran') as $file) {
+                    // Simpan atau proses setiap file lampiran
+                    $filename = $file->getClientOriginalName();
+                    $file->storeAs('lampiran', $filename, 'public'); // Simpan di dalam folder 'lampiran' di storage public
+                }
+            }
     
-                CustomerComplaintFileModel::create([
-                    'customer_complaint_id' => $customerComplaintId,
-                    'file_lampiran'         => $fileName,
-                ]);
+            if ($request->hasFile('file_photo')) {
+                foreach ($request->file('file_photo') as $photo) {
+                    // Simpan atau proses setiap foto
+                    $filename = $photo->getClientOriginalName();
+                    $photo->storeAs('photos', $filename, 'public'); // Simpan di dalam folder 'photos' di storage public
+                }
+            }
+    
+            // Input file Lampiran
+            if ($request->hasFile('file_lampiran')) {
+                foreach ($request->file('file_lampiran') as $file) {
+                    $fileName = Str::uuid() . "-" . time() . "." . $file->extension();
+                    $file->move("upload/customer_complaint/lampiran/", $fileName);
+            
+                    CustomerComplaintFileModel::create([
+                        'customer_complaint_id' => $customerComplaintId,
+                        'file_lampiran' => $fileName,
+                        'created_by' => Auth::user()->id,
+                    ]);
+                }
+            }
+            
+            // Input file Photo
+            if ($request->hasFile('file_photo')) {
+                foreach ($request->file('file_photo') as $file) {
+                    $filePhoto = Str::uuid() . "-" . time() . "." . $file->extension();
+                    $file->move("upload/customer_complaint/foto/", $filePhoto);
+            
+                    CustomerComplaintFileModel::create([
+                        'customer_complaint_id' => $customerComplaintId,
+                        'foto_lampiran' => $filePhoto,
+                        'created_by' => Auth::user()->id,
+                    ]);
+                }
             }
 
-            if ($customerComplaint) {
-                DB::commit();
-                return response()->json(['status' => true, 'message' => "Data Survey Customer Complaint berhasil ditambahkan!", 'url' => '/customer-complaint'], 200);
-            } else {
-                DB::rollback();
-                return response()->json(['status' => false, 'message' => "Gagal menambahkan data"], 200);
-            }
+            // Commit transaction
+            DB::commit();
+
+            return response()->json(['status' => true, 'message' => "Data Survey Customer Complaint berhasil ditambahkan!", 'url' => '/customer-complaint'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['status' => false, 'message' => $e->getMessage()], 200);

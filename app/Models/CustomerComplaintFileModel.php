@@ -21,9 +21,4 @@ class CustomerComplaintFileModel extends Model
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
-    
-    public function perintahKerja()
-    {
-        return $this->belongsTo(PkModel::class, 'pk_id', 'id');
-    }
 }

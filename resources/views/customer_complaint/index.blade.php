@@ -158,7 +158,7 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $customer_complaint->complaint_no }}</td>
+                                        <td>{{ $cp->complaint_no }}</td>
                                         <td>{{ $sales_quotation->sq_no }}</td>
                                         <td>{{ $sales_inquiry->inq_no }}</td>
                                         <td>{{ $sales_customer->cust_name }}</td>
