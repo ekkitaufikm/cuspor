@@ -22,17 +22,37 @@ class CustomerSatisfactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sales_quotation = SalesQuotationModel::select('sls_quotation.*')
+        $query = SalesQuotationModel::select('sls_quotation.*')
             ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
             ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
             ->where('sls_quotation.status', 8)
-            ->where('sls_customer.cust_name', Auth::user()->company_name)
-            ->orderBy('sls_quotation.created_date', 'desc')
-            ->get();
+            ->where('sls_customer.cust_name', Auth::user()->company_name);
+
         $customer_satisfaction      = CustomerSatisfactionModel::all();
         $customer_satisfaction_dtl  = CustomerSatisfactionDetailModel::all();
+        if ($request->has('sq_no')) {
+            $query->where('sls_quotation.sq_no', 'like', '%' . $request->sq_no . '%');
+        }
+
+        if ($request->has('inq_no')) {
+            $query->where('sls_inquiry.inq_no', 'like', '%' . $request->inq_no . '%');
+        }
+
+        if ($request->has('customer')) {
+            $query->where('sls_customer.cust_name', 'like', '%' . $request->customer . '%');
+        }
+
+        if ($request->has('sq_date')) {
+            $query->where('sls_quotation.created_date', 'like', '%' . $request->sq_date . '%');
+        }
+
+        if ($request->has('project_name')) {
+            $query->where('sls_inquiry.project_name', 'like', '%' . $request->project_name . '%');
+        }
+
+        $sales_quotation = $query->orderBy('sls_quotation.created_date', 'desc')->get();
 
         return view('customer_satisfaction.index', [
             "customer_satisfaction" => $customer_satisfaction,
@@ -190,6 +210,46 @@ class CustomerSatisfactionController extends Controller
             // echo json_encode($sales_inquiry); die;
 
         return view('customer_satisfaction.show', [
+            'sales_quotation'       => $sales_quotation,
+            "customer_satisfaction" => $customer_satisfaction,
+            "customer_satisfaction_dtl" => $customer_satisfaction_dtl,
+            'quotation_customer'    => $quotation_customer,
+            'sales_inquiry'         => $sales_inquiry,
+            'sales_customer'        => $sales_customer,
+            'quotation_items'       => $quotation_items
+        ]);
+    }
+
+    public function print(string $id)
+    {
+        $sq_no = Crypt::decrypt($id);
+        $sales_quotation        = SalesQuotationModel::where('sq_no', $sq_no)->first();
+        $customer_satisfaction      = CustomerSatisfactionModel::where('sq_id', $sales_quotation->sq_id)->first();
+        $customer_satisfaction_dtl  = CustomerSatisfactionDetailModel::where('customer_satisfaction_id', $customer_satisfaction->id)->first();
+
+        $quotation_customer = SalesQuotationModel::select('sls_customer_pic.*')
+            ->join('sls_customer_pic', 'sls_quotation.cust_pic', '=', 'sls_customer_pic.pic_id')
+            ->where('sls_quotation.sq_no', $sq_no)
+            ->first();
+        $sales_inquiry = SalesQuotationModel::select('sls_inquiry.*', 'sls_customer.*', 'sls_customer_pic.*', 'erp_user.user_name as pic_sales_user_name')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->leftJoin('sls_customer_pic', 'sls_inquiry.cust_pic_id', '=', 'sls_customer_pic.pic_id')
+            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+            ->where('sls_inquiry.inq_id', $sales_quotation->inq_id)
+            ->first();
+        $sales_customer = SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+            ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+            ->where('sls_quotation.sq_no', $sq_no)
+            ->first();
+        $quotation_items = QuotationItemModel::where('sq_id', $sales_quotation->sq_id)
+            ->get();
+            // echo json_encode($sales_inquiry); die;
+
+        return view('customer_satisfaction.print', [
             'sales_quotation'       => $sales_quotation,
             "customer_satisfaction" => $customer_satisfaction,
             "customer_satisfaction_dtl" => $customer_satisfaction_dtl,

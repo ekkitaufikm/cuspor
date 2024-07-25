@@ -29,6 +29,56 @@
 </div>
 <section class="content">
     <div class="row">
+        <div class="col-12">
+            <div class="box">
+                <div class="box-header">						
+                    {{-- <h4 class="box-title">Complex headers (rowspan and colspan)</h4> --}}
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <h4 class="box-title">{{ __('Search Parameter') }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <form id="searchForm" action="{{ url('product-order-history') }}" method="GET">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">SQ No</label>
+                                    <input type="text" class="form-control ps-15" name="sq_no" placeholder="SQ No" value="{{ request('sq_no') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">INQ No</label>
+                                    <input type="text" class="form-control ps-15" name="inq_no" placeholder="INQ No" value="{{ request('inq_no') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary" onclick="submitForm()">
+                                        Search
+                                    </button>
+                                    <button type="button" class="btn btn-warning me-1" onclick="resetForm()">
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="row">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> {{ session('success') }}
@@ -151,4 +201,21 @@
 
 @section('js-custom')
     {{-- Tempat Ngoding Meletakkan js custom --}}
+    <script>
+        function resetForm() {
+            // Dapatkan referensi ke form berdasarkan ID
+            var form = document.getElementById('searchForm');
+            
+            // Reset form
+            form.reset();
+        }
+        
+        function submitForm() {
+            // Dapatkan referensi ke form berdasarkan ID
+            var form = document.getElementById('searchForm');
+            
+            // Submit form
+            form.submit();
+        }
+    </script>
 @endsection

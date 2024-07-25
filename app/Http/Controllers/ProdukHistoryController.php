@@ -18,18 +18,30 @@ class ProdukHistoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sales_quotation = SalesQuotationModel::select('sls_quotation.*')
-            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
-            ->where('sls_quotation.status', 8)
-            ->where('sls_customer.cust_name', Auth::user()->company_name)
-            ->orderBy('sls_quotation.created_date', 'desc') // Menambahkan orderBy untuk mendapatkan yang terbaru
-            ->get();
-            // echo json_encode($sales_quotation); die;
+        $query = SalesQuotationModel::select('sls_quotation.*')
+                ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+                ->where('sls_customer.cust_name', Auth::user()->company_name)
+                ->where('sls_quotation.status', 8);
+
+        if ($request->has('sq_no')) {
+            $query->where('sls_quotation.sq_no', 'like', '%' . $request->sq_no . '%');
+        }
+
+        if ($request->has('inq_no')) {
+            $query->where('sls_inquiry.inq_no', 'like', '%' . $request->inq_no . '%');
+        }
+
+        if ($request->has('customer')) {
+            $query->where('sls_customer.cust_name', 'like', '%' . $request->customer . '%');
+        }
+
+        $sales_quotation = $query->orderBy('sls_quotation.created_date', 'desc')->get();
+
         return view('produk_history.index', [
-            'sales_quotation'       => $sales_quotation,
+            'sales_quotation' => $sales_quotation,
         ]);
     }
 

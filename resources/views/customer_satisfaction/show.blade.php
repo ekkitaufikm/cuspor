@@ -222,7 +222,7 @@
                                                 <tr>
                                                     <td class="pr-1" valign="top">Est`d Shipping CW</td>
                                                     <td style="width: 10px;" valign="top">: </td>
-                                                    <td valign="top">{{ rupiah( $sales_quotation->est_ship_weight) }}</td>
+                                                    <td valign="top">{{ $sales_quotation->est_ship_weight }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="pr-1" valign="top">Payment Term</td>
