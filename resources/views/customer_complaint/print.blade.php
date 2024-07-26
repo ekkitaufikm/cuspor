@@ -73,6 +73,23 @@
         .subJudul {
             background-color: #EDEDED;
         }
+        .padding-bottom {
+            padding-bottom: 70px; /* Atur sesuai dengan kebutuhan */
+        }
+        .padding-lampiran {
+            padding-bottom: 280px; /* Atur sesuai dengan kebutuhan */
+        }
+        .images-container {
+            text-align: center; /* Memusatkan gambar secara horizontal */
+        }
+        .print-img {
+            width: 55%; 
+            max-width: 100%; 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto;
+            padding: 5px;
+        }
         @media print {
             table {
                 width: 100%;
@@ -94,6 +111,23 @@
 
             .subJudul {
                 background-color: #EDEDED !important;
+            }
+            .padding-bottom {
+                padding-bottom: 110px; /* Atur sesuai dengan kebutuhan */
+            }
+            .padding-lampiran {
+                padding-bottom: 280px; /* Atur sesuai dengan kebutuhan */
+            }
+            .images-container {
+                text-align: center; /* Memusatkan gambar secara horizontal */
+            }
+            .print-img {
+                width: 55%; 
+                max-width: 100%; 
+                display: block; 
+                margin-left: auto; 
+                margin-right: auto;
+                padding: 5px;
             }
         }
 
@@ -123,7 +157,7 @@
             <table>
                 <tbody>
                     <tr>
-                        <td colspan="3" class="subJudul"><b>The Details</b> <br> <p>Rincian</p></td>
+                        <td colspan="3" class="subJudul"><b>The Details</b> <br> (Rincian)</td>
                     </tr>
                     <tr>
                         <td><b>Customer Name</b> (Nama Pelanggan)</td>
@@ -161,7 +195,7 @@
                         <td>{{ $customer_complaint->po_dan_date }}</td>
                     </tr>
                     <tr>
-                        <td colspan="3" class="subJudul"><b>Category</b> <br> <p>Kategori</p></td>
+                        <td colspan="3" class="subJudul"><b>Category</b> <br> (Kategori)</td>
                     </tr>
                     <tr>
                         <td colspan="3">
@@ -184,16 +218,38 @@
                     </tr>
                     {{-- the issue --}}
                     <tr>
-                        <td colspan="3" class="subJudul"><b>The Issue</b> <br> <p>Resolusi keluhan</p></td>
+                        <td colspan="3" class="subJudul"><b>The Issue</b> <br> (Masalah)</td>
                     </tr>
                     <tr>
-                        <td><b>Material shortage Item #51, #50, #18</b></td>
-                        <td>:</td>
-                        <td>{{ $customer_complaint->description }}</td>
+                        <td colspan="3" class="padding-bottom">{{ $customer_complaint->description }}</td>
+                    </tr>
+                    {{-- File Lampiran --}}
+                    <tr>
+                        <td colspan="3" class="subJudul"><b>File Lampiran</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="padding-lampiran">
+                            @foreach ($customer_complaint_file as $cpf)
+                                <a href="{{ url('upload/customer_complaint/lampiran')}}/{{ $cpf->file_lampiran }}" target="__blank">
+                                    <p>{{ $cpf->file_lampiran }}</p>
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    {{-- Foto Lampiran --}}
+                    <tr>
+                        <td colspan="3" class="subJudul"><b>Foto Lampiran</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="padding-bottom">
+                            @foreach ($customer_complaint_file as $cpf)
+                                <img width="30%" class="print-img" src="{{ url('upload/customer_complaint/foto')}}/{{ $cpf->foto_lampiran }}" alt="">
+                            @endforeach
+                        </td>
                     </tr>
                     {{-- complaint resolved by --}}
                     <tr>
-                        <td colspan="3" class="subJudul"><b>Complaints Resolved by</b> <br> <p>Rincian</p></td>
+                        <td colspan="3" class="subJudul"><b>Complaints Resolved by</b> <br> (Resolusi keluhan)</td>
                     </tr>
                     <tr>
                         <td><b>Complain Received by</b> (keluhan diterima oleh)</td>
@@ -206,7 +262,7 @@
                         <td>{{ $customer_complaint->received_date }}</td>
                     </tr>
                     <tr>
-                        <td><b>Complaints Resolved By</b> (Keluhan diselesaikan oleh )</td>
+                        <td><b>Complaints Resolved By</b> <br> (Keluhan diselesaikan oleh )</td>
                         <td>:</td>
                         <td>{{ $customer_complaint->resolved_by }}</td>
                     </tr>
@@ -218,7 +274,7 @@
                     <tr>
                         <td><b>Action Taken</b> (Tindakan yang Diambil)</td>
                         <td>:</td>
-                        <td>{{ $customer_complaint->action_taken }}</td>
+                        <td class="padding-bottom">{{ $customer_complaint->action_taken }}</td>
                     </tr>
                     <tr>
                         <td colspan="3" class="tandaTangan">

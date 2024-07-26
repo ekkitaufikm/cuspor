@@ -485,25 +485,25 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="c-inputs-stacked">
-                                                            <input type="checkbox" id="checkbox_123" name="category[]" value="short_shipment">
+                                                            <input type="checkbox" id="checkbox_123" name="category[]" value="Short Shipment">
                                                             <label for="checkbox_123" class="me-30">Short Shipment</label>
                                                             <br>
-                                                            <input type="checkbox" id="checkbox_234" name="category[]" value="surface_discontinue_bolt">
+                                                            <input type="checkbox" id="checkbox_234" name="category[]" value="Surface Discontinuities of Bolt (F788">
                                                             <label for="checkbox_234" class="me-30">Surface Discontinuities of Bolt (F788)</label>
                                                             <br>
-                                                            <input type="checkbox" id="checkbox_345" name="category[]" value="surface_discontinue_nut">
+                                                            <input type="checkbox" id="checkbox_345" name="category[]" value="Surface Discontinuities of Nut (F812)">
                                                             <label for="checkbox_345" class="me-30">Surface Discontinuities of Nut (F812)</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="c-inputs-stacked">
-                                                            <input type="checkbox" id="checkbox_456" name="category[]" value="coating_surface">
+                                                            <input type="checkbox" id="checkbox_456" name="category[]" value="Coating Surface">
                                                             <label for="checkbox_456" class="me-30">Coating Surface</label>
                                                             <br>
-                                                            <input type="checkbox" id="checkbox_567" name="category[]" valude="thread_function">
+                                                            <input type="checkbox" id="checkbox_567" name="category[]" valude="Thread Function">
                                                             <label for="checkbox_567" class="me-30">Thread Function</label>
                                                             <br>
-                                                            <input type="checkbox" id="checkbox_678" name="category[]" value="others">
+                                                            <input type="checkbox" id="checkbox_678" name="category[]" value="Others">
                                                             <label for="checkbox_678" class="me-30">Others</label>
                                                             <div class="type-form">
                                                                 <div id="type-form-1">
