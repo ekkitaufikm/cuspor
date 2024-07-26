@@ -56,12 +56,6 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Customer</label>
-                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
                                     <label class="form-label">SQ Date</label>
                                     <input type="date" class="form-control ps-15" name="sq_date" placeholder="SQ Date" value="{{ request('sq_date') }}">
                                 </div>
@@ -174,7 +168,7 @@
                                         <td>
                                             <div class="btn-group mb-5">
                                                 <a class="btn btn-sm btn-info" type="button" href='{{ route('customer-complaint.detail', ['id' => Crypt::encrypt($cp->id)]) }}'>Detail</a>
-                                                <a class="btn btn-sm btn-secondary" type="button" href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($cp->sq_no)]) }}'>Print</a>
+                                                <a class="btn btn-sm btn-secondary" type="button" href='{{ route('customer-complaint.print', ['id' => Crypt::encrypt($cp->id)]) }}' target="__blank">Print</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -56,12 +56,6 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Customer</label>
-                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
                                     <label class="form-label">SQ Date</label>
                                     <input type="date" class="form-control ps-15" name="sq_date" placeholder="SQ Date" value="{{ request('sq_date') }}">
                                 </div>

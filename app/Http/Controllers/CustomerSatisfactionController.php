@@ -40,10 +40,6 @@ class CustomerSatisfactionController extends Controller
             $query->where('sls_inquiry.inq_no', 'like', '%' . $request->inq_no . '%');
         }
 
-        if ($request->has('customer')) {
-            $query->where('sls_customer.cust_name', 'like', '%' . $request->customer . '%');
-        }
-
         if ($request->has('sq_date')) {
             $query->where('sls_quotation.created_date', 'like', '%' . $request->sq_date . '%');
         }

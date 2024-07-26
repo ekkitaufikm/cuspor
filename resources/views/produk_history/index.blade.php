@@ -56,8 +56,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label class="form-label">Customer</label>
-                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
+                                    <label class="form-label">Project Name</label>
+                                    <input type="text" class="form-control ps-15" name="project_name" placeholder="Project Name" value="{{ request('project_name') }}">
                                 </div>
                             </div>
                             <div class="col-12">

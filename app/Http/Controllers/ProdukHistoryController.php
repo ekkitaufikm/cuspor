@@ -34,8 +34,8 @@ class ProdukHistoryController extends Controller
             $query->where('sls_inquiry.inq_no', 'like', '%' . $request->inq_no . '%');
         }
 
-        if ($request->has('customer')) {
-            $query->where('sls_customer.cust_name', 'like', '%' . $request->customer . '%');
+        if ($request->has('project_name')) {
+            $query->where('sls_inquiry.project_name', 'like', '%' . $request->project_name . '%');
         }
 
         $sales_quotation = $query->orderBy('sls_quotation.created_date', 'desc')->get();
