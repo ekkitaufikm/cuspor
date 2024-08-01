@@ -25,7 +25,7 @@
                         <a class="{{ request()->routeIs('customer-complaint') ? 'c-active' : '' }}" href="{{ route('customer-complaint') }}"><i class="fa fa-tags"><span class="path1"></span><span class="path2"></span></i>Customer Complaint</a>
                     </li> 
                 @endif  
-                @if(Helpers::hasPrivilege('companyr'))
+                @if(Helpers::hasPrivilege(['userr', 'roler']))
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-cog"><span class="path1"></span><span class="path2"></span></i>

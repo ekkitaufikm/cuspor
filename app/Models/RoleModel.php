@@ -18,5 +18,15 @@ class RoleModel extends Model
     {
         return $this->belongsToMany(PrivilegesModel::class, 'm_roles_privileges', 'm_role_id', 'm_privilege_id')->withTimestamps();
     }
+    
+    public function dibuatOleh()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+    
+    public function dieditOleh()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 
 }
