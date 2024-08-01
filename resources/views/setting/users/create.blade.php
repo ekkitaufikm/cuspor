@@ -91,10 +91,10 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">Company Name<span style="color: red">*</span></label>
-                                    <select id="select-companyName" class="form-select select2" name="company_name" aria-label="Default select example">
+                                    <select id="select-companySector" class="form-select select2" name="company_name" aria-label="Default select example">
                                         <option value="">--Choose Options--</option>
-                                        @foreach(\App\Models\CompanyModel::all() as $cmpny)
-                                            <option value="{{ $cmpny->company_name }}">{{ $cmpny->company_name }}</option>
+                                        @foreach(\App\Models\CompanySalesModel::all() as $company)
+                                            <option value="{{ $company->cust_name }}">{{ $company->cust_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>    

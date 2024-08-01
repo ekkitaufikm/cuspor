@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 
 //model
 use App\Models\User;
-use App\Models\CompanyModel;
+use App\Models\CompanySalesModel;
 
 class UserController extends Controller
 {
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $company = CompanyModel::where('company_name', $request->company_name)->first();
+        $company = CompanySalesModel::where('cust_name', $request->company_name)->first();
         $validator = $this->rules($request->all());
 
         if ($validator->fails()) {
@@ -69,7 +69,7 @@ class UserController extends Controller
                     $data['password']   = Hash::make($request->password);
                     $data['company_sector']   = $company->company_sector;
                     $data['created_by'] = Auth::user()->id;
-
+                    
                     $data_simpan = User::create($data);
                 }
             } else {
@@ -115,7 +115,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $company = CompanyModel::where('company_name', $request->company_name)->first();
+        $company = CompanySalesModel::where('cust_name', $request->company_name)->first();
         $validator = $this->rules($request->all());
 
         if ($validator->fails()) {

@@ -12,7 +12,7 @@
 
 @section('content')
     @php
-    $satisfaction      = $customer_satisfaction->where('cust_id', $sales_quotation->cust_id)->count('id');
+    $satisfaction      = $customer_satisfaction->where('cust_id', $sales_quotation->cust_id ?? '')->count('id');
     $complaint   = $customer_complaint->where('personal_name', Auth::user()->name)->count('id');
     @endphp
 

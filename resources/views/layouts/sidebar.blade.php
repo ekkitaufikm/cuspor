@@ -35,11 +35,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">       
-                            @if(Helpers::hasPrivilege('companyr'))     
+                            {{-- @if(Helpers::hasPrivilege('companyr'))     
                                 <li>
                                     <a class="{{ request()->routeIs('company') ? 'c-active' : '' }}" href="{{ route('company') }}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Company</a>
                                 </li>  
-                            @endif           
+                            @endif            --}}
                             @if(Helpers::hasPrivilege('userr'))     
                                 <li>
                                     <a class="{{ request()->routeIs('users') ? 'c-active' : '' }}" href="{{ route('users') }}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Users</a>

@@ -147,7 +147,7 @@
                         <td width="25%">No : {{ $customer_complaint->complaint_no }}</td>
                     </tr>
                     <tr>
-                        <td class="center-align">FORMULIR KELUAHAN PELANGGAN</td>
+                        <td class="center-align">FORMULIR KELUHAN PELANGGAN</td>
                         <td width="25%">DATE : {{ $customer_complaint->created_at->format('d m Y') }}</td>
                     </tr>
                 </tbody>
