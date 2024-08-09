@@ -40,6 +40,10 @@ class CustomerSatisfactionController extends Controller
             $query->where('sls_inquiry.inq_no', 'like', '%' . $request->inq_no . '%');
         }
 
+        if ($request->has('customer')) {
+            $query->where('sls_customer.cust_name', 'like', '%' . $request->customer . '%');
+        }
+
         if ($request->has('sq_date')) {
             $query->where('sls_quotation.created_date', 'like', '%' . $request->sq_date . '%');
         }
@@ -48,8 +52,13 @@ class CustomerSatisfactionController extends Controller
             $query->where('sls_inquiry.project_name', 'like', '%' . $request->project_name . '%');
         }
 
+        if ($request->has('status')) {
+            $query->where('sls_quotation.status', 'like', '%' . $request->status . '%');
+        }
+
         $sales_quotation = $query->orderBy('sls_quotation.created_date', 'desc')->get();
 
+        // echo json_encode($sales_quotation); die;
         return view('customer_satisfaction.index', [
             "customer_satisfaction" => $customer_satisfaction,
             "customer_satisfaction_dtl" => $customer_satisfaction_dtl,

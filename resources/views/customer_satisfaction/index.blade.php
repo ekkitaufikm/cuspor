@@ -42,6 +42,9 @@
                 <div class="box-body">
                     <form id="searchForm" action="{{ url('customer-satisfaction') }}" method="GET">
                         <div class="row">
+                            @php
+                                $data_status = \App\Models\LookupModel::where('lookup_config', 'sls_quotation_status')->get();
+                            @endphp
                             <div class="col-4">
                                 <div class="form-group">
                                     <label class="form-label">SQ No</label>
@@ -56,6 +59,12 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
+                                    <label class="form-label">Customer</label>
+                                    <input type="text" class="form-control ps-15" name="customer" placeholder="Customer" value="{{ request('customer') }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
                                     <label class="form-label">SQ Date</label>
                                     <input type="date" class="form-control ps-15" name="sq_date" placeholder="SQ Date" value="{{ request('sq_date') }}">
                                 </div>
@@ -66,6 +75,77 @@
                                     <input type="text" class="form-control ps-15" name="project_name" placeholder="Project Name" value="{{ request('project_name') }}">
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <select id="divisi-customer" class="form-select select2" name="status" aria-label="Default select example">
+                                        <option value="" disabled>--Choose Option --</option>
+                                        @foreach ($data_status as $ds)
+                                            <option value="{{ $ds->lookup_code }}" {{ old('status', request('status')) == $ds->lookup_code ? 'selected' : '' }}>{{ $ds->lookup_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Services</label>
+                                    <div class="input-group my-colorpicker2">
+                                        <input type="text" class="form-control" name="services" placeholder="Services" value="{{ request('services') }}">
+                  
+                                        <div class="input-group-addon">
+                                          %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Commercial</label>
+                                    <div class="input-group my-colorpicker2">
+                                        <input type="text" class="form-control" name="commercial" placeholder="Commercial" value="{{ request('commercial') }}">
+                  
+                                        <div class="input-group-addon">
+                                          %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Delivery Material</label>
+                                    <div class="input-group my-colorpicker2">
+                                        <input type="text" class="form-control" name="delivery_material" placeholder="Delivery Material" value="{{ request('delivery_material') }}">
+                  
+                                        <div class="input-group-addon">
+                                          %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Product Quality</label>
+                                    <div class="input-group my-colorpicker2">
+                                        <input type="text" class="form-control" name="product_quality" placeholder="Product Quality" value="{{ request('product_quality') }}">
+                  
+                                        <div class="input-group-addon">
+                                          %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="form-label">Average Satisfaction</label>
+                                    <div class="input-group my-colorpicker2">
+                                        <input type="text" class="form-control" name="average_satisfaction" placeholder="Average Satisfaction" value="{{ request('average_satisfaction') }}">
+                  
+                                        <div class="input-group-addon">
+                                          %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
                             <div class="col-12">
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary" onclick="submitForm()">
@@ -111,7 +191,7 @@
                                     <th>INQ No</th>
                                     <th>Customer</th>
                                     <th>SQ Date</th>
-                                    <th>Project Name</th>
+                                    <th style="width:30%;">Project Name</th>
                                     <th>Status</th>
                                     <th>Services</th>
                                     <th>Commercial</th>
@@ -120,6 +200,9 @@
                                     <th>Average Satisfaction</th> 
                                     <th>Survey</th>
                                     <th>Survey Status</th>
+                                    <th>SQ PIC Customer</th>
+                                    <th>Sales By</th>
+                                    <th>Satisfaction Date</th>
                                     <th width="10%">Action</th>
                                 </tr>
                             </thead>
@@ -128,15 +211,22 @@
                                     @php
                                         $lookup_status = \App\Models\LookupModel::where('lookup_config', 'sls_quotation_status')->where('lookup_code', $sq->status)->first();
                                         $cp_satisfaction = $customer_satisfaction->where('sq_id', $sq->sq_id)->first();
-                                        $cp_satisfaction_dtl = $customer_satisfaction_dtl->where('customer_satisfaction_id', $cp_satisfaction->id??'')->first();
+                                        $cp_satisfaction_dtl = $customer_satisfaction_dtl->where('customer_satisfaction_id', $cp_satisfaction->id ?? '')->first();
                                         $sales_inquiry = \App\Models\QuotationItemModel::select('sls_inquiry.*')
-                                                            ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
-                                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
-                                                            ->where('sls_inquiry.inq_id', $sq->inq_id)
-                                                            ->first();
+                                            ->join('sls_quotation', 'sls_quotation_items_int.sq_id', '=', 'sls_quotation.sq_id')
+                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                                            ->where('sls_inquiry.inq_id', $sq->inq_id)
+                                            ->first();
+                                        $sales_customer = \App\Models\SalesQuotationModel::select('sls_customer.*', 'sls_customer_pic.*', 'erp_user.*')
+                                            ->join('sls_inquiry', 'sls_quotation.inq_id', '=', 'sls_inquiry.inq_id')
+                                            ->join('sls_customer', 'sls_inquiry.cust_id', '=', 'sls_customer.cust_id')
+                                            ->leftJoin('sls_customer_pic', 'sls_customer.cust_id', '=', 'sls_customer_pic.cust_id')
+                                            ->leftJoin('erp_user', 'sls_inquiry.pic_sales', '=', 'erp_user.id')
+                                            ->where('sls_quotation.sq_no', $sq->sq_no)
+                                            ->first();
                                         $status_text = '';
                                         $status_color = '';
-                            
+                                
                                         switch ($sq->status) {
                                             case "2":
                                             case "8":
@@ -178,7 +268,7 @@
                                         <td class="text-center">{{ isset($cp_satisfaction_dtl->delivery_material) ? $cp_satisfaction_dtl->delivery_material . '%' : '-' }}</td>
                                         <td class="text-center">{{ isset($cp_satisfaction_dtl->product_quality) ? $cp_satisfaction_dtl->product_quality . '%' : '-' }}</td>
                                         @php
-                                            $nilai_average = (($cp_satisfaction_dtl->services ?? '0')+($cp_satisfaction_dtl->commercial_aspect ?? '0')+($cp_satisfaction_dtl->delivery_material ?? '0')+($cp_satisfaction_dtl->product_quality ?? '0'))/4
+                                            $nilai_average = (($cp_satisfaction_dtl->services ?? '0') + ($cp_satisfaction_dtl->commercial_aspect ?? '0') + ($cp_satisfaction_dtl->delivery_material ?? '0') + ($cp_satisfaction_dtl->product_quality ?? '0')) / 4;
                                         @endphp
                                         <td class="text-center">{{ isset($nilai_average) ? $nilai_average . '%' : '-' }}</td>
                                         <td>
@@ -205,6 +295,9 @@
                                                 <div class="w-100"><span class="badge badge-success">Survey Finished</span></div>
                                             @endif
                                         </td>
+                                        <td>{{ $sales_customer->pic_name ?? '-' }}</td>
+                                        <td>{{ ucwords(strtolower($sales_customer->user_name ?? '-')) }}</td>
+                                        <td>{{ $cp_satisfaction->created_at ?? '-' }}</td>
                                         <td>
                                             @if (isset($cp_satisfaction->status) != null)
                                                 <div class="btn-group mb-5">
@@ -215,8 +308,9 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                          </tbody>
+                            </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>

@@ -82,9 +82,9 @@
                                         <td>{{ $cp->kode }}</td>
                                         <td>{{ $cp->nama }}</td>
                                         <td>{{ $users }}</td>
-                                        <td>{{ $cp->created_by ?? '-' }}</td>
+                                        <td>{{ $cp->dibuatOleh->name ?? '-' }}</td>
                                         <td>{{ $cp->created_at ?? '-' }}</td>
-                                        <td>{{ $cp->updated_by ?? '-' }}</td>
+                                        <td>{{ $cp->dieditOleh->name ?? '-' }}</td>
                                         <td>{{ $cp->updated_at ?? '-' }}</td>
                                         <td>
                                             <div class="btn-group mb-5">
